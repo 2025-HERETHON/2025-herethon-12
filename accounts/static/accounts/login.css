@@ -1,0 +1,89 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input,
+button {
+  width: 100%;
+}
+
+.splash-screen {
+  background-color: #e3f0ff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeOut 0.5s ease 1s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 70px 20px 0;
+  width: 100%;
+  gap: 13px;
+}
+
+input,
+#login,
+#kakao {
+  width: 80%;
+  height: 50px;
+  border-radius: 8px;
+  font-size: 17px;
+  text-align: center;
+  color: #6e6e6e;
+}
+
+input {
+  border: 1px solid #d9d9d9;
+}
+
+#login {
+  background-color: var(--color-blue);
+  color: #ffffff;
+}
+
+#login:active {
+  background-color: var(--color-deep-blue);
+}
+
+#kakao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #ffee00;
+  margin: 7px 0;
+}
+
+a {
+  color: #6e6e6e;
+  font-size: 17px;
+}
