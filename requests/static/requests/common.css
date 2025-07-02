@@ -1,0 +1,95 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
+
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-y: scroll; /* 스크롤 설정 하기 위해 필요 */
+  scrollbar-width: none; /* 스크롤 안 보이게 함 */
+  -ms-overflow-style: none; /* 스크롤 안 보이게 함 */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+ol,
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+a,
+button,
+input {
+  /* 클릭하면 배경 파래지는 거 수정 */
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 모바일 웹 화면으로 구현하려면 이걸로 감싸기 */
+.main-container {
+  max-width: 430px;
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+/* 화면 하단 파란색 버튼 */
+.submit-btn {
+  width: 80%;
+  max-width: 344px;
+  height: 50px;
+  background-color: #5aa4ff;
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 20px;
+  position: fixed;
+  bottom: 22px;
+}
+
+/* 숨기려는 요소 class에 포함 */
+.hidden {
+  display: none;
+}
