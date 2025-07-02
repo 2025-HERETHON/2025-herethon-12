@@ -1,5 +1,14 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
 
+:root {
+  --color-mint: #4abad9; /* 무료 나눔 */
+  --color-deep-blue: #2e80e6; /* nav바 선택 아이콘, 교환, 거래 완료, 클릭될 때 바뀌는 컬러 */
+  --color-blue: #5aa4ff; /* 거래중, 등록 버튼 기본 컬러 */
+  --color-light-blue: #bad4f3; /* nav바에서 선택 안 된 아이콘 */
+  --color-gray: #8f8f8f; /* 거래 완료 */
+  --color-red: #f93e3e; /* 필수 항목 경고 */
+}
+
 html {
   box-sizing: border-box;
 }
@@ -81,12 +90,19 @@ img {
   width: 80%;
   max-width: 344px;
   height: 50px;
-  background-color: #5aa4ff;
+  background-color: var(--color-blue);
   color: #ffffff;
   border-radius: 8px;
   font-size: 20px;
   position: fixed;
   bottom: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-btn:active {
+  background-color: var(--color-deep-blue);
 }
 
 /* 숨기려는 요소 class에 포함 */
