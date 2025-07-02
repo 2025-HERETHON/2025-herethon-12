@@ -42,3 +42,4 @@ class ItemImage(models.Model):
     image_order = models.IntegerField()
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='image')
+
