@@ -16,17 +16,14 @@ html,
 body {
   height: 100%;
   margin: 0;
-}
-
-body {
-  margin: 0;
   padding: 0;
   width: 100%;
-  overflow-y: scroll; /* 스크롤 설정 하기 위해 필요 */
+  overflow-y: auto; /* 스크롤 설정 하기 위해 필요 */
   scrollbar-width: none; /* 스크롤 안 보이게 함 */
   -ms-overflow-style: none; /* 스크롤 안 보이게 함 */
 }
 
+html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;
 }
