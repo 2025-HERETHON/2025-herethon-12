@@ -1,23 +1,35 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/accounts/static/accounts/common.css" />
-    <link rel="stylesheet" href="/accounts/static/accounts/login.css" />
-    <script defer src="/accounts/static/accounts/js/login.js"></script>
+    <!-- 장고 형식 -->
+    <link rel="stylesheet" href="{% static 'accounts/login.css' %}" />
+    <link rel="stylesheet" href="{% static 'accounts/common.css' %}" />
+    <script defer src="{% static 'accounts/js/login.js' %}"></script>
+
+
+<!--    <link rel="stylesheet" href="/accounts/static/accounts/common.css" />-->
+<!--    <link rel="stylesheet" href="/accounts/static/accounts/login.css" />-->
+<!--    <script defer src="/accounts/static/accounts/js/login.js"></script>-->
   </head>
   <body>
     <div class="splash-screen">
+<!--      <img-->
+<!--        src="/accounts/static/accounts/images/splash-logo.svg"-->
+<!--        alt="스플래시 로고"-->
+<!--      />-->
       <img
-        src="/accounts/static/accounts/images/splash-logo.svg"
+        src="{% static 'accounts/images/logo.svg' %}"
         alt="스플래시 로고"
       />
     </div>
 
     <div class="main-container">
-      <img src="/accounts/static/accounts/images/logo.svg" alt="로고" />
+<!--      <img src="/accounts/static/accounts/images/logo.svg" alt="로고" />-->
+      <img src="{% static 'accounts/images/logo.svg' %}" alt="로고" />
       <!-- 70px -->
       <form method="post" action="">
         <input
@@ -38,10 +50,11 @@
         />
         <button id="login">로그인</button>
         <button id="kakao" type="button">
-          <img
-            src="/accounts/static/accounts/images/kakao.svg"
-            alt="카카오톡 로고"
-          />
+<!--          <img-->
+<!--            src="/accounts/static/accounts/images/kakao.svg"-->
+<!--            alt="카카오톡 로고"-->
+<!--          />-->
+          <img src="{% static 'accounts/images/kakao.svg' %}" alt="카카오톡 로고" />
           <span>카카오로 시작하기</span>
         </button>
         <a href="./signup.html">회원가입</a>

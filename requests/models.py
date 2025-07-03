@@ -37,7 +37,7 @@ class DonationRequest(models.Model):
     place = models.CharField(max_length=12)
     memo = models.CharField(max_length=200)
     status = models.CharField(
-        max_length=4, 
+        max_length=11,
         choices=Status.choices,
         default=Status.WAITING)
     created_at = models.DateTimeField(auto_now_add=True)
