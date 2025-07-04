@@ -19,8 +19,16 @@
         <!-- header는 나중에 컴포넌트화 해도 될 듯 -->
         <div class="header-title">회원가입</div>
       </div>
-      <form method="post" action="{% url 'check_id' %}">
+      <form method="post" action="{% url 'signup' %}">
         {% csrf_token %}
+        {% if messages %} <!-- 중복 확인 결과 출력 / 수정하셔도 됩니다!! -->
+            <div class="messages">
+              {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
         <div class="username-container">
           <label for="username">아이디</label>
           <div class="username-box">
@@ -36,7 +44,7 @@
               required
               value="{{ username|default:'' }}"
             />
-            <button type="submit" class="gray-box">중복확인</button>
+            <button type="button" value="check_id" class="gray-box" onclick="checkId()">중복확인</button>
             <!-- 추후 동작 추가 필요 -->
           </div>
           <div class="description" id="username-desc">
@@ -46,9 +54,6 @@
             필수 입력 사항입니다.
           </div>
         </div>
-      </form>
-      <form method="post" action="{% url 'signup' %}">
-        {% csrf_token %}
         <div class="password-container">
           <label for="password">비밀번호</label>
           <input
@@ -86,9 +91,11 @@
             type="text"
             class="input-box"
             id="nickname"
+            name="nickname"
             minlength="2"
             maxlength="10"
             aria-describedby="nickname-desc"
+            value="{{ nickname|default:'' }}"
             required
           />
           <div class="description" id="nickname-desc">
@@ -98,7 +105,7 @@
             필수 입력 사항입니다.
           </div>
         </div>
-        <button class="submit-btn">가입하기</button>
+        <button type="submit" name="action" value="signup" class="submit-btn" onclick="reRequired()">가입하기</button>
       </form>
     </div>
   </body>
