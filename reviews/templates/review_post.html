@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dearbebe</title>
+    <link rel="stylesheet" href="/reviews/static/reviews/common.css" />
+    <link rel="stylesheet" href="/reviews/static/reviews/review_post.css" />
+    <script defer src="/reviews/static/reviews/js/review-post.js"></script>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header">
+        <a href="" class="back-btn">
+          <img src="/posts/static/posts/images/back.svg" alt="뒤로가기" />
+        </a>
+        <div class="header-title">후기 작성</div>
+        <p></p>
+      </div>
+      <form method="POST" action="" class="main-form">
+        <div class="review-title">
+          <div class="text-label">
+            <span class="review-nickname">닉네임</span>
+            <span> 님의 나눔, 어떠셨나요?</span>
+            <!-- 교환일 경우 -->
+            <!-- <span> 님과의 교환, 어떠셨나요?</span> -->
+          </div>
+        </div>
+        <div class="star-container">
+          <div class="thumbnail">
+            <img
+              src="/reviews/static/reviews/images/sample-img.png"
+              alt="후기 물품 썸네일"
+            />
+          </div>
+          <div class="star-box">
+            <div class="text-label">신형 유모차</div>
+            <div class="rating">
+              <label for="star0.5" class="rating-label">
+                <input
+                  type="radio"
+                  id="star0.5"
+                  class="hidden"
+                  name="rating"
+                  value="0.5"
+                />
+                <span class="star-icon"></span>
+              </label>
+              <label for="star1.0" class="rating-label">
+                <input
+                  type="radio"
+                  id="star1.0"
+                  class="hidden"
+                  name="rating"
+                  value="1"
+                />
+                <span class="star-icon"></span>
+              </label>
+              <label for="star1.5" class="rating-label">
+                <input
+                  type="radio"
+                  id="star1.5"
+                  class="hidden"
+                  name="rating"
+                  value="1.5"
+                />
+                <span class="star-icon"></span>
+              </label>
+              <label for="star2.0" class="rating-label">
+                <input
+                  type="radio"
+                  id="star2.0"
+                  class="hidden"
+                  name="rating"
+                  value="2"
+                />
+                <span class="star-icon"></span>
+              </label>
+              <label for="star2.5" class="rating-label">
+                <input
+                  type="radio"
+                  id="star2.5"
+                  class="hidden"
+                  name="rating"
+                  value="2.5"
+                />
+                <span class="star-icon"></span>
+              </label>
+              <label for="star3.0" class="rating-label">
+                <input
+                  type="radio"
+                  id="star3.0"
+                  class="hidden"
+                  name="rating"
+                  value="3"
+                />
+                <span class="star-icon"></span>
+              </label>
+              <label for="star3.5" class="rating-label">
+                <input
+                  type="radio"
+                  id="star3.5"
+                  class="hidden"
+                  name="rating"
+                  value="3.5"
+                />
+                <span class="star-icon"></span>
+              </label>
+              <label for="star4.0" class="rating-label">
+                <input
+                  type="radio"
+                  id="star4.0"
+                  class="hidden"
+                  name="rating"
+                  value="4"
+                />
+                <span class="star-icon"></span>
+              </label>
+              <!-- 별점 4.5점을 기본값으로 설정했어요 -->
+              <label for="star4.5" class="rating-label">
+                <input
+                  type="radio"
+                  id="star4.5"
+                  class="hidden"
+                  name="rating"
+                  value="4.5"
+                  checked
+                />
+                <span class="star-icon"></span>
+              </label>
+              <label for="star5.0" class="rating-label">
+                <input
+                  type="radio"
+                  id="star5.0"
+                  class="hidden"
+                  name="rating"
+                  value="5"
+                />
+                <span class="star-icon"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="desc-container">
+          <label for="description" class="text-label"
+            >나눔 후기를 작성해 주세요!</label
+          >
+          <!-- 교환일 경우 -->
+          <!-- <label for="description" class="text-label">교환 후기를 작성해 주세요!</label> -->
+          <div class="wrapper">
+            <textarea
+              name="description"
+              id="description"
+              maxlength="200"
+            ></textarea>
+            <div class="limit">200자 이내</div>
+          </div>
+          <div class="error-msg hidden" id="desc-err">
+            필수 입력 사항입니다.
+          </div>
+        </div>
+        <div class="photo-container">
+          <div class="photo-title">사진 첨부</div>
+          <div class="photo-box">
+            <div class="photo-select">
+              <label for="photo-input" id="photo-input-label">
+                <input type="file" accept="image/*" id="photo-input" />
+                <img src="/posts/static/posts/images/add.svg" alt="사진 추가" />
+                <div class="photo-input-status">0/1</div>
+              </label>
+            </div>
+            <div class="photo-preview">
+              <!-- 고른 사진이 없을 때 -->
+              <img src="/posts/static/posts/images/image.svg" alt="사진 없음" />
+              <!-- 고른 사진이 있을 때 -->
+              <!-- <img src="사진 링크" alt="사진" /> -->
+            </div>
+          </div>
+        </div>
+        <div class="button-wrapper">
+          <button type="submit" class="submit-btn">등록하기</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
