@@ -34,9 +34,9 @@ form {
   margin-top: 85px;
 }
 
-form > div {
+form > div:not(.button-wrapper) {
   gap: 5px;
-  width: 80%;
+  width: 90%;
 }
 
 .search-container {
@@ -100,4 +100,11 @@ li > button:active {
 
 .submit-btn {
   background-color: #8a8a8a;
+}
+
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
