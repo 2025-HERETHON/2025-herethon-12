@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
-# class MemberManager(UserManager):
-#     pass
+class MemberManager(UserManager):
+    pass
 
 class Member(AbstractUser):
     #username = models.CharField(max_length=12, unique=True)
