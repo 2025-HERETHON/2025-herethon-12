@@ -1,18 +1,24 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/posts/static/posts/common.css" />
-    <link rel="stylesheet" href="/posts/static/posts/post.css" />
-    <script defer src="/posts/static/posts/js/post.js"></script>
+    <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'posts/post.css' %}" />
+    <script defer src="{% static 'posts/js/post.js' %}"></script>
+
+<!--    <link rel="stylesheet" href="/posts/static/posts/common.css" />-->
+<!--    <link rel="stylesheet" href="/posts/static/posts/post.css" />-->
+<!--    <script defer src="/posts/static/posts/js/post.js"></script>-->
   </head>
   <body>
     <div class="main-container">
       <div class="header">
         <a href="" class="back-btn">
-          <img src="/posts/static/posts/images/back.svg" alt="뒤로가기" />
+          <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
+<!--          <img src="/posts/static/posts/images/back.svg" alt="뒤로가기" />-->
         </a>
         <div class="header-title">글쓰기</div>
         <p></p>
@@ -24,21 +30,24 @@
             <div class="photo-select">
               <label for="photo-input" id="photo-input-label">
                 <input type="file" accept="image/*" id="photo-input" multiple />
-                <img src="/posts/static/posts/images/add.svg" alt="사진 추가" />
+                <img src="{% static 'posts/images/add.svg' %}" alt="사진 추가" />
+<!--                <img src="/posts/static/posts/images/add.svg" alt="사진 추가" />-->
                 <div class="photo-input-status">0/3</div>
               </label>
             </div>
             <div class="photo-preview">
               <!-- 고른 사진이 없을 때 -->
-              <img src="/posts/static/posts/images/image.svg" alt="사진 없음" />
+              <img src="{% static 'posts/images/image.svg' %}" alt="사진 없음" />
+<!--              <img src="/posts/static/posts/images/image.svg" alt="사진 없음" />-->
               <!-- 고른 사진이 있을 때 -->
               <!-- <img src="사진 링크" alt="사진" /> -->
             </div>
             <div class="photo-preview">
-              <img src="/posts/static/posts/images/image.svg" alt="사진 없음" />
+              <img src="{% static 'posts/images/image.svg' %}" alt="사진 없음" />
+<!--              <img src="/posts/static/posts/images/image.svg" alt="사진 없음" />-->
             </div>
             <div class="photo-preview">
-              <img src="/posts/static/posts/images/image.svg" alt="사진 없음" />
+              <img src="{% static 'posts/images/image.svg' %}" alt="사진 없음" />
             </div>
           </div>
           <div class="error-msg hidden" id="photo-err">
@@ -57,9 +66,13 @@
           <div class="selected category-selected">
             <p>카테고리</p>
             <img
-              src="/posts/static/posts/images/arrow.svg"
+              src="{% static 'posts/images/arrow.svg' %}"
               alt="드롭다운 버튼"
             />
+<!--            <img-->
+<!--              src="/posts/static/posts/images/arrow.svg"-->
+<!--              alt="드롭다운 버튼"-->
+<!--            />-->
           </div>
           <div class="options hidden">
             <!-- 각 item div의 textContent가 value로 들어감 (post.js 참고)-->
@@ -124,9 +137,13 @@
           <div class="selected condition-selected">
             <p>제품 상태</p>
             <img
-              src="/posts/static/posts/images/arrow.svg"
+              src="{% static 'posts/images/arrow.svg' %}"
               alt="드롭다운 버튼"
             />
+<!--            <img-->
+<!--              src="/posts/static/posts/images/arrow.svg"-->
+<!--              alt="드롭다운 버튼"-->
+<!--            />-->
           </div>
           <div class="options hidden">
             <div class="item">새상품</div>
@@ -146,9 +163,13 @@
           <div class="selected age-selected">
             <p>추천 월령</p>
             <img
-              src="/posts/static/posts/images/arrow.svg"
+              src="{% static 'posts/images/arrow.svg' %}"
               alt="드롭다운 버튼"
             />
+<!--            <img-->
+<!--              src="/posts/static/posts/images/arrow.svg"-->
+<!--              alt="드롭다운 버튼"-->
+<!--            />-->
           </div>
           <div class="options hidden">
             <div class="item">0~3개월</div>
