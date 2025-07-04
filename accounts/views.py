@@ -1,29 +1,51 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib import messages
-from .models import Member
 
-# Create your views here.
-#회원가입 랜더링
+#로그인
+def login_page(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            #유저 존재
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.error(request, "아이디 또는 비밀번호가 틀렸습니다.")
+            #id만 다시 채워주기
+            return render(request, "accounts/login.html", {
+                "username": username,
+            })
+    return render(request, "accounts/login.html")
+
+
+#회원가입
 def signup_page(request):
     if request.method == "POST":
-        action = request.POST.get("action")  #check_id or signup
+        action = request.POST.get("action")
         username = request.POST.get("username")
         password = request.POST.get("password")
         password_check = request.POST.get("password-check")
         nickname = request.POST.get("nickname")
 
-        if action == "check_id": #아이디 중복 확인
-            if Member.objects.filter(username=username).exists():
+        User = get_user_model()
+        #아이디 중복 확인
+        if action == "check_id":
+            if User.objects.filter(username=username).exists():
                 messages.error(request, "중복된 아이디")
             else:
                 messages.success(request, "사용 가능")
+            #작성해놨던 아이디, 닉네임 다시 채워주기
             return render(request, "accounts/signup.html", {
                 "username": username,
-                "nickname": nickname})
-
-        elif action == "signup": #회원가입
-            #비밀번호 확인
+                "nickname": nickname,
+            })
+        #유저 생성
+        elif action == "signup":
             if password != password_check:
                 messages.error(request, "비밀번호가 일치하지 않습니다.")
                 return render(request, "accounts/signup.html", {
@@ -31,19 +53,19 @@ def signup_page(request):
                     "nickname": nickname,
                 })
 
-            #아이디 중복 확인
-            if Member.objects.filter(username=username).exists():
+            if User.objects.filter(username=username).exists():
                 messages.error(request, "중복된 아이디")
                 return render(request, "accounts/signup.html", {
                     "username": username,
                     "nickname": nickname,
                 })
-
-            Member.objects.create(
+            #비밀번호 자동 해싱 처리
+            user = User.objects.create_user(
                 username=username,
-                password=make_password(password),
+                password=password,
                 nickname=nickname
             )
+
             return redirect("login")
 
     return render(request, "accounts/signup.html")

@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <!-- 장고 형식 -->
     <link rel="stylesheet" href="{% static 'accounts/login.css' %}" />
     <link rel="stylesheet" href="{% static 'accounts/common.css' %}" />
     <script defer src="{% static 'accounts/js/login.js' %}"></script>
@@ -31,23 +30,35 @@
 <!--      <img src="/accounts/static/accounts/images/logo.svg" alt="로고" />-->
       <img src="{% static 'accounts/images/logo.svg' %}" alt="로고" />
       <!-- 70px -->
-      <form method="post" action="">
+      <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
         <input
           type="text"
           id="username"
+          name="username"
           placeholder="아이디"
           minlength="4"
           maxlength="12"
           required
+          value="{{ username|default:'' }}"
         />
         <input
           type="password"
           id="password"
+          name="password"
           placeholder="비밀번호"
           minlength="6"
           maxlength="20"
           required
         />
+          <!--  로그인 결과 출력  -->
+          {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+          {% endif %}
         <button id="login">로그인</button>
         <button id="kakao" type="button">
 <!--          <img-->
