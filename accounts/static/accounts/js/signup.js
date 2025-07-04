@@ -51,6 +51,29 @@ function validNickname() {
   }
 }
 
+// 아이디 중복 확인 로직
+function checkId() {
+    document.getElementById("password").removeAttribute("required");
+    document.getElementById("password-check").removeAttribute("required");
+    document.getElementById("nickname").removeAttribute("required");
+
+    const form = document.querySelector("form");
+
+    const actionInput = document.createElement("input");
+    actionInput.type = "hidden";
+    actionInput.name = "action";
+    actionInput.value = "check_id";
+    form.appendChild(actionInput);
+
+    form.submit();
+}
+
+function restoreRequired() {
+  document.getElementById("password").setAttribute("required", "true");
+  document.getElementById("password-check").setAttribute("required", "true");
+  document.getElementById("nickname").setAttribute("required", "true");
+}
+
 username.addEventListener("input", validUsername);
 password.addEventListener("input", validPassword);
 passwordCheck.addEventListener("input", checkPassword);
