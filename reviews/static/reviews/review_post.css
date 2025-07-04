@@ -6,6 +6,51 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+.darken {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed;
+  width: 70%;
+  height: 120px;
+  max-width: 301px;
+  z-index: 1020;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #8fbffa;
+}
+
+.modal p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#ok {
+  color: var(--color-blue);
+  font-size: 16px;
+  font-weight: 500;
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
 /* 뒤로가기 버튼만 있는 header */
 .header {
   position: fixed;
@@ -100,7 +145,7 @@ body {
 }
 
 .rating label:nth-child(even) {
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .rating label:nth-child(even) .star-icon {

@@ -7,6 +7,8 @@ const stars = document.querySelectorAll(".star-icon");
 const desc = document.getElementById("description");
 const descErr = document.getElementById("desc-err");
 const photoInput = document.getElementById("photo-input");
+const darken = document.querySelector(".darken");
+const modal = document.querySelector(".modal");
 
 checkedRate(); // 새로고침할 때 별점 기본값 채움
 
@@ -76,9 +78,13 @@ photoInput.addEventListener("change", () => {
 
 mainForm.addEventListener("submit", (e) => {
   const descValue = desc.value.trim();
+
   if (!descValue || descValue.length > 200) {
     e.preventDefault();
     desc.style.borderColor = "var(--color-red)";
     descErr.classList.remove("hidden");
+  } else {
+    darken.classList.remove("hidden");
+    modal.classList.remove("hidden");
   }
 });
