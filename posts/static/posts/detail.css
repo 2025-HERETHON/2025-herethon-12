@@ -186,6 +186,7 @@ body {
   flex-direction: column;
   padding: 10px;
   gap: 10px;
+  margin-bottom: 100px;
 }
 
 .profile-bar {
@@ -267,8 +268,19 @@ body {
   font-size: 15px;
 }
 
+.description {
+  white-space: pre-line;
+}
+
 .sold-out {
   background-color: #8f8f8f;
+}
+
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hidden {

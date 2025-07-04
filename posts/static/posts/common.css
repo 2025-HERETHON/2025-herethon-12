@@ -84,7 +84,7 @@ img {
 
 /* 화면 하단 파란색 버튼 */
 .submit-btn {
-  width: 100%;
+  width: 90%;
   max-width: 387px; /* main-container 430px의 90% */
   height: 50px;
   background-color: var(--color-blue);
