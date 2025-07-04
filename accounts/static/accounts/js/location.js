@@ -9,3 +9,7 @@ region.addEventListener("input", () => {
     submitBtn.style.backgroundColor = "#8A8A8A";
   }
 });
+
+submitBtn.addEventListener("click", () => {
+  submitBtn.style.backgroundColor = "var(--color-deep-blue)";
+});
