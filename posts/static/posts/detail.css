@@ -230,7 +230,7 @@ body {
 }
 
 .type-time,
-.place-status-age {
+.place-condition-age {
   margin: 5px 0;
 }
 
@@ -259,17 +259,13 @@ body {
 }
 
 .time,
-.place-status-age {
+.place-condition-age {
   color: #8a8a8a;
 }
 
-.place-status-age,
+.place-condition-age,
 .description {
   font-size: 15px;
-}
-
-.description {
-  white-space: pre-line;
 }
 
 .sold-out {
