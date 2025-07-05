@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from requests.models import DonationRequest
+from django.db.models import Q
+from requests.models import DonationRequest, ExchangeRequest
 from posts.models import Item
 from requests.enums import Status
+from django.utils.timezone import localtime
 
 # 나눔-받은 신청 목록 조회
 def received_donation_requests(request):
@@ -13,6 +15,7 @@ def received_donation_requests(request):
     return render(request, 'requests/received_donation_list.html', {
         'donation_requests': donation_requests
     })
+
 
 # 나눔-보낸 신청 목록 조회 
 def sent_donation_requests(request):
@@ -61,3 +64,63 @@ def manage_sent_donation_request(request, request_id, action):
             messages.error(request, "삭제할 수 없는 상태입니다.")
 
     return redirect('sent_donation_requests')
+
+
+
+# 교환-받은 신청 목록 조회
+def received_exchange_requests(request):
+    member = request.user
+    my_items = Item.objects.filter(member=member)
+    exchange_requests = ExchangeRequest.objects.filter(item__in=my_items).order_by('-created_at')
+
+    return render(request, 'requests/received_exchange_list.html', {
+        'exchange_requests': exchange_requests
+    })
+
+# 교환-보낸 신청 목록 조회
+def sent_exchange_requests(request):
+    member = request.user
+    exchange_requests = ExchangeRequest.objects.filter(member=member).order_by('-created_at')
+
+    return render(request, 'requests/sent_exchange_list.html', {
+        'exchange_requests': exchange_requests
+    })
+
+# 교환-받은신청(거절처리)
+def reject_exchange_request(request, request_id):
+    exchange_request = get_object_or_404(ExchangeRequest, pk=request_id)
+
+    if exchange_request.item.member != request.user:
+        messages.error(request, "해당 신청을 거절할 권한이 없습니다.")
+        return redirect('received_exchange_requests')
+
+    exchange_request.status = Status.REJECTED
+    exchange_request.save()
+
+    return redirect('received_exchange_requests')
+
+# 교환-보낸신청(취소/삭제)
+
+def manage_sent_exchange_request(request, request_id, action):
+    exchange_request = get_object_or_404(ExchangeRequest, pk=request_id)
+
+    if exchange_request.member != request.user:
+        messages.error(request, "해당 요청을 처리할 권한이 없습니다.")
+        return redirect('sent_exchange_requests')
+
+    if action == "cancel":
+        if exchange_request.status == Status.WAITING:
+            exchange_request.status = Status.REJECTED
+            exchange_request.save()
+            messages.success(request, "신청이 취소되었습니다.")
+        else:
+            messages.error(request, "취소할 수 없는 상태입니다.")
+
+    elif action == "delete":
+        if exchange_request.status in [Status.REJECTED, Status.COMPLETED]:
+            exchange_request.delete()
+            messages.success(request, "신청이 삭제되었습니다.")
+        else:
+            messages.error(request, "삭제할 수 없는 상태입니다.")
+
+    return redirect('sent_exchange_requests')
