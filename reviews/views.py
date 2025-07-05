@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.http import HttpResponseForbidden
 from .models import Review
 from .forms import ReviewForm
+from django.db.models import Avg
+from django.utils.timezone import localtime, now
 from requests.models import ExchangeRequest, DonationRequest
 
 @login_required
@@ -82,3 +84,55 @@ def create_review(request, request_type, request_id):
     # 잘못된 request_type 처리
     else:
         return HttpResponseForbidden("잘못된 요청입니다.")
+
+# --- 받은/작성한 후기 목록, 평균 별점 ---
+@login_required
+def my_reviews_view(request):
+    user = request.user
+
+    # 내가 작성한 후기
+    written_reviews = Review.objects.filter(writer=user).order_by('-created_at')
+
+    # 내가 받은 후기
+    received_reviews = Review.objects.filter(receiver=user).order_by('-created_at')
+
+    # 받은 별점 평균
+    avg_rating = received_reviews.aggregate(avg=Avg('rating'))['avg']
+
+    # 작성일 -> "~일 전" 변환 함수
+    def days_ago_display(date):
+        delta = now().date() - date.date()
+        if delta.days == 0:
+            return "오늘"
+        elif delta.days == 1:
+            return "어제"
+        else:
+            return f"{delta.days}일 전"
+
+    written_reviews_formatted = [{
+        "review": review,
+        "days_ago": days_ago_display(localtime(review.created_at))
+    } for review in written_reviews]
+
+    received_reviews_formatted = [{
+        "review": review,
+        "days_ago": days_ago_display(localtime(review.created_at))
+    } for review in received_reviews]
+
+    return render(request, 'reviews/my_reviews.html', {
+        'written_reviews': written_reviews_formatted,
+        'received_reviews': received_reviews_formatted,
+        'avg_rating': round(avg_rating or 0, 1)
+    })
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
+
+    # 작성자 본인만 삭제 가능
+    if review.writer != request.user:
+        return HttpResponseForbidden("리뷰를 삭제할 권한이 없습니다.")
+
+    review.delete()
+    messages.success(request, "리뷰가 삭제되었습니다.")
+    return redirect('my_written_reviews')  # 혹은 적절한 리뷰 목록 url name으로 변경
