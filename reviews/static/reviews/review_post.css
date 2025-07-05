@@ -135,7 +135,7 @@ body {
 }
 
 .rating-label {
-  width: 12px;
+  width: 14px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -153,8 +153,8 @@ body {
 }
 
 .star-icon {
-  width: 12px;
-  height: 24px;
+  width: 14px;
+  height: 28px;
   display: block;
   position: relative;
   left: 0;
@@ -163,8 +163,8 @@ body {
 }
 
 .star-icon-filled {
-  width: 12px;
-  height: 24px;
+  width: 14px;
+  height: 28px;
   display: block;
   position: relative;
   left: 0;
