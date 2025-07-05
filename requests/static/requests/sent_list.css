@@ -1,0 +1,46 @@
+@import url(./received_list.css);
+
+.txt-btn {
+  color: #8a8a8a;
+  font-size: 14px;
+  font-weight: 600;
+  align-items: center;
+  padding: 5px 0;
+  background: none;
+}
+
+.waiting,
+.rejected,
+.trading,
+.completed {
+  width: 35%;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0;
+  border-radius: 8px;
+}
+
+.waiting {
+  background-color: #ffffff;
+  color: #8a8a8a;
+  border: 1px solid #bcbcbc;
+}
+
+.rejected {
+  border: 1px solid #bcbcbc;
+  color: #8a8a8a;
+  background-color: #eaeaea;
+}
+
+.trading {
+  background-color: var(--color-main);
+  color: #ffffff;
+}
+
+.completed {
+  background-color: var(--color-deep-main);
+  color: #ffffff;
+}
