@@ -5,8 +5,16 @@ from requests.models import DonationRequest, ExchangeRequest
 from posts.models import Item
 from requests.enums import Status
 from django.utils.timezone import localtime
+from django.contrib.auth.decorators import login_required
+from collections import defaultdict
+
+
+# ------------------------
+# 기존 신청 관련 뷰들
+# ------------------------
 
 # 나눔-받은 신청 목록 조회
+@login_required
 def received_donation_requests(request):
     member = request.user # 현재 로그인한 유저 
     my_items = Item.objects.filter(member=member) # 내가 올린 용품
@@ -18,6 +26,7 @@ def received_donation_requests(request):
 
 
 # 나눔-보낸 신청 목록 조회 
+@login_required
 def sent_donation_requests(request):
     member = request.user
     donation_requests = DonationRequest.objects.filter(member=member).order_by('-created_at')
@@ -27,6 +36,7 @@ def sent_donation_requests(request):
     })
 
 # 나눔-받은신청(거절처리)
+@login_required
 def reject_donation_request(request, request_id):
     donation_request = get_object_or_404(DonationRequest, pk=request_id)
 
@@ -40,6 +50,7 @@ def reject_donation_request(request, request_id):
     return redirect('received_donation_requests')
 
 # 나눔-보낸신청(삭제 or 취소 처리)
+@login_required
 def manage_sent_donation_request(request, request_id, action):
     donation_request = get_object_or_404(DonationRequest, pk=request_id)
 
@@ -68,6 +79,7 @@ def manage_sent_donation_request(request, request_id, action):
 
 
 # 교환-받은 신청 목록 조회
+@login_required
 def received_exchange_requests(request):
     member = request.user
     my_items = Item.objects.filter(member=member)
@@ -78,6 +90,7 @@ def received_exchange_requests(request):
     })
 
 # 교환-보낸 신청 목록 조회
+@login_required
 def sent_exchange_requests(request):
     member = request.user
     exchange_requests = ExchangeRequest.objects.filter(member=member).order_by('-created_at')
@@ -87,6 +100,7 @@ def sent_exchange_requests(request):
     })
 
 # 교환-받은신청(거절처리)
+@login_required
 def reject_exchange_request(request, request_id):
     exchange_request = get_object_or_404(ExchangeRequest, pk=request_id)
 
@@ -100,7 +114,7 @@ def reject_exchange_request(request, request_id):
     return redirect('received_exchange_requests')
 
 # 교환-보낸신청(취소/삭제)
-
+@login_required
 def manage_sent_exchange_request(request, request_id, action):
     exchange_request = get_object_or_404(ExchangeRequest, pk=request_id)
 
@@ -124,3 +138,73 @@ def manage_sent_exchange_request(request, request_id, action):
             messages.error(request, "삭제할 수 없는 상태입니다.")
 
     return redirect('sent_exchange_requests')
+
+# ------------------------
+# 마이페이지 - 교환/나눔 내역 조회 뷰
+# ------------------------
+
+@login_required
+def my_exchange_history(request):
+    member = request.user
+
+    # 받은 교환: 내가 올린 글에 대해 누군가와 교환 성사된 것
+    received = ExchangeRequest.objects.filter(
+        item_member=member,
+        status=Status.COMPLETED 
+    ).select_related('item', 'member')
+
+    # 보낸 교환: 내가 신청해서 성사된 교환
+    sent = ExchangeRequest.objects.filter(
+        member=member,
+        status=Status.COMPLETED
+    ).select_related('item', 'item_member')
+
+    # 날짜별 그룹핑
+    all_requests = list(received) + list(sent)
+    all_requests.sort(key=lambda r: r.updated_at, reverse=True)
+
+    grouped = defaultdict(list)
+    for req in all_requests:
+        date = localtime(req.updated_at).strftime("%Y.%m.%d")
+        grouped[date].append(req)
+
+    return render(request, 'requests/my_exchange_history.html', {
+        'grouped': grouped
+    })
+
+@login_required
+def my_sent_donations(request):
+    member = request.user
+
+    completed_requests = DonationRequest.objects.filter(
+        item__member=member,
+        status=Status.COMPLETED
+    ).select_related('item', 'member')
+
+    grouped = defaultdict(list)
+    for req in completed_requests:
+        date = localtime(req.updated_at).strftime("%Y.%m.%d")
+        grouped[date].append(req)
+
+    return render(request, 'requests/my_sent_donations.html', {
+        'grouped': grouped
+    })
+
+
+@login_required
+def my_received_donations(request):
+    member = request.user
+
+    completed_requests = DonationRequest.objects.filter(
+        member=member,
+        status=Status.COMPLETED
+    ).select_related('item', 'item__member')
+
+    grouped = defaultdict(list)
+    for req in completed_requests:
+        date = localtime(req.updated_at).strftime("%Y.%m.%d")
+        grouped[date].append(req)
+
+    return render(request, 'requests/my_received_donations.html', {
+        'grouped': grouped
+    })

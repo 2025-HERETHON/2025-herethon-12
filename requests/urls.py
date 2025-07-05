@@ -17,4 +17,9 @@ urlpatterns = [
     path('exchange/sent/', views.sent_exchange_requests, name='sent_exchange_requests'),
     path('exchange/reject/<int:request_id>/', views.reject_exchange_request, name='reject_exchange_request'),
     path('exchange/sent/<int:request_id>/<str:action>/', views.manage_sent_exchange_request, name='manage_sent_exchange_request'),
+
+    path('mypage/exchanges/', views.my_exchange_history, name='my_exchange_history'),
+    path('mypage/donations/sent', views.my_sent_donations, name='my_sent_donations'),
+    path('mypage/donations/received', views.my_received_donations, name='my_received_donations'),
+
 ]

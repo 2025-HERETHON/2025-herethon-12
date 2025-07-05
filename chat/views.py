@@ -6,9 +6,10 @@ from requests.models import DonationRequest, ExchangeRequest
 from requests.enums import Status
 from .forms import MessageForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # 1. 쪽지방 생성
-
+@login_required
 def start_chat(request, request_type, request_id):
     if request_type == "donation":
         donation = get_object_or_404(DonationRequest, pk=request_id)
@@ -23,7 +24,7 @@ def start_chat(request, request_type, request_id):
 
 
 # 2. 쪽지방 목록 조회
-
+@login_required
 def thread_list(request):
     # 현재 로그인한 사용자와 관련된 쪽지방들을 조회
     member = request.user
@@ -37,7 +38,7 @@ def thread_list(request):
 
 
 # 3. 쪽지방 상세 채팅 화면
-
+@login_required
 def chat_room(request, thread_id):
     #특정 쪽지방 안의 메시지들을 시간순으로 불러옴
     thread = get_object_or_404(Thread, pk=thread_id)
@@ -56,7 +57,7 @@ def chat_room(request, thread_id):
 
 
 # 4. 메시지 전송
-
+@login_required
 def send_message(request, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id)
 
@@ -74,7 +75,7 @@ def send_message(request, thread_id):
     return redirect('chat_room', thread_id=thread_id)
 
 # 5. 거래 완료 처리
-
+@login_required
 def complete_trade(request, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id)
 

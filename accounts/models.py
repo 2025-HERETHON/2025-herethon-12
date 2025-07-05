@@ -11,6 +11,5 @@ class Member(AbstractUser):
     region_district = models.CharField(max_length=15)
     #is_verified = models.BooleanField(default=False)
     star = models.FloatField(default=0)
-    image_url = models.CharField(max_length=50, null=True, blank=True)
-    #objects = MemberManager()
+    image = models.ImageField(upload_to='profile_images/', null=True, blank=True)    #objects = MemberManager()
     #USERNAME_FIELD = 'username'
