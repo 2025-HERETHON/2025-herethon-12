@@ -10,7 +10,7 @@ button {
 }
 
 .splash-screen {
-  background-color: #e3f0ff;
+  background-color: #e0f8ff;
   position: fixed;
   top: 0;
   left: 0;
@@ -66,12 +66,12 @@ input {
 }
 
 #login {
-  background-color: var(--color-blue);
+  background-color: var(--color-main);
   color: #ffffff;
 }
 
 #login:active {
-  background-color: var(--color-deep-blue);
+  background-color: var(--color-deep-main);
 }
 
 #kakao {
@@ -81,6 +81,11 @@ input {
   gap: 10px;
   background-color: #ffee00;
   margin: 7px 0;
+}
+
+.message {
+  color: var(--color-red);
+  font-size: 11px;
 }
 
 a {

@@ -68,7 +68,7 @@ body {
 }
 
 .photo-select {
-  background-color: var(--color-blue);
+  background-color: var(--color-main);
   width: 60px;
   height: 60px;
   border: 1px dashed #ffffff;
@@ -216,11 +216,11 @@ body {
   background-color: #ffffff;
   font-size: 17px;
   font-weight: 600;
-  color: var(--color-blue);
+  color: var(--color-main);
 }
 
 input[type="radio"]:checked + label {
-  background-color: var(--color-blue);
+  background-color: var(--color-main);
   color: #ffffff;
 }
 
@@ -240,4 +240,3 @@ input[type="radio"]:checked + label {
 .submit-btn {
   box-shadow: 3px 4px 20px 8px rgba(0, 0, 0, 0.16);
 }
-
