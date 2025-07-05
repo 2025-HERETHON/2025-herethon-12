@@ -19,7 +19,7 @@ def login_page(request):
             login(request, user)
             return redirect("home")
         else:
-            messages.error(request, "아이디 또는 비밀번호가 틀렸습니다.")
+            messages.error(request, "아이디 또는 비밀번호를 다시 확인해주세요.")
             #id만 다시 채워주기
             return render(request, "accounts/login.html", {
                 "username": username,
@@ -40,9 +40,9 @@ def signup_page(request):
         #아이디 중복 확인
         if action == "check_id":
             if User.objects.filter(username=username).exists():
-                messages.error(request, "중복된 아이디")
+                messages.error(request, "이미 사용하고 있는 아이디입니다.")
             else:
-                messages.success(request, "사용 가능")
+                messages.success(request, "사용하실 수 있는 아이디입니다.")
             #작성해놨던 아이디, 닉네임 다시 채워주기
             return render(request, "accounts/signup.html", {
                 "username": username,

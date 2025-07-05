@@ -6,6 +6,8 @@ const passwordCheck = document.getElementById("password-check");
 const passwordCheckErr = document.getElementById("password-check-err");
 const nickname = document.getElementById("nickname");
 const nicknameErr = document.getElementById("nickname-err");
+const msg = document.querySelector(".message");
+const usernameDesc = document.getElementById("username-desc");
 
 function validUsername() {
   const regex = /^[a-z\d]{4,12}$/;
@@ -72,7 +74,22 @@ function restoreRequired() {
   document.getElementById("password").setAttribute("required", "true");
   document.getElementById("password-check").setAttribute("required", "true");
   document.getElementById("nickname").setAttribute("required", "true");
+  usernameDesc.classList.remove("hidden");
+  msg.classList.add("hidden");
 }
+
+// 중복 확인 후 아이디 입력창 테두리 색 변경
+window.addEventListener("DOMContentLoaded", () => {
+  if (!msg) return;
+
+  if (msg.classList.contains("error")) {
+    username.style.borderColor = "var(--color-red)";
+    usernameDesc.classList.add("hidden");
+  } else if (msg.classList.contains("success")) {
+    username.style.borderColor = "#4EC789";
+    usernameDesc.classList.add("hidden");
+  }
+})
 
 username.addEventListener("input", validUsername);
 password.addEventListener("input", validPassword);

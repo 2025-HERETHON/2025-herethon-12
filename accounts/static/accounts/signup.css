@@ -80,7 +80,8 @@ input {
 }
 
 .description,
-.error-msg {
+.error-msg,
+.message {
   font-weight: 300;
   font-size: 12px;
   align-self: flex-start;
@@ -90,8 +91,12 @@ input {
   color: #8a8a8a;
 }
 
-.error-msg {
+.error-msg, .error {
   color: var(--color-red);
+}
+
+.success {
+  color: #4EC789;
 }
 
 .button-wrapper {

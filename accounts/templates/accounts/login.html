@@ -20,10 +20,7 @@
 <!--        src="/accounts/static/accounts/images/splash-logo.svg"-->
 <!--        alt="스플래시 로고"-->
 <!--      />-->
-      <img
-        src="{% static 'accounts/images/logo.svg' %}"
-        alt="스플래시 로고"
-      />
+      <img src="{% static 'accounts/images/splash-logo.svg' %}" alt="스플래시 로고" />
     </div>
 
     <div class="main-container">
@@ -31,7 +28,7 @@
       <img src="{% static 'accounts/images/logo.svg' %}" alt="로고" />
       <!-- 70px -->
       <form method="post" action="{% url 'login' %}">
-          {% csrf_token %}
+        {% csrf_token %}
         <input
           type="text"
           id="username"
@@ -51,14 +48,12 @@
           maxlength="20"
           required
         />
-          <!--  로그인 결과 출력  -->
-          {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <div class="message {{ message.tags }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-          {% endif %}
+    <!--  로그인 결과 출력  -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
         <button id="login">로그인</button>
         <button id="kakao" type="button">
 <!--          <img-->

@@ -83,6 +83,11 @@ input {
   margin: 7px 0;
 }
 
+.message {
+  color: var(--color-red);
+  font-size: 11px;
+}
+
 a {
   color: #6e6e6e;
   font-size: 17px;
