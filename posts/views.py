@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import Item
+from .models import Item, ItemImage
 from .enums import Category, TradeType, Condition, RecommendedAge
 
 #enum 매핑
@@ -55,6 +55,7 @@ def post_add(request):
         condition = CONDITION_MAP.get(condition_text)
         age = AGE_MAP.get(age_text)
 
+        #게시글 저장
         item = Item.objects.create(
             title=title,
             description=description,
@@ -65,6 +66,15 @@ def post_add(request):
             age=age,
             member=request.user,
         )
+
+        #이미지 저장
+        images = request.FILES.getlist("photos")
+        for idx, image in enumerate(images):
+            ItemImage.objects.create(
+                item=item,
+                image=image,            
+                image_order=idx + 1      #업로드 순서 저장 (수정 로직 추가 필요)
+            )
 
         return redirect("/")
 
