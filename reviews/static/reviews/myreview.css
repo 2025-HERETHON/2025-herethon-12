@@ -93,7 +93,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-blue);
+  background-color: var(--color-main);
   color: #fff;
   border-radius: 8px;
   padding: 4px 8px;
@@ -118,7 +118,7 @@
   align-items: flex-start;
   border-radius: 8px;
   padding: 12px;
-  margin-bottom: 10px;  
+  margin-bottom: 10px;
   border-top: 1px solid #d9d9d9;
 }
 
@@ -187,7 +187,7 @@
 .bottom-nav nav li {
   text-align: center;
   font-size: 11px;
-  color: var(--color-light-blue);
+  color: var(--color-light-main);
 }
 
 .bottom-nav nav li img {
@@ -197,5 +197,5 @@
 }
 
 .bottom-nav nav .active {
-  color: var(--color-deep-blue);
+  color: var(--color-deep-main);
 }

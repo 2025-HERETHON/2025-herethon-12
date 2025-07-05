@@ -64,12 +64,12 @@ input {
 }
 
 .search-btn {
-  background-color: var(--color-blue);
+  background-color: var(--color-main);
   color: #ffffff;
 }
 
 .search-btn:active {
-  background-color: var(--color-deep-blue);
+  background-color: var(--color-deep-main);
 }
 
 .result-container {
@@ -95,7 +95,7 @@ li > button {
 }
 
 li > button:active {
-  color: #2b77d3;
+  color: #2b97b5;
 }
 
 .submit-btn {
