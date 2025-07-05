@@ -1,0 +1,147 @@
+/* ===== 헤더 ===== */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 16px 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.back-btn {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 23px;
+    height: 13px;
+}
+
+.back-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ===== 날짜 ===== */
+.date-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    margin: 12px 16px 12px;
+}
+
+/* ===== 아이템 카드 ===== */
+.item-card {
+    display: flex;
+    padding: 12px 16px;
+    gap: 12px;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    position: relative;
+}
+
+.item-img {
+    width: 108px;
+    height: 101px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.item-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    color: #000;
+}
+
+.item-people {
+    font-size: 10px;
+    color: var(--color-gray);
+    margin: 2px 0;
+}
+
+.item-people .who {
+    color: var(--color-blue);
+    font-weight: 600;
+}
+
+.item-detail {
+    font-size: 12px;
+    color: #8a8a8a;
+    margin: 4px 0 8px;
+    line-height: 100%;
+    font-weight: 400;
+}
+
+.review-btn {
+    width: 95px;
+    height: 27px;
+    font-size: 12px;
+    background-color: var(--color-blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 100%;
+    cursor: pointer;
+    margin-left: auto;
+    display: block;
+}
+
+.review-btn:active {
+    background-color: var(--color-deep-blue);
+}
+
+/* ===== 하단 네비게이션 ===== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    /* 가운데 정렬 */
+    width: 100%;
+    max-width: 430px;
+    /* 📌 main-container와 동일하게 */
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+    z-index: 10;
+}
+
+.bottom-nav ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.bottom-nav li {
+    text-align: center;
+    font-size: 9px;
+    color: var(--color-gray);
+    padding: 6px 2px 2px 0;
+}
+
+.bottom-nav li img {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 2px;
+}
+
+.bottom-nav li:last-child {
+    color: var(--color-deep-blue);
+}
