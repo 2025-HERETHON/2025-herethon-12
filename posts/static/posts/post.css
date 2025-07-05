@@ -76,6 +76,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 #photo-input,
@@ -86,6 +87,7 @@ body {
 
 #photo-input-label img {
   margin: 5px 0;
+  cursor: pointer;
 }
 
 .photo-input-status {
@@ -95,12 +97,33 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
-.photo-preview {
+.photo-slot {
+  position: relative;
   width: 60px;
   height: 60px;
   border-radius: 8px;
+}
+
+.photo-preview,
+.photo-preview-unknown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.photo-preview img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+}
+
+.photo-preview-unknown {
   display: flex;
   justify-content: center;
   align-items: center;
