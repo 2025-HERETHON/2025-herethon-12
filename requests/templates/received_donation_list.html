@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dearbebe</title>
+    <link rel="stylesheet" href="/requests/static/requests/common.css" />
+    <link rel="stylesheet" href="/requests/static/requests/received_list.css" />
+    <script defer src="/requests/static/requests/js/received_list.js"></script>
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- 신청 거절 모달 -->
+      <div class="reject-modal hidden">
+        <p>거절하시겠습니까?</p>
+        <div class="x-divide"></div>
+        <form method="POST" action="">
+          <button type="button" id="cancel">취소</button>
+          <div class="y-divide"></div>
+          <button type="submit" id="ok">확인</button>
+          <!-- 거절 시 받은 신청란에서 사라짐 -->
+        </form>
+      </div>
+      <div class="darken hidden"></div>
+
+      <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+          <div class="header-title">신청 관리</div>
+        </div>
+        <!-- 받은 신청 보낸 신청-->
+        <div class="mini-header">
+          <div class="request-radio">
+            <a href="#" class="marked">받은 신청</a>
+            <a href="./sent_donation_list.html">보낸 신청</a>
+          </div>
+          <div class="mini-dropdown">
+            <div class="selected">
+              <p>나눔</p>
+              <img
+                src="/requests/static/requests/images/down-icon-white.svg"
+                alt="드롭다운 버튼"
+              />
+            </div>
+            <div class="options hidden">
+              <a href="#" class="item">나눔</a>
+              <a href="./received_exchange_list.html" class="item">교환</a>
+            </div>
+          </div>
+        </div>
+        <!-- 날짜에 따른 신청들 구분 -->
+        <div class="requests-container">
+          <div class="date">6/30</div>
+          <!-- 각 신청 -->
+          <div class="r-container">
+            <div class="top-wrapper">
+              <div class="text-container">
+                <div class="profile-bar">
+                  <img
+                    src="/requests/static/requests/images/default_profile.png"
+                    alt="기본 프로필 사진"
+                  />
+                  <!-- 프로필 사진이 있다면 <img ... / >-->
+                  <div class="profile">
+                    <!-- 닉네임, 시간, 위치 -->
+                    <div class="nickname-time">
+                      <div class="nickname">닉네임</div>
+                      <div class="time">13:20</div>
+                    </div>
+                    <div class="region">
+                      <img
+                        src="/requests/static/requests/images/place.svg"
+                        alt="위치 아이콘"
+                      />
+                      <p>상계동</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="title">미끄럼 방지 여아 신발</div>
+                <!-- 거래 희망 장소 -->
+                <div class="place">
+                  <div class="dot"></div>
+                  <p>상계동 하나로 마트 앞</p>
+                </div>
+              </div>
+              <!-- 썸네일 -->
+              <div class="image-container">
+                <img
+                  src="/requests/static/requests/images/sample-img.png"
+                  alt="상품 이미지"
+                />
+              </div>
+            </div>
+            <div class="description">
+              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
+              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
+            </div>
+            <!-- 쪽지 버튼, 거절 버튼 -->
+            <div class="button-wrapper">
+              <a href="" class="send-message">쪽지하기</a>
+              <button class="reject">거절</button>
+            </div>
+          </div>
+          <!-- 각 신청 -->
+          <div class="r-container">
+            <div class="top-wrapper">
+              <div class="text-container">
+                <div class="profile-bar">
+                  <img
+                    src="/requests/static/requests/images/default_profile.png"
+                    alt="기본 프로필 사진"
+                  />
+                  <!-- 프로필 사진이 있다면 <img ... / >-->
+                  <div class="profile">
+                    <!-- 닉네임, 시간, 위치 -->
+                    <div class="nickname-time">
+                      <div class="nickname">닉네임</div>
+                      <div class="time">13:20</div>
+                    </div>
+                    <div class="region">
+                      <img
+                        src="/requests/static/requests/images/place.svg"
+                        alt="위치 아이콘"
+                      />
+                      <p>상계동</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="title">미끄럼 방지 여아 신발</div>
+                <!-- 거래 희망 장소 -->
+                <div class="place">
+                  <div class="dot"></div>
+                  <p>상계동 하나로 마트 앞</p>
+                </div>
+              </div>
+              <!-- 썸네일 -->
+              <div class="image-container">
+                <img
+                  src="/requests/static/requests/images/sample-img.png"
+                  alt="상품 이미지"
+                />
+              </div>
+            </div>
+            <div class="description">
+              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
+              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
+            </div>
+            <!-- 쪽지 버튼, 거절 버튼 -->
+            <div class="button-wrapper">
+              <a href="" class="send-message">쪽지하기</a>
+              <button class="reject">거절</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 날짜에 따른 신청들 구분 -->
+        <div class="requests-container">
+          <div class="date">7/1</div>
+          <!-- 각 신청 -->
+          <div class="r-container">
+            <div class="top-wrapper">
+              <div class="text-container">
+                <div class="profile-bar">
+                  <img
+                    src="/requests/static/requests/images/default_profile.png"
+                    alt="기본 프로필 사진"
+                  />
+                  <!-- 프로필 사진이 있다면 <img ... / >-->
+                  <div class="profile">
+                    <!-- 닉네임, 시간, 위치 -->
+                    <div class="nickname-time">
+                      <div class="nickname">닉네임</div>
+                      <div class="time">13:20</div>
+                    </div>
+                    <div class="region">
+                      <img
+                        src="/requests/static/requests/images/place.svg"
+                        alt="위치 아이콘"
+                      />
+                      <p>상계동</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="title">미끄럼 방지 여아 신발</div>
+                <!-- 거래 희망 장소 -->
+                <div class="place">
+                  <div class="dot"></div>
+                  <p>상계동 하나로 마트 앞</p>
+                </div>
+              </div>
+              <!-- 썸네일 -->
+              <div class="image-container">
+                <img
+                  src="/requests/static/requests/images/sample-img.png"
+                  alt="상품 이미지"
+                />
+              </div>
+            </div>
+            <div class="description">
+              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
+              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
+            </div>
+            <!-- 쪽지 버튼, 거절 버튼 -->
+            <div class="button-wrapper">
+              <a href="" class="send-message">쪽지하기</a>
+              <button class="reject">거절</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 하단 네비게이션 -->
+        <footer class="bottom-nav">
+          <nav>
+            <ul>
+              <li>
+                <img src="/requests/static/requests/images/home.svg" alt="" />홈
+              </li>
+              <li>
+                <img
+                  src="/requests/static/requests/images/message.svg"
+                  alt=""
+                />쪽지
+              </li>
+              <li class="active">
+                <img
+                  src="/requests/static/requests/images/form-active.svg"
+                  alt=""
+                />신청 관리
+              </li>
+              <li>
+                <img
+                  src="/requests/static/requests/images/my.svg"
+                  alt=""
+                />마이페이지
+              </li>
+            </ul>
+          </nav>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
