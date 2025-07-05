@@ -10,6 +10,10 @@ const msg = document.querySelector(".message");
 const usernameDesc = document.getElementById("username-desc");
 
 function validUsername() {
+  if (msg) {
+    msg.classList.add("hidden")
+  }
+
   const regex = /^[a-z\d]{4,12}$/;
   if (!regex.test(username.value)) {
     username.style.borderColor = "var(--color-red)";
