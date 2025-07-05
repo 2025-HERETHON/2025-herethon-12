@@ -23,13 +23,14 @@
         <div class="header-title">글쓰기</div>
         <p></p>
       </div>
-      <form method="POST" action="" class="main-form">
+      <form method="POST" action="" class="main-form" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="photo-container">
           <div class="photo-title">사진</div>
           <div class="photo-box">
             <div class="photo-select">
               <label for="photo-input" id="photo-input-label">
-                <input type="file" accept="image/*" id="photo-input" multiple />
+                <input type="file" accept="image/*" id="photo-input" name="photos" multiple />
                 <img src="{% static 'posts/images/add.svg' %}" alt="사진 추가" />
 <!--                <img src="/posts/static/posts/images/add.svg" alt="사진 추가" />-->
                 <div class="photo-input-status">0/3</div>

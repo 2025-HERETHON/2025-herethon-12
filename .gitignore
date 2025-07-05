@@ -195,3 +195,5 @@ migrations/
 .cursorindexingignore
 
 .env
+
+media/
