@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
+from django.http import JsonResponse
+from accounts.models import Member
 
 #로그인
 def login_page(request):
@@ -69,3 +73,29 @@ def signup_page(request):
             return redirect("login")
 
     return render(request, "accounts/signup.html")
+
+# accounts/views.py
+@login_required
+def my_page(request):
+    return render(request, 'accounts/mypage.html', {'member': request.user})
+
+@login_required
+def edit_profile(request):
+    member = request.user
+    if request.method == 'POST':
+        nickname = request.POST.get('nickname')
+        profile_image = request.FILES.get('profile_image')
+
+        member.nickname = nickname
+        if profile_image:
+            member.profile_image = profile_image
+        member.save()
+        return redirect('my_page')
+
+    return render(request, 'accounts/edit_profile.html', {'member': member})
+
+@require_GET
+def check_id_duplicate(request):
+    username = request.GET.get('username')
+    exists = Member.objects.filter(username=username).exists()
+    return JsonResponse({'exists': exists})
