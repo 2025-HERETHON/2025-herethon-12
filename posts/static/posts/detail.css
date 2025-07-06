@@ -23,7 +23,7 @@ body {
   background-color: #ffffff;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   display: grid;
   grid-template-rows: 1.4fr 1px 1fr;
   border-radius: 8px;
@@ -199,6 +199,7 @@ body {
 .profile-bar img {
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 }
 
 .profile {
