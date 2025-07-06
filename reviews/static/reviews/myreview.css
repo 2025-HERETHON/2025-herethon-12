@@ -58,7 +58,11 @@
 .rating {
   display: flex;
 }
-
+.user-rating .rating-total {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
 .rating-label {
   width: 12px;
   overflow: hidden;
@@ -104,7 +108,11 @@
     padding: 0 16px 80px;
     /* 하단 nav 고려 */
 }
-
+.review-section h3{
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0px;
+}
 .review-header {
     display: flex;
     justify-content: space-between;
