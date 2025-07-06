@@ -7,6 +7,7 @@ from requests.enums import Status
 from django.utils.timezone import localtime
 from django.contrib.auth.decorators import login_required
 from collections import defaultdict
+from reviews.models import Review
 
 
 # ------------------------
@@ -147,9 +148,9 @@ def manage_sent_exchange_request(request, request_id, action):
 def my_exchange_history(request):
     member = request.user
 
-    # 받은 교환: 내가 올린 글에 대해 누군가와 교환 성사된 것
+    # 받은 교환: 내가 올린 글에 대해 누군가 신청한 교환 성사된 것
     received = ExchangeRequest.objects.filter(
-        item_member=member,
+        item__member=member,
         status=Status.COMPLETED 
     ).select_related('item', 'member')
 
@@ -157,7 +158,11 @@ def my_exchange_history(request):
     sent = ExchangeRequest.objects.filter(
         member=member,
         status=Status.COMPLETED
-    ).select_related('item', 'item_member')
+    ).select_related('item', 'item__member')
+
+    # 리뷰 작성 여부 설정
+    for req in list(received) + list(sent):
+        req.review_written = Review.objects.filter(exchange_request=req, writer=member).exists()
 
     # 날짜별 그룹핑
     all_requests = list(received) + list(sent)
@@ -199,6 +204,9 @@ def my_received_donations(request):
         member=member,
         status=Status.COMPLETED
     ).select_related('item', 'item__member')
+
+    for req in completed_requests:
+        req.review_written = Review.objects.filter(donation_request=req, writer=member).exists()
 
     grouped = defaultdict(list)
     for req in completed_requests:

@@ -1,12 +1,16 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/posts/static/posts/common.css" />
+    <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'posts/post.css' %}" />
+    <script defer src="{% static 'posts/js/post.js' %}"></script>
+    <!-- <link rel="stylesheet" href="/posts/static/posts/common.css" />
     <link rel="stylesheet" href="/posts/static/posts/exchange_free.css" />
-    <script defer src="/posts/static/posts/js/free.js"></script>
+    <script defer src="/posts/static/posts/js/free.js"></script> -->
   </head>
   <body>
     <div class="main-container">
@@ -19,7 +23,7 @@
 
       <div class="header">
         <a href="" class="back-btn">
-          <img src="/posts/static/posts/images/back.svg" alt="뒤로가기" />
+          <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
         </a>
         <div class="header-title">나눔 신청</div>
         <p></p>

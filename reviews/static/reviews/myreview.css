@@ -216,33 +216,51 @@
     cursor: pointer;
 }
 
-/* === 하단 네비게이션 === */
+/* ===== 하단 네비게이션 ===== */
 .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 430px;
-    background-color: #fff;
-    border-top: 1px solid #ddd;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%); /* 가운데 정렬 */
+  width: 100%;
+  max-width: 430px; /* 📌 main-container와 동일하게 */
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  z-index: 10;
 }
 
-.bottom-nav nav ul {
-    display: flex;
-    justify-content: space-around;
-    padding: 8px 0;
+.bottom-nav nav ul,
+.bottom-nav ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0;
 }
 
-.bottom-nav nav li {
-    text-align: center;
-    font-size: 11px;
-    color: var(--color-light-main);
+.bottom-nav nav li,
+.bottom-nav li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-light-main);
+  cursor: pointer;
 }
 
-.bottom-nav nav li img {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 4px;
+.bottom-nav nav li img,
+.bottom-nav li img {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 4px;
 }
+
+.bottom-nav nav .active {
+  color: var(--color-deep-main);
+}
+
 
 .bottom-nav nav .active {
     color: var(--color-deep-main);

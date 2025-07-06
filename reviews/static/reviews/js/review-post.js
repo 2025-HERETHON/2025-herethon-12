@@ -7,6 +7,9 @@ const stars = document.querySelectorAll(".star-icon");
 const desc = document.getElementById("description");
 const descErr = document.getElementById("desc-err");
 const photoInput = document.getElementById("photo-input");
+const photoStatus = document.querySelector(".photo-input-status");
+const preview = document.querySelector(".photo-preview");
+const unknown = document.querySelector(".photo-preview-unknown");
 const darken = document.querySelector(".darken");
 const modal = document.querySelector(".modal");
 
@@ -34,6 +37,23 @@ function initStars() {
   for (let i = 0; i < stars.length; i++) {
     stars[i].classList.remove("star-icon-filled");
   }
+}
+
+// 사진 미리보기 함수
+function renderPreview(photo) {
+  // 초기화
+  preview.classList.add("hidden");
+  unknown.classList.remove("hidden");
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const previewImg = preview.querySelector("img");
+    previewImg.src = e.target.result;
+
+    preview.classList.remove("hidden");
+    unknown.classList.add("hidden");
+  };
+  reader.readAsDataURL(photo);
 }
 
 // hover시 별 채워진 걸로 보임
@@ -74,6 +94,11 @@ photoInput.addEventListener("change", () => {
     photoInput.value = "";
     return;
   }
+
+  // 사진 첨부 버튼 숫자 변경
+  photoStatus.textContent = `${photos.length}/1`;
+  // 사진 미리보기
+  renderPreview(photos[0]);
 });
 
 mainForm.addEventListener("submit", (e) => {

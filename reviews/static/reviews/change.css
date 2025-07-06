@@ -116,7 +116,6 @@
   width: 100%;
   max-width: 430px;
   /* 📌 main-container와 동일하게 */
-  border-top: 1px solid #ddd;
   background-color: #fff;
   z-index: 10;
 }
@@ -125,23 +124,26 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 0;
-  padding: 0;
+  padding: 8px 0;
 }
 
 .bottom-nav li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   text-align: center;
-  font-size: 9px;
-  color: var(--color-gray);
-  padding: 6px 2px 2px 0;
+  font-size: 11px;
+  color: var(--color-light-main);
+  cursor: pointer;
 }
 
 .bottom-nav li img {
-  width: 28px;
-  height: 28px;
-  margin-bottom: 2px;
+  width: 30px;
+  height: 30px;
 }
 
-.bottom-nav li:last-child {
+.bottom-nav nav .active {
   color: var(--color-deep-main);
 }

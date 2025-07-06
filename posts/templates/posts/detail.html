@@ -1,12 +1,16 @@
-a<!DOCTYPE html>
+<!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/posts/static/posts/common.css" />
+    <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'posts/detail.css' %}" />
+    <script defer src="{% static 'posts/js/detail.js' %}"></script>
+    <!-- <link rel="stylesheet" href="/posts/static/posts/common.css" />
     <link rel="stylesheet" href="/posts/static/posts/detail.css" />
-    <script defer src="/posts/static/posts/js/detail.js"></script>
+    <script defer src="/posts/static/posts/js/detail.js"></script> -->
   </head>
   <body>
     <div class="main-container">
@@ -24,11 +28,11 @@ a<!DOCTYPE html>
 
       <div class="header">
         <a href="" class="back-btn">
-          <img src="/posts/static/posts/images/back.svg" alt="뒤로가기" />
+          <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
         </a>
         <div class="header-title">게시글</div>
         <button class="more-btn">
-          <img src="/posts/static/posts/images/more.svg" alt="더보기" />
+          <img src="{% static 'posts/images/more.svg' %}" alt="더보기" />
         </button>
 
         <!-- 수정 삭제 드롭다운 -->
@@ -43,15 +47,15 @@ a<!DOCTYPE html>
         <div class="img-container">
           <div class="img-box">
             <img
-              src="/posts/static/posts/images/sample-img1.png"
+              src="{% static 'posts/images/sample-img1.png' %}"
               alt="제품 사진1"
             />
             <img
-              src="/posts/static/posts/images/sample-img2.png"
+              src="{% static 'posts/images/sample-img2.png' %}"
               alt="제품 사진2"
             />
             <img
-              src="/posts/static/posts/images/sample-img3.png"
+              src="{% static 'posts/images/sample-img3.png' %}"
               alt="제품 사진3"
             />
           </div>
@@ -65,7 +69,7 @@ a<!DOCTYPE html>
         <div class="text-container">
           <div class="profile-bar">
             <img
-              src="/posts/static/posts/images/default_profile.png"
+              src="{% static 'posts/images/default_profile.png' %}"
               alt="기본 프로필 사진"
             />
             <div class="profile">
@@ -79,8 +83,13 @@ a<!DOCTYPE html>
             <!-- <div class="type exchange-type">교환</div> -->
             <div class="time">07/01 13:20</div>
           </div>
-          <div class="place-status-age">
-            거래 희망 장소 / 제품 상태 / 추천 월령
+          <div class="place place-condition-age">
+            <div class="dot"></div>
+            <span id="place">상계동 하나로 마트 앞</span>
+            <span>/</span>
+            <span id="condition">상태 양호</span>
+            <span>/</span>
+            <span id="age">7-8세 추천</span>
           </div>
           <div class="description">
             간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
