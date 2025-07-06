@@ -71,12 +71,15 @@
               alt="프로필"
             />
             <div class="review-content">
+              <!-- 나중에 별점 받아서 별 모양으로 나타내려면 후기 작성창 별점처럼 수정 필요 -->
               <div class="stars">
+                <!-- 별들 다 쪼개놔야 할 듯-->
                 <img src="/reviews/static/reviews/images/star-full.svg" />
                 <img src="/reviews/static/reviews/images/star-full.svg" />
                 <img src="/reviews/static/reviews/images/star-full.svg" />
                 <img src="/reviews/static/reviews/images/star-full.svg" />
                 <img src="/reviews/static/reviews/images/star-full.svg" />
+                <!-- 여기에 별점 평균 변수로 받고, js로 별 표시 구현 -->
                 <span class="score">4.5</span>
               </div>
               <p class="review-text">
@@ -128,28 +131,23 @@
         <nav>
           <ul>
             <li>
-              <img
-                src="/reviews/static/reviews/images/home.svg"
-                alt=""
-              /><br />홈
+              <img src="/reviews/static/reviews/images/home.svg" alt="" />홈
             </li>
             <li>
               <img
                 src="/reviews/static/reviews/images/message.svg"
                 alt=""
-              /><br />쪽지
+              />쪽지
             </li>
             <li>
-              <img
-                src="/reviews/static/reviews/images/form.svg"
-                alt=""
-              /><br />신청 관리
+              <img src="/reviews/static/reviews/images/form.svg" alt="" />신청
+              관리
             </li>
             <li class="active">
               <img
                 src="/reviews/static/reviews/images/my-active.svg"
                 alt=""
-              /><br />마이페이지
+              />마이페이지
             </li>
           </ul>
         </nav>
