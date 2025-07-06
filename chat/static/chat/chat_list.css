@@ -1,0 +1,99 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #BCBCBC;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px 0px;
+}
+
+.chat_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 7px 15px;
+  border-bottom: 1px solid #BCBCBC;
+  position: relative;
+}
+
+.review-profile {
+  width: 45px;
+  height: 45px;
+  margin-right: 12px;
+}
+
+.chat-content {
+  flex: 1;
+}
+
+.chat-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.chat-start {
+  font-size: 13px;
+  color: #8A8A8A;
+  margin-top: 10px;
+}
+
+.time {
+  font-size: 10px;
+  color: #aaa;
+  position: absolute;
+  right: 30px;
+  top: 15px;
+}
+
+/* ===== 하단 네비게이션 ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  /* 가운데 정렬 */
+  width: 100%;
+  max-width: 430px;
+  /* 📌 main-container와 동일하게 */
+  background-color: #fff;
+  z-index: 10;
+}
+
+.bottom-nav ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.bottom-nav li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-light-main);
+  cursor: pointer;
+}
+
+.bottom-nav li img {
+  width: 30px;
+  height: 30px;
+}
+
+.bottom-nav nav .active {
+  color: var(--color-deep-main);
+}
