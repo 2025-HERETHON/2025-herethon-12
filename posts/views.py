@@ -64,6 +64,9 @@ def post_add(request):
             trade_type=trade_type,
             condition=condition,
             age=age,
+            region_city=request.user.region_city,
+            region_district=request.user.region_district,
+            region_dong=request.user.region_dong,
             member=request.user,
         )
 
@@ -73,7 +76,7 @@ def post_add(request):
             ItemImage.objects.create(
                 item=item,
                 image=image,            
-                image_order=idx + 1      #업로드 순서 저장 (수정 로직 추가 필요)
+                image_order=idx + 1  #업로드 순서 저장 (수정 로직 추가 필요)
             )
 
         return redirect("/")
