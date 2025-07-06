@@ -1,171 +1,219 @@
 /* === 헤더 === */
 .header {
-  display: flex;
-  align-items: center;
-  padding: 12px 16px;
-  position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    position: relative;
 }
 
 .back-btn {
-  background: none;
-  padding: 0;
+    background: none;
+    padding: 0;
 }
 
 .page-title {
-  flex-grow: 1;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
+    flex-grow: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 /* === 유저 정보 카드 === */
 .user-summary {
-  padding: 16px;
+    padding: 16px;
 }
 
 .user-card {
-  display: flex;
-  align-items: center;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
 }
 
 .profile-img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  margin-right: 12px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 12px;
 }
 
 .user-info .username {
-  font-weight: 600;
-  font-size: 14px;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .user-info .user-id {
-  font-size: 12px;
-  color: var(--color-gray);
-  margin-top: 4px;
+    font-size: 12px;
+    color: var(--color-gray);
+    margin-top: 4px;
 }
 
 .user-rating p {
-  font-size: 14px;
-  margin: 8px 0;
+    font-size: 14px;
+    margin: 8px 0;
 }
 
-.star-rating {
+.rating {
   display: flex;
-  align-items: center;
-  gap: 4px;
+}
+.user-rating .rating-total {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.rating-label {
+  width: 12px;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.star-rating img {
-  width: 20px;
-  height: 20px;
+.rating label:nth-child(odd) .star-icon {
+  background-position: left;
 }
 
-.star-rating .score {
-  margin-left: 6px;
-  font-size: 14px;
-  color: #555;
+.rating label:nth-child(even) {
+  margin-right: 10px;
 }
+
+.rating label:nth-child(even) .star-icon {
+  background-position: right;
+}
+
+.star-icon {
+  width: 12px;
+  height: 24px;
+  display: block;
+  position: relative;
+  left: 0;
+  background-image: url(./images/empty-star.svg);
+  background-repeat: no-repeat;
+}
+
+.star-icon-filled {
+  width: 12px;
+  height: 24px;
+  display: block;
+  position: relative;
+  left: 0;
+  background-image: url(./images/full-star.svg);
+  background-repeat: no-repeat;
+}
+
+
 
 /* === 거래 후기 섹션 === */
 .review-section {
-  padding: 0 16px 80px; /* 하단 nav 고려 */
+    padding: 0 16px 80px;
+    /* 하단 nav 고려 */
 }
-
+.review-section h3{
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0px;
+}
 .review-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0;
 }
 
 .review-header h2 {
-  font-size: 14px;
-  font-weight: 600;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .dropdown-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-main);
-  color: #fff;
-  border-radius: 8px;
-  padding: 4px 8px;
-  font-size: 12px;
-  gap: 4px;
-  height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-main);
+    color: #fff;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 12px;
+    gap: 4px;
+    height: 28px;
 }
 
 .down-icon {
-  width: 12px;
-  height: 6px;
+    width: 12px;
+    height: 6px;
 }
 
 /* === 후기 리스트 === */
 .review-list {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .review-item {
-  display: flex;
-  align-items: flex-start;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-top: 1px solid #d9d9d9;
+    display: flex;
+    align-items: flex-start;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 0px;
+    border-top: 1px solid #d9d9d9;
 }
 
 .review-profile {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  margin-right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 .review-content {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .review-content .stars {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    margin-bottom: 4px;
 }
 
 .review-content .stars img {
-  width: 14px;
-  height: 14px;
+    width: 14px;
+    height: 14px;
 }
 
 .review-text {
-  font-size: 13px;
-  color: #333;
-  line-height: 1.4;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.reviewimg {
+    margin-right: 10px;
+    width: 62px;
+    height: 62px;
+}
+
+.date {
+    font-size: 10px;
+    font-weight: 400;
+    margin-bottom: 35px;
 }
 
 .review-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  font-size: 11px;
-  color: var(--color-gray);
-  margin-left: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 11px;
+    color: var(--color-gray);
+    margin-left: 8px;
 }
 
 .review-meta .delete-btn {
-  width: 14px;
-  height: 14px;
-  margin-top: 6px;
-  cursor: pointer;
+    width: 14px;
+    height: 14px;
+    margin-top: 6px;
+    cursor: pointer;
 }
 
 /* ===== 하단 네비게이션 ===== */
@@ -173,15 +221,15 @@
   position: fixed;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
-  /* 가운데 정렬 */
+  transform: translateX(-50%); /* 가운데 정렬 */
   width: 100%;
-  max-width: 430px;
-  /* 📌 main-container와 동일하게 */
+  max-width: 430px; /* 📌 main-container와 동일하게 */
   background-color: #fff;
+  border-top: 1px solid #ddd;
   z-index: 10;
 }
 
+.bottom-nav nav ul,
 .bottom-nav ul {
   display: flex;
   justify-content: space-around;
@@ -189,6 +237,7 @@
   padding: 8px 0;
 }
 
+.bottom-nav nav li,
 .bottom-nav li {
   display: flex;
   flex-direction: column;
@@ -201,11 +250,107 @@
   cursor: pointer;
 }
 
+.bottom-nav nav li img,
 .bottom-nav li img {
   width: 30px;
   height: 30px;
+  margin-bottom: 4px;
 }
 
 .bottom-nav nav .active {
   color: var(--color-deep-main);
 }
+
+
+.bottom-nav nav .active {
+    color: var(--color-deep-main);
+}
+
+/* 모달 전체 배경 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* 모달창 박스 */
+.modal-content {
+  background: #fff;
+  padding: 24px 32px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 삭제 모달 배경 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 어두운 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* 숨김 처리 */
+.modal.hidden {
+  display: none;
+}
+
+/* 모달 안 하얀 박스 */
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px 0 0 0;
+  width: 317px;
+  height: 127px;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+.modal_p{
+    margin-bottom: 30px;
+}
+
+/* 버튼 감싸는 박스 */
+.modal-buttons {
+  display: flex;
+  border-top: 1px solid #ddd;
+  margin-top: 16px;
+  height: 44px;
+}
+
+/* 버튼 공통 스타일 */
+.modal-buttons button {
+  flex: 1;
+  border: none;
+  background-color: white;
+  color: #00bcd4;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* 취소 버튼에만 우측 선 */
+#cancelDelete {
+  border-right: 1px solid #ddd;
+}
+
+/* 버튼 클릭 시 배경 */
+.modal-buttons button:hover {
+  background-color: #f4f4f4;
+}
+
+
