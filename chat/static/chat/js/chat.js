@@ -25,3 +25,13 @@ completeModal.addEventListener("click", (e) => {
 // 취소 버튼 누르거나, 화면 다른 부분 누르면 모달창 닫힘
 document.addEventListener("click", closeAll);
 cancel.addEventListener("click", closeAll);
+
+// 사진 여러 장 업로드 금지
+imgInput.addEventListener("change", () => {
+  const photos = Array.from(imgInput.files);
+  if (photos.length > 1) {
+    alert("사진은 1장만 업로드할 수 있습니다.");
+    imgInput.value = "";
+    return;
+  }
+});
