@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/chat/static/chat/common.css" />
+    <link rel="stylesheet" href="/chat/static/chat/chat.css" />
+    <script defer src="/chat/static/chat/js/chat.js"></script>
+    <title>Dearbebe</title>
+  </head>
+  <body>
+    <!-- 거래 완료 모달 -->
+    <div class="complete-modal hidden">
+      <p>거래를 완료하시겠어요?</p>
+      <div class="x-divide"></div>
+      <form method="POST" action="">
+        <button type="button" id="cancel">아니오</button>
+        <div class="y-divide"></div>
+        <button type="submit" id="ok">네</button>
+      </form>
+    </div>
+    <div class="darken hidden"></div>
+
+    <div class="header">
+      <a href="" class="back-btn">
+        <img src="/chat/static/chat/images/back.svg" alt="뒤로가기" />
+      </a>
+      <div class="header-title">쪽지</div>
+      <p></p>
+    </div>
+    <div class="main-container">
+      <!-- 거래 완료 버튼 바 -->
+      <div class="complete-bar">
+        <div class="complete-desc">
+          거래가 끝나셨다면 버튼을 눌러 완료해 주세요.
+        </div>
+        <!-- 이 버튼 누르면 모달창 뜸 -->
+        <button id="complete-btn">거래 완료</button>
+      </div>
+      <!-- 채팅 부분 -->
+      <div class="chatting">
+        <!-- 각 날짜별 채팅 -->
+        <div class="chat-container">
+          <div class="date">2025.06.25</div>
+          <!-- 상대 채팅 -->
+          <div class="your-chats">
+            <div class="your-profile-img">
+              <img
+                src="/chat/static/chat/images/default_profile.png"
+                alt="상대 프로필 사진"
+              />
+            </div>
+            <div class="your-msgs">
+              <div class="your-nickname">닉네임</div>
+              <!-- 이게 각 채팅 하나하나니까 여기서 for문 돌리면 될 듯 -->
+              <div class="your-msg">
+                <div class="your-msg-content">어쩌구저쩌구채팅내용</div>
+                <div class="your-msg-time">00:12</div>
+              </div>
+            </div>
+          </div>
+          <!-- 내 채팅 -->
+          <div class="my-chats">
+            <!-- 이게 각 채팅 하나하나니까 여기서 for문 돌리면 될 듯 -->
+            <div class="my-msg">
+              <div class="my-msg-content">저쩌구저쩌구</div>
+              <div class="my-msg-time">12:34</div>
+            </div>
+            <div class="my-msg">
+              <div class="my-msg-content">안녕하세요 반갑습니다</div>
+              <div class="my-msg-time">12:35</div>
+            </div>
+          </div>
+        </div>
+        <!-- 각 날짜별 채팅 -->
+        <div class="chat-container">
+          <div class="date">2025.06.26</div>
+          <!-- 상대 채팅 -->
+          <div class="your-chats">
+            <div class="your-profile-img">
+              <img
+                src="/chat/static/chat/images/default_profile.png"
+                alt="상대 프로필 사진"
+              />
+            </div>
+            <div class="your-msgs">
+              <div class="your-nickname">닉네임</div>
+              <!-- 이게 각 채팅 하나하나니까 여기서 for문 돌리면 될 듯 -->
+              <div class="your-msg">
+                <div class="your-msg-content">틴틴팅클콩물베리미니</div>
+                <div class="your-msg-time">00:32</div>
+              </div>
+              <div class="your-msg">
+                <div class="your-msg-content">
+                  만약에 채팅을 길게 길게 길게 쓴다면 어떡하지 길게 길게 완전
+                  길게 개쩔게 길게 ㅁㅊ듯이 길게 만약에 채팅을 길게 길게 길게
+                  쓴다면 어떡하지 길게 길게 완전 길게 개쩔게 길게 ㅁㅊ듯이 길게
+                  만약에 채팅을 길게 길게 길게 쓴다면 어떡하지 길게 길게 완전
+                  길게 개쩔게 길게 ㅁㅊ듯이 길게
+                </div>
+                <div class="your-msg-time">00:38</div>
+              </div>
+              <div class="your-msg">
+                <div class="your-msg-content-photo">
+                  <img
+                    src="/chat/static/chat/images/sample-img.jpeg"
+                    alt="사진"
+                  />
+                </div>
+                <div class="your-msg-time">00:38</div>
+              </div>
+            </div>
+          </div>
+          <!-- 내 채팅 -->
+          <div class="my-chats">
+            <!-- 이게 각 채팅 하나하나니까 여기서 for문 돌리면 될 듯 -->
+            <div class="my-msg">
+              <div class="my-msg-content-photo">
+                <img
+                  src="/chat/static/chat/images/sample-img.jpeg"
+                  alt="사진"
+                />
+              </div>
+              <div class="my-msg-time">12:34</div>
+            </div>
+            <div class="my-msg">
+              <div class="my-msg-content">김냄비펌피럽</div>
+              <div class="my-msg-time">12:35</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 채팅 입력창 -->
+      <form method="post" action="" class="chat-input">
+        <label for="img-input" id="img-input-label">
+          <input type="file" accept="image/*" id="img-input" />
+          <img
+            src="/chat/static/chat/images/camera.svg"
+            alt="사진 등록 아이콘"
+          />
+        </label>
+        <input type="text" id="text-input" />
+        <label for="send-btn" id="send-btn-label">
+          <input type="submit" id="send-btn" />
+          <img
+            src="/chat/static/chat/images/send.svg"
+            alt="메세지 전송 아이콘"
+          />
+        </label>
+      </form>
+    </div>
+  </body>
+</html>
