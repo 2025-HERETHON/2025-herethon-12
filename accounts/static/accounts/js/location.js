@@ -53,7 +53,7 @@ async function getRegionFromCoords(lat, lon) {
       `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${lon}&y=${lat}`,
       {
         headers: {
-            Authorization: `KakaoAK ${KAKAO_REST_API_KEY}`,
+          Authorization: `KakaoAK ${KAKAO_REST_API_KEY}`,
         },
       }
     );

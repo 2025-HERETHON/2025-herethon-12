@@ -18,6 +18,7 @@
         <div class="header-title">동네 설정</div>
       </div>
       <form method="post" action="">
+        {% csrf_token %}
         <div class="search-container">
           <input
             type="text"
