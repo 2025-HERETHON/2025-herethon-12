@@ -1,0 +1,290 @@
+/* === 헤더 === */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 0px 16px;
+    position: relative;
+}
+
+.back-btn {
+    background: none;
+    padding: 0;
+}
+
+.page-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* === 유저 정보 카드 === */
+.user-summary {
+    padding: 1px;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+}
+
+.profile-img {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    margin-right: 0px;
+}
+
+.user-info .username {
+    font-weight: 600;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.user-info .user-id {
+    font-size: 12px;
+    color: var(--color-gray);
+    margin-top: 10px;
+}
+
+.user-rating p {
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.rating {
+    display: flex;
+}
+
+.user-rating .rating-total {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.rating-label {
+    width: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.rating label:nth-child(odd) .star-icon {
+    background-position: left;
+}
+
+.rating label:nth-child(even) {
+    margin-right: 10px;
+}
+
+.rating label:nth-child(even) .star-icon {
+    background-position: right;
+}
+
+.star-icon {
+    width: 12px;
+    height: 24px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url(../../../reviews/static/reviews/images/empty-star.svg);
+    background-repeat: no-repeat;
+}
+
+.star-icon-filled {
+    width: 12px;
+    height: 24px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url(../../../reviews/static/reviews/images/star-full.svg);
+    background-repeat: no-repeat;
+}
+
+/* ===== 아이템 카드 ===== */
+.title {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 8px 8px 16px;
+    margin-bottom: 0;
+}
+
+.post-list {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0px;
+}
+
+.title_line {
+    display: flex;
+    align-items: center;
+}
+
+.down {
+    width: 16px;
+    height: 9px;
+    margin-top: 65px;
+}
+
+.item-card {
+    display: flex;
+    padding: 12px 16px;
+    gap: 12px;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    position: relative;
+}
+
+.item-img {
+    width: 108px;
+    height: 101px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.state-line {
+    display: flex;
+}
+
+.state {
+    width: 88px;
+    height: 17px;
+    border-radius: 8.5px;
+    margin: 10px 10px;
+    background-color: var(--color-deep-main);
+    color: #fff;
+}
+
+.free {
+    width: 88px;
+    height: 17px;
+    border-radius: 8.5px;
+    margin: 10px 10px;
+    background-color: var(--color-mint);
+    color: #fff;
+}
+
+.age {
+    font-size: 12px;
+    color: #484848;
+}
+
+.item-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    color: #000;
+}
+
+.item-detail {
+    font-size: 12px;
+    color: #000;
+    margin: 4px 0 8px;
+    line-height: 100%;
+    font-weight: 400;
+}
+
+.title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-top: 60px;
+}
+.review_list{
+    margin-top: 20px;
+}
+.review-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 8px 8px 16px;
+    margin-bottom: 0;
+}
+
+.review-down {
+    width: 16px;
+    height: 9px;
+    margin-top: 20px;
+}
+
+.review-item {
+    display: flex;
+    align-items: flex-start;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 0px;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.review-profile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.review-content {
+    flex-grow: 1;
+}
+
+.review-content .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.review-content .stars img {
+    width: 14px;
+    height: 14px;
+}
+
+.review-text {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.reviewimg {
+    margin-right: 10px;
+    width: 62px;
+    height: 62px;
+}
+
+.date {
+    font-size: 10px;
+    font-weight: 400;
+    margin-bottom: 35px;
+}
+
+.review-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 11px;
+    color: var(--color-gray);
+    margin-left: 8px;
+}
+
+.review-meta .delete-btn {
+    width: 14px;
+    height: 14px;
+    margin-top: 6px;
+    cursor: pointer;
+}
