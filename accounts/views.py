@@ -57,7 +57,7 @@ def signup_page(request):
                 })
 
             if User.objects.filter(username=username).exists():
-                messages.error(request, "중복된 아이디")
+                messages.error(request, "이미 사용하고 있는 아이디입니다.")
                 return render(request, "accounts/signup.html", {
                     "username": username,
                     "nickname": nickname,
@@ -69,7 +69,45 @@ def signup_page(request):
                 nickname=nickname
             )
 
-            return redirect("login")
+            login(request, user)
+            return redirect("location")
 
     return render(request, "accounts/signup.html")
+
+#동네 설정
+def my_region(request):
+    if request.method == 'POST':
+        member = request.user
+        member.region_city = request.POST.get('region_city')
+        member.region_district = request.POST.get('region_district')
+        member.region_dong = request.POST.get('region_dong')
+        member.save()
+        return redirect('home')
+    return render(request, 'accounts/location.html')
+
+# accounts/views.py
+@login_required
+def my_page(request):
+    return render(request, 'accounts/mypage.html', {'member': request.user})
+
+@login_required
+def edit_profile(request):
+    member = request.user
+    if request.method == 'POST':
+        nickname = request.POST.get('nickname')
+        profile_image = request.FILES.get('profile_image')
+
+        member.nickname = nickname
+        if profile_image:
+            member.profile_image = profile_image
+        member.save()
+        return redirect('my_page')
+
+    return render(request, 'accounts/edit_profile.html', {'member': member})
+
+@require_GET
+def check_id_duplicate(request):
+    username = request.GET.get('username')
+    exists = Member.objects.filter(username=username).exists()
+    return JsonResponse({'exists': exists})
 

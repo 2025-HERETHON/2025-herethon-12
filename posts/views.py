@@ -79,6 +79,6 @@ def post_add(request):
                 image_order=idx + 1  #업로드 순서 저장 (수정 로직 추가 필요)
             )
 
-        return redirect("/")
+        return redirect("home")
 
     return render(request, "posts/post.html")
