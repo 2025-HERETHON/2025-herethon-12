@@ -9,26 +9,27 @@
 .back-btn {
     background: none;
     padding: 0;
+    width: 23px;
+    height: 13px;
 }
 
 .page-title {
     flex-grow: 1;
     text-align: center;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
 }
 
 /* === 유저 정보 카드 === */
 .user-summary {
-    padding: 1px;
+    padding: 0px;
 }
 
 .user-card {
     display: flex;
     align-items: center;
     border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
+    padding: 0px 16px;
 }
 
 .user-info {
@@ -60,9 +61,23 @@
     font-size: 14px;
     margin: 8px 0;
 }
+.user-rating{
+    margin-left: 25px;
+}
+
+.rating-box {
+    display: flex;
+    align-items: center;
+}
 
 .rating {
     display: flex;
+}
+
+.rating-score {
+    color: rgba(0, 0, 0, 0.46);
+    font-size: 15px;
+    text-align: center;
 }
 
 .user-rating .rating-total {
@@ -72,48 +87,45 @@
 }
 
 .rating-label {
-    width: 12px;
+    width: 14px;
     overflow: hidden;
-    cursor: pointer;
 }
 
-.rating label:nth-child(odd) .star-icon {
+.rating span:nth-child(odd) {
     background-position: left;
 }
 
-.rating label:nth-child(even) {
+.rating span:nth-child(even) {
     margin-right: 10px;
-}
-
-.rating label:nth-child(even) .star-icon {
     background-position: right;
 }
 
 .star-icon {
-    width: 12px;
-    height: 24px;
+    width: 14px;
+    height: 28px;
     display: block;
     position: relative;
     left: 0;
-    background-image: url(../../../reviews/static/reviews/images/empty-star.svg);
+    background-image: url(./images/empty-star.svg);
     background-repeat: no-repeat;
 }
 
 .star-icon-filled {
-    width: 12px;
-    height: 24px;
+    width: 14px;
+    height: 28px;
     display: block;
     position: relative;
     left: 0;
-    background-image: url(../../../reviews/static/reviews/images/star-full.svg);
+    background-image: url(./images/full-star.svg);
     background-repeat: no-repeat;
 }
 
 /* ===== 아이템 카드 ===== */
 .title {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 600;
     padding: 8px 8px 8px 16px;
+    margin-top: 40px;
     margin-bottom: 0;
 }
 
@@ -131,7 +143,7 @@
 .down {
     width: 16px;
     height: 9px;
-    margin-top: 65px;
+    margin-top: 45px;
 }
 
 .item-card {
@@ -144,8 +156,8 @@
 }
 
 .item-img {
-    width: 108px;
-    height: 101px;
+    width: 73px;
+    height: 68px;
     border-radius: 8px;
     object-fit: cover;
     flex-shrink: 0;
@@ -162,22 +174,21 @@
     display: flex;
 }
 
-.state {
-    width: 88px;
-    height: 17px;
-    border-radius: 8.5px;
-    margin: 10px 10px;
-    background-color: var(--color-deep-main);
-    color: #fff;
-}
-
+.state,
 .free {
     width: 88px;
     height: 17px;
     border-radius: 8.5px;
-    margin: 10px 10px;
-    background-color: var(--color-mint);
+    margin: 10px 10px 10px 0px;
     color: #fff;
+}
+
+.state {
+    background-color: var(--color-deep-main);
+}
+
+.free {
+    background-color: var(--color-mint);
 }
 
 .age {
@@ -186,7 +197,7 @@
 }
 
 .item-title {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 600;
     margin: 0;
     color: #000;
@@ -200,14 +211,10 @@
     font-weight: 400;
 }
 
-.title {
-    font-size: 17px;
-    font-weight: 600;
-    margin-top: 60px;
-}
-.review_list{
+.review_list {
     margin-top: 20px;
 }
+
 .review-title {
     font-size: 18px;
     font-weight: 600;
@@ -287,4 +294,38 @@
     height: 14px;
     margin-top: 6px;
     cursor: pointer;
+}
+
+/* review-list 내 star를 더 작은 svg로 교체했습니다 */
+.review-item .rating-label {
+    width: 5.5px;
+    overflow: hidden;
+}
+
+.review-item .star-icon {
+    width: 5.5px;
+    height: 11px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url(./images/mini-empty-star.svg);
+    background-repeat: no-repeat;
+}
+
+.review-item .star-icon-filled {
+    width: 5.5px;
+    height: 11px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url(./images/mini-full-star.svg);
+    background-repeat: no-repeat;
+}
+
+.review-item .rating-score {
+    font-size: 10px;
+}
+
+.review-item .rating span:nth-child(even) {
+    margin-right: 5px;
 }
