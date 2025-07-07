@@ -29,49 +29,23 @@
 
             <div class="user-rating">
                 <p class="rating-total">베비몬스터님의 총 별점</p>
-                <div class="rating">
-                    <label for="star0.5" class="rating-label">
-                        <input type="radio" id="star0.5" class="hidden" name="rating" value="0.5" />
-                        <span class="star-icon"></span>
-                    </label>
-                    <label for="star1.0" class="rating-label">
-                        <input type="radio" id="star1.0" class="hidden" name="rating" value="1" />
-                        <span class="star-icon"></span>
-                    </label>
-                    <label for="star1.5" class="rating-label">
-                        <input type="radio" id="star1.5" class="hidden" name="rating" value="1.5" />
-                        <span class="star-icon"></span>
-                    </label>
-                    <label for="star2.0" class="rating-label">
-                        <input type="radio" id="star2.0" class="hidden" name="rating" value="2" />
-                        <span class="star-icon"></span>
-                    </label>
-                    <label for="star2.5" class="rating-label">
-                        <input type="radio" id="star2.5" class="hidden" name="rating" value="2.5" />
-                        <span class="star-icon"></span>
-                    </label>
-                    <label for="star3.0" class="rating-label">
-                        <input type="radio" id="star3.0" class="hidden" name="rating" value="3" />
-                        <span class="star-icon"></span>
-                    </label>
-                    <label for="star3.5" class="rating-label">
-                        <input type="radio" id="star3.5" class="hidden" name="rating" value="3.5" />
-                        <span class="star-icon"></span>
-                    </label>
-                    <label for="star4.0" class="rating-label">
-                        <input type="radio" id="star4.0" class="hidden" name="rating" value="4" />
-                        <span class="star-icon"></span>
-                    </label>
-                    <!-- 별점 4.5점을 기본값으로 설정했어요 -->
-                    <label for="star4.5" class="rating-label">
-                        <input type="radio" id="star4.5" class="hidden" name="rating" value="4.5" checked />
-                        <span class="star-icon"></span>
-                    </label>
-                    <label for="star5.0" class="rating-label">
-                        <input type="radio" id="star5.0" class="hidden" name="rating" value="5" />
-                        <span class="star-icon"></span>
-                    </label>
+                <div class="rating-box">
+                    <div class="rating">
+                        <span class="star-icon star0.5"></span>
+                        <span class="star-icon star1.0"></span>
+                        <span class="star-icon star1.5"></span>
+                        <span class="star-icon star2.0"></span>
+                        <span class="star-icon star2.5"></span>
+                        <span class="star-icon star3.0"></span>
+                        <span class="star-icon star3.5"></span>
+                        <span class="star-icon star4.0"></span>
+                        <span class="star-icon star4.5"></span>
+                        <span class="star-icon star5.0"></span>
+                    </div>
+                    <!-- 이 숫자에 따라 별점 표시 달라짐 -->
+                    <div class="rating-score">4.5</div>
                 </div>
+            </div>
 
         </section>
         <ul class="post-list">
@@ -112,118 +86,90 @@
             <li class="review-item">
                 <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
                 <div class="review-content">
-                    <div class="rating">
-                        <label for="star0.5" class="rating-label">
-                            <input type="radio" id="star0.5" class="hidden" name="rating" value="0.5" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star1.0" class="rating-label">
-                            <input type="radio" id="star1.0" class="hidden" name="rating" value="1" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star1.5" class="rating-label">
-                            <input type="radio" id="star1.5" class="hidden" name="rating" value="1.5" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star2.0" class="rating-label">
-                            <input type="radio" id="star2.0" class="hidden" name="rating" value="2" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star2.5" class="rating-label">
-                            <input type="radio" id="star2.5" class="hidden" name="rating" value="2.5" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star3.0" class="rating-label">
-                            <input type="radio" id="star3.0" class="hidden" name="rating" value="3" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star3.5" class="rating-label">
-                            <input type="radio" id="star3.5" class="hidden" name="rating" value="3.5" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star4.0" class="rating-label">
-                            <input type="radio" id="star4.0" class="hidden" name="rating" value="4" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <!-- 별점 4.5점을 기본값으로 설정했어요 -->
-                        <label for="star4.5" class="rating-label">
-                            <input type="radio" id="star4.5" class="hidden" name="rating" value="4.5" checked />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star5.0" class="rating-label">
-                            <input type="radio" id="star5.0" class="hidden" name="rating" value="5" />
-                            <span class="star-icon"></span>
-                        </label>
+                    <div class="rating-box">
+                        <div class="rating">
+                            <span class="star-icon star0.5"></span>
+                            <span class="star-icon star1.0"></span>
+                            <span class="star-icon star1.5"></span>
+                            <span class="star-icon star2.0"></span>
+                            <span class="star-icon star2.5"></span>
+                            <span class="star-icon star3.0"></span>
+                            <span class="star-icon star3.5"></span>
+                            <span class="star-icon star4.0"></span>
+                            <span class="star-icon star4.5"></span>
+                            <span class="star-icon star5.0"></span>
+                        </div>
+                        <div class="rating-score">4.5</div>
                     </div>
 
                     <p class="review-text">
                         유모차 무료 나눔 받았는데 너무 좋았습니다!! 감사합니다.</p>
                 </div>
-              
+
                 <div class="review-meta">
                     <span class="date">3일전</span>
-                   
+
                 </div>
             </li>
             <li class="review-item">
-            <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
                 <div class="review-content">
-                    <div class="rating">
-                        <label for="star0.5" class="rating-label">
-                            <input type="radio" id="star0.5" class="hidden" name="rating" value="0.5" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star1.0" class="rating-label">
-                            <input type="radio" id="star1.0" class="hidden" name="rating" value="1" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star1.5" class="rating-label">
-                            <input type="radio" id="star1.5" class="hidden" name="rating" value="1.5" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star2.0" class="rating-label">
-                            <input type="radio" id="star2.0" class="hidden" name="rating" value="2" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star2.5" class="rating-label">
-                            <input type="radio" id="star2.5" class="hidden" name="rating" value="2.5" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star3.0" class="rating-label">
-                            <input type="radio" id="star3.0" class="hidden" name="rating" value="3" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star3.5" class="rating-label">
-                            <input type="radio" id="star3.5" class="hidden" name="rating" value="3.5" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star4.0" class="rating-label">
-                            <input type="radio" id="star4.0" class="hidden" name="rating" value="4" />
-                            <span class="star-icon"></span>
-                        </label>
-                        <!-- 별점 4.5점을 기본값으로 설정했어요 -->
-                        <label for="star4.5" class="rating-label">
-                            <input type="radio" id="star4.5" class="hidden" name="rating" value="4.5" checked />
-                            <span class="star-icon"></span>
-                        </label>
-                        <label for="star5.0" class="rating-label">
-                            <input type="radio" id="star5.0" class="hidden" name="rating" value="5" />
-                            <span class="star-icon"></span>
-                        </label>
+           <div class="rating-box">
+                        <div class="rating">
+                            <span class="star-icon star0.5"></span>
+                            <span class="star-icon star1.0"></span>
+                            <span class="star-icon star1.5"></span>
+                            <span class="star-icon star2.0"></span>
+                            <span class="star-icon star2.5"></span>
+                            <span class="star-icon star3.0"></span>
+                            <span class="star-icon star3.5"></span>
+                            <span class="star-icon star4.0"></span>
+                            <span class="star-icon star4.5"></span>
+                            <span class="star-icon star5.0"></span>
+                        </div>
+                        <div class="rating-score">4.5</div>
                     </div>
 
                     <p class="review-text">
                         유모차 무료 나눔 받았는데 너무 좋았습니다!! 감사합니다.</p>
                 </div>
-              
+
                 <div class="review-meta">
                     <span class="date">3일전</span>
-                   
+
+                </div>
+            </li>
+            <li class="review-item">
+                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <div class="review-content">
+           <div class="rating-box">
+                        <div class="rating">
+                            <span class="star-icon star0.5"></span>
+                            <span class="star-icon star1.0"></span>
+                            <span class="star-icon star1.5"></span>
+                            <span class="star-icon star2.0"></span>
+                            <span class="star-icon star2.5"></span>
+                            <span class="star-icon star3.0"></span>
+                            <span class="star-icon star3.5"></span>
+                            <span class="star-icon star4.0"></span>
+                            <span class="star-icon star4.5"></span>
+                            <span class="star-icon star5.0"></span>
+                        </div>
+                        <div class="rating-score">4.5</div>
+                    </div>
+
+                    <p class="review-text">
+                        유모차 무료 나눔 받았는데 너무 좋았습니다!! 감사합니다.</p>
+                </div>
+
+                <div class="review-meta">
+                    <span class="date">3일전</span>
+
                 </div>
             </li>
         </div>
     </div>
-        <script src="/reviews/static/reviews/js/review-post.js"></script>
+    <script src="/home/static/home/js/profile.js"></script>
 </body>
 
 </html>
