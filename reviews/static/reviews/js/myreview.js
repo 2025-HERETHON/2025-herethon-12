@@ -1,49 +1,51 @@
+// 별점 후기 페이지는 로직 필요 없어서 지웠습니다
+//   // 별점 기능
+//   const rateWrap = document.querySelector(".rating");
+//   const labels = document.querySelectorAll(".rating-label");
+//   const input = document.querySelectorAll(".rating-label input");
+//   const stars = document.querySelectorAll(".star-icon");
+
+//   function filledRate(index) {
+//     for (let i = 0; i <= index; i++) {
+//       stars[i].classList.add("star-icon-filled");
+//     }
+//   }
+
+//   function initStars() {
+//     for (let i = 0; i < stars.length; i++) {
+//       stars[i].classList.remove("star-icon-filled");
+//     }
+//   }
+
+//   function checkedRate() {
+//     initStars();
+//     const checked = document.querySelector(".rating-label input:checked");
+//     if (!checked) return;
+//     const index = [...input].indexOf(checked);
+//     filledRate(index);
+//   }
+
+//   checkedRate();
+
+//   stars.forEach((starIcon, index) => {
+//     starIcon.addEventListener("mouseenter", () => {
+//       initStars();
+//       filledRate(index);
+//     });
+//   });
+
+//   input.forEach((radio) => {
+//     radio.addEventListener("change", () => {
+//       checkedRate();
+//     });
+//   });
+
+//   rateWrap.addEventListener("mouseleave", () => {
+//     checkedRate();
+//   });
+
+// 입력 페이지가 아닌데 이 부분도 필요가 할까요...?
 document.addEventListener("DOMContentLoaded", () => {
-  // 별점 기능
-  const rateWrap = document.querySelector(".rating");
-  const labels = document.querySelectorAll(".rating-label");
-  const input = document.querySelectorAll(".rating-label input");
-  const stars = document.querySelectorAll(".star-icon");
-
-  function filledRate(index) {
-    for (let i = 0; i <= index; i++) {
-      stars[i].classList.add("star-icon-filled");
-    }
-  }
-
-  function initStars() {
-    for (let i = 0; i < stars.length; i++) {
-      stars[i].classList.remove("star-icon-filled");
-    }
-  }
-
-  function checkedRate() {
-    initStars();
-    const checked = document.querySelector(".rating-label input:checked");
-    if (!checked) return;
-    const index = [...input].indexOf(checked);
-    filledRate(index);
-  }
-
-  checkedRate();
-
-  stars.forEach((starIcon, index) => {
-    starIcon.addEventListener("mouseenter", () => {
-      initStars();
-      filledRate(index);
-    });
-  });
-
-  input.forEach((radio) => {
-    radio.addEventListener("change", () => {
-      checkedRate();
-    });
-  });
-
-  rateWrap.addEventListener("mouseleave", () => {
-    checkedRate();
-  });
-
   // 후기 입력 유효성 검사
   const mainForm = document.querySelector(".main-form");
   const desc = document.getElementById("description");
@@ -113,5 +115,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cancelDeleteBtn.addEventListener("click", () => {
     modalOverlay.classList.add("hidden");
+  });
+
+  const ratingBoxes = document.querySelectorAll(".rating-box");
+
+  ratingBoxes.forEach((box) => {
+    const scoreBox = box.querySelector(".rating-score");
+    const stars = box.querySelectorAll(".star-icon");
+    const score = parseFloat(scoreBox.textContent.trim());
+    const fill = Math.round(score * 2);
+
+    for (let i = 0; i < stars.length; i++) {
+      if (i < fill) {
+        stars[i].classList.add("star-icon-filled");
+      } else {
+        stars[i].classList.remove("star-icon-filled");
+      }
+    }
   });
 });

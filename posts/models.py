@@ -29,6 +29,11 @@ class Item(models.Model):
         null=True,
         blank=True
     )
+    #작성 시점에서의 사용자 지역 추출해서 저장
+    region_city = models.CharField(max_length=15)
+    region_district = models.CharField(max_length=15)
+    region_dong = models.CharField(max_length=15)
+    
     sold_out = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
