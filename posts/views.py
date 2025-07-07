@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item, ItemImage
 from .enums import Category, TradeType, Condition, RecommendedAge
 
@@ -13,7 +13,7 @@ CATEGORY_MAP = {
 }
 
 TRADE_TYPE_MAP = {
-    "무료나눔": TradeType.FREE,
+    "무료 나눔": TradeType.FREE,
     "교환": TradeType.EXCHANGE,
 }
 
@@ -82,3 +82,14 @@ def post_add(request):
         return redirect("home")
 
     return render(request, "posts/post.html")
+
+#게시글 상세 조회
+@login_required
+def post_detail(request, item_id):
+    item = get_object_or_404(Item, item_id=item_id)
+    return render(request, 'posts/detail.html', {'item': item})
+
+#게시글 수정
+
+
+#게시글 삭제

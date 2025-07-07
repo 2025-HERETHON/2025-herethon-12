@@ -43,21 +43,21 @@
         <ul class="post-list">
             <h2 class="title">최신 등록글</h2>
             {% for item in items %}
-            <div class="item-card">
+            <div class="item-card" data-id="{{item.id}}" onclick="location.href='{% url 'post_detail' item.item_id %}'">
                 {% if item.images.first %}
                 <img src="{{ item.images.first.image.url }}" alt="" class="item-img">
                 {% endif %}
                 <div class="item-info">
                     <p class="item-title">{{item.title}}</p>
                     <div class="state-line">
-                        <button class="{% if item.trade_type == '무료나눔' %}free{% else %}state{% endif %}">
+                        <button class="{% if item.trade_type == '무료 나눔' %}free{% else %}state{% endif %}">
                             {{ item.trade_type }}
                         </button>
-                        {% if item.age or item.condition %}
+                        {% if item.condition or item.age %}
                             <p class="age">
-                            {% if item.age %}{{ item.get_age_display }}{% endif %}
-                            {% if item.age and item.condition %} / {% endif %}
-                                {% if item.condition %}{{ item.get_condition_display }}{% endif %}
+                            {% if item.condition %}{{ item.get_condition_display }}{% endif %}
+                            {% if item.condition and item.age %} / {% endif %}
+                                {% if item.age %}{{ item.get_age_display }}{% endif %}
                             </p>
                         {% endif %}
                     </div>

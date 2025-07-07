@@ -14,7 +14,7 @@ class Item(models.Model):
     )
     place = models.CharField(max_length=12)
     trade_type = models.CharField(
-        max_length=4,
+        max_length=5,
         choices=TradeType.choices,
     )
     condition = models.CharField(
@@ -50,3 +50,5 @@ class ItemImage(models.Model):
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='images')
 
+    class Meta: #이미지 자동정렬
+        ordering = ['image_order']
