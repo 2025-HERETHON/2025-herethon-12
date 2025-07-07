@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/chat/static/chat/common.css" />
-    <link rel="stylesheet" href="/chat/static/chat/chat.css" />
-    <script defer src="/chat/static/chat/js/chat.js"></script>
+    <link rel="stylesheet" href="{% static 'chat/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'chat/chat.css' %}" />
+    <script defer src="{% static 'chat/js/chat.js' %}"></script>
     <title>Dearbebe</title>
   </head>
   <body>
@@ -14,6 +15,8 @@
       <p>거래를 완료하시겠어요?</p>
       <div class="x-divide"></div>
       <form method="POST" action="">
+        {% csrf_token %}
+        
         <button type="button" id="cancel">아니오</button>
         <div class="y-divide"></div>
         <button type="submit" id="ok">네</button>

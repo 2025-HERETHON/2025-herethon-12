@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/chat/static/chat/common.css" />
-    <link rel="stylesheet" href="/chat/static/chat/chat_list.css" />
+    <link rel="stylesheet" href="{% static 'chat/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'chat/chat.css' %}" />
     <title>Dearbebe</title>
 </head>
 
@@ -93,19 +94,18 @@
     <footer class="bottom-nav">
         <nav>
             <ul>
-                <li>
-                    <img src="/reviews/static/reviews/images/home.svg" alt="" />홈
-                </li>
-                <li>
-                    <img src="/reviews/static/reviews/images/message.svg" alt="" />쪽지
-                </li>
-                <li>
-                    <img src="/reviews/static/reviews/images/form.svg" alt="" />신청
-                    관리
-                </li>
-                <li class="active">
-                    <img src="/reviews/static/reviews/images/my-active.svg" alt="" />마이페이지
-                </li>
+              <li>
+                <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+              </li>
+              <li>
+                <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+              </li>
+              <li>
+                <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+              </li>
+              <li class="active">
+                <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
+              </li>
             </ul>
         </nav>
     </footer>

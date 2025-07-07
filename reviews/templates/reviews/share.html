@@ -1,18 +1,19 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/reviews/static/reviews/common.css" />
-    <link rel="stylesheet" href="/reviews/static/reviews/share.css" />
+    <link rel="stylesheet" href="{% static 'reviews/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'reviews/share.css' %}" />
   </head>
 
   <body>
     <div class="main-container">
       <div class="header">
         <button class="back-btn">
-          <img src="/reviews/static/reviews/images/back-btn.svg" alt="" />
+          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
         </button>
         <div class="header-title">나눔 내역</div>
       </div>
@@ -21,11 +22,7 @@
         <div class="date-label">6/30</div>
         <button class="dropdown-btn">
           받은 나눔
-          <img
-            src="/reviews/static/reviews/images/down-icon.svg"
-            alt="아래 화살표"
-            class="down-icon"
-          />
+          <img src="{% static 'reviews/images/down-icon.svg' %}" alt="아래 화살표" class="down-icon" />
         </button>
       </div>
 
@@ -107,23 +104,16 @@
         <nav>
           <ul>
             <li>
-              <img src="/reviews/static/reviews/images/home.svg" alt="" />홈
+              <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
             </li>
             <li>
-              <img
-                src="/reviews/static/reviews/images/message.svg"
-                alt=""
-              />쪽지
+              <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
             </li>
             <li>
-              <img src="/reviews/static/reviews/images/form.svg" alt="" />신청
-              관리
+              <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
             </li>
             <li class="active">
-              <img
-                src="/reviews/static/reviews/images/my-active.svg"
-                alt=""
-              />마이페이지
+              <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
             </li>
           </ul>
         </nav>
