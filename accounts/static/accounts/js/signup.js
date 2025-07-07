@@ -79,6 +79,7 @@ function restoreRequired() {
   document.getElementById("password-check").setAttribute("required", "true");
   document.getElementById("nickname").setAttribute("required", "true");
   usernameDesc.classList.remove("hidden");
+  username.style.borderColor = "#ababab";
   msg.classList.add("hidden");
 }
 
