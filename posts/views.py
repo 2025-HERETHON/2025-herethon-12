@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item, ItemImage
 from .enums import Category, TradeType, Condition, RecommendedAge
@@ -91,5 +92,15 @@ def post_detail(request, item_id):
 
 #게시글 수정
 
-
 #게시글 삭제
+@login_required
+def post_delete(request, item_id):
+    item = get_object_or_404(Item, item_id=item_id)
+    if request.user != item.member:
+        return HttpResponse("<script>history.back();</script>") #작성자가 아니면 삭제 권한 X
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('home') #삭제 후
+
+    return HttpResponse("<script>history.back();</script>")

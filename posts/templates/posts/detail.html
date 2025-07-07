@@ -18,7 +18,7 @@
       <div class="delete-modal hidden">
         <p>게시글을 삭제하시겠습니까?</p>
         <div class="x-divide"></div>
-        <form method="POST" action="">
+        <form method="POST" action="{% url 'post_delete' item.item_id%}">
           {% csrf_token %}
           <button type="button" id="cancel">취소</button>
           <div class="y-divide"></div>
