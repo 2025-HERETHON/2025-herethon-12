@@ -27,15 +27,14 @@
 
                 <!-- ✅ 카테고리 메뉴 -->
                 <div class="category-list">
-                <a href="?category=전체"><button class="category-btn {% if selected_category == '전체' %}active{% endif %}">전체</button></a>
-                <a href="?category=의류"><button class="category-btn {% if selected_category == '의류' %}{% endif %}">의류</button></a>
-                <a href="?category=수유"><button class="category-btn {% if selected_category == '수유' %}{% endif %}">수유</button></a>
-                <a href="?category=위생"><button class="category-btn {% if selected_category == '위생' %}{% endif %}">위생</button></a>
-                <a href="?category=장난감"><button class="category-btn {% if selected_category == '장난감' %}{% endif %}">장난감</button></a>
-                <a href="?category=기타"><button class="category-btn {% if selected_category == '기타' %}{% endif %}">기타</button></a>
+                    <button class="category-btn {% if selected_category == '전체' %}active{% endif %}" onclick="location.href='?category=전체'">전체</button>
+                    <button class="category-btn {% if selected_category == '의류' %}active{% endif %}" onclick="location.href='?category=의류'">의류</button>
+                    <button class="category-btn {% if selected_category == '수유' %}active{% endif %}" onclick="location.href='?category=수유'">수유</button>
+                    <button class="category-btn {% if selected_category == '위생' %}active{% endif %}" onclick="location.href='?category=위생'">위생</button>
+                    <button class="category-btn {% if selected_category == '장난감' %}active{% endif %}" onclick="location.href='?category=장난감'">장난감</button>
+                    <button class="category-btn {% if selected_category == '기타' %}active{% endif %}" onclick="location.href='?category=기타'">기타</button>
                 </div>
 
-           
         </div>
 
 

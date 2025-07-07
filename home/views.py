@@ -18,7 +18,7 @@ def home_view(request):
         if category == '전체':
             items = Item.objects.all().order_by('-created_at')
         else:
-            items = Item.objects.filter(category=category).order_by('-created_at')
+            items = Item.objects.filter(category=category).order_by('-created_at') #최신순 정렬
 
         return render(request, 'home/home_main.html', {
             'items': items,
