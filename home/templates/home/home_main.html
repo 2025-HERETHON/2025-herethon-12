@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 {% load static %}
+{% load time_filters %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'home/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
     <link rel="stylesheet" href="{% static 'home/home_main.css' %}" />
 
 <!--    <link rel="stylesheet" href="/posts/static/posts/common.css" />-->
@@ -35,18 +36,26 @@
                 <div class="item-info">
                     <p class="item-title">{{item.title}}</p>
                     <div class="state-line">
-                        <button class="state">교환</button>
-                        <p class="age">0-3세 추천 / 새제품</p>
+                        <button class="{% if item.trade_type == '무료나눔' %}free{% else %}state{% endif %}">
+                            {{ item.trade_type }}
+                        </button>
+                        {% if item.age or item.condition %}
+                            <p class="age">
+                            {% if item.age %}{{ item.get_age_display }}{% endif %}
+                            {% if item.age and item.condition %} / {% endif %}
+                                {% if item.condition %}{{ item.get_condition_display }}{% endif %}
+                            </p>
+                        {% endif %}
                     </div>
-                    <p class="item-detail">딱 1번 사용한 제품입니다. 아이가 빨리 커버려서 3세 남자 아이가 쓸만한 용품과 교환.....</p>
+                    <p class="item-detail">{{ item.description | truncatechars:63}}</p>
                     <div class="loca-min">
                         <div class="location">
                             <img src="{% static 'home/images/location.svg' %}" alt="" class="location-icon">
 <!--                            <img src="/home/static/home/images/location.svg" alt="" class="location-icon">-->
 
-                            <p class="loca">상계동</p>
+                            <p class="loca">{{ item.region_dong }}</p>
                         </div>
-                        <p class="minute">3분전</p>
+                        <p class="minute">{{ item.created_at|time_since_custom }}</p>
                     </div>
                 </div>
             </div>
