@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/reviews/static/reviews/common.css" />
-    <link rel="stylesheet" href="/reviews/static/reviews/review_post.css" />
-    <script defer src="/reviews/static/reviews/js/review-post.js"></script>
+    <link rel="stylesheet" href="{% static 'reviews/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'reviews/review_post.css' %}" />
+    <script defer src="{% static 'reviews/js/review_post' %}"></script>
   </head>
   <body>
     <div class="main-container">
@@ -19,7 +20,7 @@
 
       <div class="header">
         <a href="" class="back-btn">
-          <img src="/posts/static/posts/images/back.svg" alt="뒤로가기" />
+          <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
         </a>
         <div class="header-title">후기 작성</div>
         <p></p>
@@ -172,17 +173,14 @@
             <div class="photo-select">
               <label for="photo-input" id="photo-input-label">
                 <input type="file" accept="image/*" id="photo-input" />
-                <img src="/posts/static/posts/images/add.svg" alt="사진 추가" />
+                <img src="{% static 'posts/images/add.svg' %}" alt="사진 추가" />
                 <div class="photo-input-status">0/1</div>
               </label>
             </div>
             <div class="photo-slot">
               <!-- 고른 사진이 없을 때 -->
               <div class="photo-preview-unknown">
-                <img
-                  src="/posts/static/posts/images/image.svg"
-                  alt="사진 없음"
-                />
+                <img src="{% static 'posts/images/image.svg' %}" alt="사진 없음" />
               </div>
               <!-- 고른 사진이 있을 때 -->
               <div class="photo-preview hidden">

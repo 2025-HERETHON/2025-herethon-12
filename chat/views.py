@@ -34,7 +34,7 @@ def thread_list(request):
         Q(exchange__member=member) | Q(exchange__item__member=member)
     ).annotate(last_msg_time=Max("messages__sent_at")).order_by('-last_msg_time')  # 최근 메시지 순으로 쪽지방을 정렬해서 보여줌
 
-    return render(request, 'chat/thread_list.html', {'threads': threads})
+    return render(request, 'chat/chat_list.html', {'threads': threads})
 
 
 # 3. 쪽지방 상세 채팅 화면
@@ -50,7 +50,7 @@ def chat_room(request, thread_id):
         date = localtime(msg.sent_at).strftime("%Y.%m.%d")
         grouped.setdefault(date, []).append(msg)
 
-    return render(request, 'chat/chat_room.html', {
+    return render(request, 'chat/chat.html', {
         'thread': thread,
         'grouped_messages': grouped,
     })
