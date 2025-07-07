@@ -1,12 +1,16 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/accounts/static/accounts/common.css" />
-    <link rel="stylesheet" href="/accounts/static/accounts/location.css" />
-    <script defer src="/accounts/static/accounts/js/location.js"></script>
+    <link rel="stylesheet" href="{% static 'accounts/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'accounts/location.css' %}" />
+<!--    <link rel="stylesheet" href="/accounts/static/accounts/common.css" />-->
+<!--    <link rel="stylesheet" href="/accounts/static/accounts/location.css" />-->
+    <script defer src="{% static 'accounts/js/location.js' %}"></script>
+<!--    <script defer src="/accounts/static/accounts/js/location.js"></script>-->
   </head>
   <body>
     <div class="main-container">
