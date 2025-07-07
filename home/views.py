@@ -9,7 +9,12 @@ def home_view(request):
     category = request.GET.get('category', '전체') #카테고리 선택
     keyword = request.GET.get('q', '') #키워드 검색
 
-    items = Item.objects.all()
+    #같은 광역시, 시군구 기준 필터링
+    user = request.user
+    items = Item.objects.filter(
+        region_city=user.region_city,
+        region_district=user.region_district
+    )
 
     #카테고리
     if category != '전체':
