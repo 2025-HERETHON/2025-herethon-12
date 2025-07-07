@@ -85,29 +85,3 @@ def my_region(request):
         return redirect('home')
     return render(request, 'accounts/location.html')
 
-# accounts/views.py
-@login_required
-def my_page(request):
-    return render(request, 'accounts/mypage.html', {'member': request.user})
-
-@login_required
-def edit_profile(request):
-    member = request.user
-    if request.method == 'POST':
-        nickname = request.POST.get('nickname')
-        profile_image = request.FILES.get('profile_image')
-
-        member.nickname = nickname
-        if profile_image:
-            member.profile_image = profile_image
-        member.save()
-        return redirect('my_page')
-
-    return render(request, 'accounts/edit_profile.html', {'member': member})
-
-@require_GET
-def check_id_duplicate(request):
-    username = request.GET.get('username')
-    exists = Member.objects.filter(username=username).exists()
-    return JsonResponse({'exists': exists})
-
