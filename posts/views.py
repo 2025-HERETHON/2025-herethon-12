@@ -83,8 +83,13 @@ def post_add(request):
 
     return render(request, "posts/post.html")
 
-#게시글 상세
+#게시글 상세 조회
 @login_required
 def post_detail(request, item_id):
     item = get_object_or_404(Item, item_id=item_id)
     return render(request, 'posts/detail.html', {'item': item})
+
+#게시글 수정
+
+
+#게시글 삭제
