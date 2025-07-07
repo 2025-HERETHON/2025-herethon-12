@@ -19,6 +19,7 @@
         <p>게시글을 삭제하시겠습니까?</p>
         <div class="x-divide"></div>
         <form method="POST" action="">
+          {% csrf_token %}
           <button type="button" id="cancel">취소</button>
           <div class="y-divide"></div>
           <button type="submit" id="ok">확인</button>
@@ -31,41 +32,39 @@
           <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
         </a>
         <div class="header-title">게시글</div>
+
+        {% if request.user == item.member %}
+<!--       게시글 작성자일 때만 더보기 버튼 보이게-->
         <button class="more-btn">
           <img src="{% static 'posts/images/more.svg' %}" alt="더보기" />
         </button>
-
         <!-- 수정 삭제 드롭다운 -->
         <div class="header-dropdown hidden">
           <a href="" class="dropdown-modify">수정</a>
           <div class="x-divide"></div>
           <button class="dropdown-delete">삭제</button>
         </div>
+        {% else %}
+          <button class="more-btn" style="visibility: hidden;"></button>
+        {% endif %}
       </div>
 
       <div class="detail-container">
         <div class="img-container">
           <div class="img-box">
-            <img
-              src="{% static 'posts/images/sample-img1.png' %}"
-              alt="제품 사진1"
-            />
-            <img
-              src="{% static 'posts/images/sample-img2.png' %}"
-              alt="제품 사진2"
-            />
-            <img
-              src="{% static 'posts/images/sample-img3.png' %}"
-              alt="제품 사진3"
-            />
+            {% for image in item.images.all  %}
+            <img src="{{ image.image.url }}" alt="제품 사진{{ forloop.counter }}" />
+            {% endfor %}
           </div>
           <div class="indicator">
+            {% for image in item.images.all %}
             <!-- 사진 개수만큼 반복하도록 -->
-            <div class="dot dot-active"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+            <div class="dot {% if forloop.first %}dot-active{% endif %}"></div>
+            {% endfor %}
           </div>
         </div>
+
+
         <div class="text-container">
           <div class="profile-bar">
             <img
@@ -73,31 +72,54 @@
               alt="기본 프로필 사진"
             />
             <div class="profile">
-              <div class="detail-nickname">닉네임</div>
-              <div class="detail-region">성북동(지역)</div>
+              <div class="detail-nickname">{{item.member.nickname}}</div>
+              <div class="detail-region">
+                {{item.region_dong}}({{item.region_district}})
+              </div>
             </div>
           </div>
-          <div class="title">미끄럼 방지 여아 신발</div>
+          <div class="title">{{item.title}}</div>
           <div class="type-time">
-            <div class="type free-type">무료 나눔</div>
+            <div class="type {% if item.trade_type == '무료 나눔' %}free-type{% else %}exchange-type{% endif %}">
+              {{item.trade_type}}
+            </div>
             <!-- <div class="type exchange-type">교환</div> -->
-            <div class="time">07/01 13:20</div>
+            <div class="time">{{ item.created_at|date:"m/d H:i" }}</div>
           </div>
           <div class="place place-condition-age">
             <div class="dot"></div>
-            <span id="place">상계동 하나로 마트 앞</span>
-            <span>/</span>
-            <span id="condition">상태 양호</span>
-            <span>/</span>
-            <span id="age">7-8세 추천</span>
+            <span id="place">{{ item.place }}</span>
+
+            {% if item.condition or item.age %}
+              <span>/</span>
+            {% endif %}
+
+            {% if item.condition %}
+              <span id="condition">{{ item.get_condition_display }}</span>
+              {% if item.age %}
+                <span>/</span>
+              {% endif %}
+            {% endif %}
+
+            {% if item.age %}
+              <span id="age">{{ item.get_age_display }}</span>
+            {% endif %}
           </div>
           <div class="description">
-            간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-            간단하게 입력된 설명
+            {{ item.description|linebreaksbr }}
           </div>
         </div>
         <div class="button-wrapper">
-          <a href="./free.html" class="submit-btn">나눔 신청</a>
+          {% if item.sold_out %}
+            <a href="#" class="submit-btn sold-out">거래 완료</a>
+          {% else %}
+            {% if item.trade_type == '무료 나눔' %}
+              <a href="#" class="submit-btn">나눔 신청</a>
+            {% else %}
+              <a href="#" class="submit-btn">교환 신청</a>
+            {% endif %}
+          {% endif %}
+<!--          <a href="./free.html" class="submit-btn">나눔 신청</a>-->
           <!-- <a href="./exchange.html" class="submit-btn">교환 신청</a> -->
           <!-- <a href="" class="submit-btn sold-out">거래 완료</a> -->
         </div>
