@@ -19,12 +19,14 @@
         <div class="header">
             <div class="top-bar">
                 <div class="top-location">{{ request.user.region_district }}</div>
-                <div class="search-box">
-                    <img src="{% static 'home/images/search-icon.svg' %}" alt="검색 아이콘" class="search-icon" />
+                <form method="get" action="">
+                    <div class="search-box">
+                        <img src="{% static 'home/images/search-icon.svg' %}" alt="검색 아이콘" class="search-icon" />
 <!--                    <img src="/home/static/home/images/search-icon.svg" alt="검색 아이콘" class="search-icon" />-->
-                    <input type="text" class="search-input" id="searchInput" />
-                </div> </div>
-           
+                        <input type="text" class="search-input" id="searchInput" name="q" />
+                    </div>
+                </form>
+            </div>
         </div>
         <ul class="post-list">
             <h2 class="title">최신 등록글</h2>
@@ -64,7 +66,11 @@
         <footer class="bottom-nav">
             <nav>
                 <ul>
-                    <li><img src="{% static 'reviews/images/home.svg' %}" alt=""><br />홈</li>
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'reviews/images/home.svg' %}" alt=""><br />홈
+                        </a>
+                    </li>
                     <li><img src="{% static 'reviews/images/message.svg' %}" alt=""><br />쪽지</li>
                     <li><img src="{% static 'reviews/images/form.svg' %}" alt=""><br />신청 관리</li>
                     <li><img src="{% static 'reviews/images/my-active.svg' %}" alt=""><br />마이페이지</li>
