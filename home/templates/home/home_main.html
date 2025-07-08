@@ -63,24 +63,33 @@
             </div>
             {% endfor %}
         </ul>
+        <!-- 하단 네비게이션 -->
         <footer class="bottom-nav">
-            <nav>
-                <ul>
-                    <li>
-                        <a href="{% url 'home' %}">
-                            <img src="{% static 'reviews/images/home.svg' %}" alt=""><br />홈
-                        </a>
-                    </li>
-                    <li><img src="{% static 'reviews/images/message.svg' %}" alt=""><br />쪽지</li>
-                    <li><img src="{% static 'reviews/images/form.svg' %}" alt=""><br />신청 관리</li>
-                    <li><img src="{% static 'reviews/images/my-active.svg' %}" alt=""><br />마이페이지</li>
-
-<!--                    <li><img src="/reviews/static/reviews/images/home.svg" alt=""><br />홈</li>-->
-<!--                    <li><img src="/reviews/static/reviews/images/message.svg" alt=""><br />쪽지</li>-->
-<!--                    <li><img src="/reviews/static/reviews/images/form.svg" alt=""><br />신청 관리</li>-->
-<!--                    <li><img src="/reviews/static/reviews/images/my.svg" alt=""><br />마이페이지</li>-->
-                </ul>
-            </nav>
+          <nav>
+            <a href="{% url 'home' %}" class="active">
+              <img src="{% static 'home/images/home-active.svg' %}" alt="" />홈
+            </a>
+            <a href="{% url 'chat:thread_list' %}">
+              <img
+                src="{% static 'home/images/message.svg' %}"
+                alt=""
+              />쪽지
+            </a>
+            <a
+              href="{% url 'requests:received_donation_requests' %}"
+            >
+              <img
+                src="{% static 'home/images/form.svg' %}"
+                alt=""
+              />신청 관리
+            </a>
+            <a href="{% url 'my_page' %}">
+              <img
+                src="{% static 'home/images/my.svg' %}"
+                alt=""
+              />마이페이지
+            </a>
+          </nav>
         </footer>
     </div>
 
