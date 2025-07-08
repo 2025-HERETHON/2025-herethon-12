@@ -218,7 +218,7 @@ def exchange_request(request, item_id):
         images = request.FILES.getlist("photos")
         for idx, image_file in enumerate(images):
             ExchangeImage.objects.create(
-                exchange_request=exchange_request_obj,
+                request=exchange_request_obj,
                 image=image_file,
                 image_order=idx + 1
             )
