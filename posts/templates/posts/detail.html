@@ -114,9 +114,9 @@
             <a href="#" class="submit-btn sold-out">거래 완료</a>
           {% else %}
             {% if item.trade_type == '무료 나눔' %}
-              <a href="#" class="submit-btn">나눔 신청</a>
+              <a href="{% url 'donation_request' item.item_id %}" class="submit-btn">나눔 신청</a>
             {% else %}
-              <a href="#" class="submit-btn">교환 신청</a>
+              <a href="{% url 'exchange_request' item.item_id %}" class="submit-btn">교환 신청</a>
             {% endif %}
           {% endif %}
 <!--          <a href="./free.html" class="submit-btn">나눔 신청</a>-->

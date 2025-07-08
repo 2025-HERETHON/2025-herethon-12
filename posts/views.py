@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item, ItemImage
+from requests.models import DonationRequest, ExchangeRequest
 from .enums import Category, TradeType, Condition, RecommendedAge
 
 #enum 매핑
@@ -104,3 +105,38 @@ def post_delete(request, item_id):
         return redirect('home') #삭제 후
 
     return HttpResponse("<script>history.back();</script>")
+
+#교환 신청
+@login_required
+def exchange_request(request, item_id):
+    item = get_object_or_404(Item, item_id=item_id)
+    if request.user == item.member:
+        return HttpResponse("<script>history.back();</script>")  # 작성자이면 본인 게시글에 대한 신청 막아둠
+
+
+    return render(request, 'posts/exchange.html')
+
+
+
+#나눔 신청
+@login_required
+def donation_request(request, item_id):
+    item = get_object_or_404(Item, item_id=item_id)
+
+    if request.user == item.member:
+        return HttpResponse("<script>history.back();</script>") #작성자이면 본인 게시글에 대한 신청 막아둠
+
+    if request.method == "POST":
+        place = request.POST.get("place")
+        memo = request.POST.get("description")
+
+        DonationRequest.objects.create(
+            place=place,
+            memo=memo,
+            item=item,
+            member=request.user, #신청자
+        )
+        return redirect("post_detail", item_id=item_id)
+
+    #item = get_object_or_404(Item, item_id=item_id)
+    return render(request, 'posts/free.html')

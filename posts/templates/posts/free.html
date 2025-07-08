@@ -7,7 +7,7 @@
     <title>Dearbebe</title>
     <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
     <link rel="stylesheet" href="{% static 'posts/post.css' %}" />
-    <script defer src="{% static 'posts/js/post.js' %}"></script>
+    <script defer src="{% static 'posts/js/free.js' %}"></script>
     <!-- <link rel="stylesheet" href="/posts/static/posts/common.css" />
     <link rel="stylesheet" href="/posts/static/posts/exchange_free.css" />
     <script defer src="/posts/static/posts/js/free.js"></script> -->
@@ -22,13 +22,14 @@
       <div class="darken hidden"></div>
 
       <div class="header">
-        <a href="" class="back-btn">
+        <a href="javascript:history.back()" class="back-btn">
           <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
         </a>
         <div class="header-title">나눔 신청</div>
         <p></p>
       </div>
       <form method="POST" action="" class="main-form">
+        {% csrf_token %}
         <div class="place-container">
           <label for="place" class="text-label">거래 희망 장소</label>
           <div class="wrapper">
