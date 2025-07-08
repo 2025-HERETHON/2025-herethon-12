@@ -13,7 +13,7 @@ def login_page(request):
         if user is not None:
             #유저 존재
             login(request, user)
-            return redirect("/") #추후 home 경로 매핑 필요
+            return redirect("home") #추후 home 경로 매핑 필요
             #login 필요한 페이지일 때 비로그인 상태이면 로그인 페이지로 리다이렉트 > 로그인 후 전 페이지로 이동
             next_url = request.GET.get("next") or '/'
             return redirect(next_url)
