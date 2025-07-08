@@ -146,6 +146,7 @@ document.querySelectorAll(".dropdown").forEach((dropdown) => {
   const placeholder = hiddenInput.placeholder;
   const name = selected.querySelector("p");
   const arrow = selected.querySelector("img");
+  const categorySelected = document.querySelector(".category-selected");
 
   // 수정 창에서 이전에 선택된 게 저장되도록
   const inputValue = hiddenInput.value;
@@ -174,7 +175,7 @@ document.querySelectorAll(".dropdown").forEach((dropdown) => {
       arrow.classList.add("hidden"); // 항목 선택했으므로 화살표 숨김
       hiddenInput.value = text; // 드롭다운마다 숨겨둔 input에 value 보냄
       options.classList.add("hidden");
-      categorySelected.style.borderColor = "#bcbcbc";
+      categorySelected.style.borderColor = "#bcbcbc"; // 카테고리 드롭다운에만 한해서
     }
   });
 });
