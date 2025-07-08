@@ -45,7 +45,7 @@ photoInput.addEventListener("change", () => {
   if (currentCount() + allPhotos.length >= 1) photoErr.classList.add("hidden");
 });
 
-
+// 드롭다운 & 필수 항목 검증 로직은 그대로 유지 (간단하게만 정리)
 function validateForm() {
   let valid = true;
 
