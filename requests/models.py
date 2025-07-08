@@ -53,10 +53,13 @@ class DonationRequest(models.Model):
 
 class ExchangeImage(models.Model):
     image_id = models.AutoField(primary_key=True)
-    image_url = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='exchange_images/')
     image_order = models.IntegerField()
 
-    request = models.ForeignKey(ExchangeRequest, on_delete=models.CASCADE, related_name="image")
+    exchange_request = models.ForeignKey(ExchangeRequest, on_delete=models.CASCADE, related_name="image")
+
+    class Meta:
+        ordering = ['image_order']
 
     def __str__(self):
         return f"{self.request.id}번 교환신청 이미지 {self.image_order}"
