@@ -38,11 +38,18 @@
           <div class="mini-dropdown">
             <div class="selected">
               <p>교환</p>
-              <img src="{% static 'requests/images/down-icon-white.svg' %}" alt="드롭다운 버튼" />
+              <img
+                src="{% static 'requests/images/down-icon-white.svg' %}"
+                alt="드롭다운 버튼"
+              />
             </div>
             <div class="options hidden">
               <a href="#" class="item">교환</a>
-              <a href="{% url 'requests:received_donation_requests' %}" class="item">나눔</a>
+              <a
+                href="{% url 'requests:received_donation_requests' %}"
+                class="item"
+                >나눔</a
+              >
             </div>
           </div>
         </div>
@@ -281,20 +288,30 @@
         <!-- 하단 네비게이션 -->
         <footer class="bottom-nav">
           <nav>
-            <ul>
-              <li>
-                <img src="{% static 'requests/images/home.svg' %}" alt="" />홈
-              </li>
-              <li>
-                <img src="{% static 'requests/images/message.svg' %}" alt="" />쪽지
-              </li>
-              <li>
-                <img src="{% static 'requests/images/form-active.svg' %}" alt="" />신청 관리
-              </li>
-              <li class="active">
-                <img src="{% static 'requests/images/my.svg' %}" alt="" />마이페이지
-              </li>
-            </ul>
+            <a href="{% url 'home' %}">
+              <img src="{% static 'requests/images/home.svg' %}" alt="" />홈
+            </a>
+            <a href="{% url 'chat:thread_list' %}">
+              <img
+                src="{% static 'requests/images/message.svg' %}"
+                alt=""
+              />쪽지
+            </a>
+            <a
+              href="{% url 'requests:received_donation_requests' %}"
+              class="active"
+            >
+              <img
+                src="{% static 'requests/images/form-active.svg' %}"
+                alt=""
+              />신청 관리
+            </a>
+            <a href="{% url 'my_page' %}">
+              <img
+                src="{% static 'requests/images/my.svg' %}"
+                alt=""
+              />마이페이지
+            </a>
           </nav>
         </footer>
       </div>
