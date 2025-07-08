@@ -31,8 +31,11 @@ def received_donation_requests(request):
 
     grouped = defaultdict(list)
     for req in donation_requests:
-        date = localtime(req.created_at).strftime("%Y.%m.%d")
-        grouped[date].append(req)
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
+        grouped[date_str].append(req)
 
     print("donation_requests 개수:", donation_requests.count())
     print("grouped keys:", grouped.keys())
@@ -54,11 +57,14 @@ def sent_donation_requests(request):
 
     grouped_requests = defaultdict(list)
     for req in requests:
-        date_str = localtime(req.created_at).strftime('%-m/%-d')  # 예: 7/8
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')
+        day = date.strftime('%d').lstrip('0')
+        date_str = f"{month}/{day}"  # 예: 7/8
         grouped_requests[date_str].append(req)
 
     return render(request, 'requests/sent_donation_list.html', {
-        'grouped_requests': grouped_requests.items()  # list of (date, [req, ...])
+        'grouped_requests': grouped_requests.items()
     })
 
 # 나눔-받은신청(거절처리)
