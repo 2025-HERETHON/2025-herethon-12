@@ -21,7 +21,13 @@ def received_donation_requests(request):
 
     member = request.user
     my_items = Item.objects.filter(member=member)
-    donation_requests = DonationRequest.objects.filter(item__in=my_items).order_by('-created_at')
+
+    # ✅ 거절된(REJECTED) 요청 제외
+    donation_requests = DonationRequest.objects.filter(
+        item__in=my_items
+    ).exclude(
+        status=Status.REJECTED
+    ).order_by('-created_at')
 
     grouped = defaultdict(list)
     for req in donation_requests:
@@ -39,7 +45,6 @@ def received_donation_requests(request):
     return render(request, 'requests/received_donation_list.html', {
         'grouped': dict(grouped)
     })
-
 
 # 나눔-보낸 신청 목록 조회 
 @login_required
