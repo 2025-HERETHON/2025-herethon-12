@@ -162,3 +162,7 @@
 .bottom-nav nav .active {
     color: var(--color-deep-main);
 }
+
+.pm {
+    color:#FFFFFF;
+}

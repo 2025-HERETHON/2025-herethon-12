@@ -5,32 +5,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/accounts/static/accounts/common.css" />
-    <link rel="stylesheet" href="/accounts/static/accounts/edit_profile.css" />
-    <script defer src="/accounts/static/accounts/js/edit_profile.js"></script>
+    <link rel="stylesheet" href="{% static 'reviews/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'reviews/edit.css' %}" />
+    <script defer src="{% static 'reviews/js/edit.js' %}"></script>
   </head>
   <body>
     <div class="main-container">
       <div class="header">
         <a href="" class="back-btn">
-          <img src="/accounts/static/accounts/images/back.svg" alt="뒤로가기" />
+          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="뒤로가기" />
         </a>
         <div class="header-title">프로필 수정</div>
         <p></p>
       </div>
       <form method="post" action="" class="container">
+        {% csrf_token %}
         <div class="edit-profile">
           <div class="profile-preview">
             <div class="preview">
-              <img src="/accounts/static/accounts/images/default_profile.png" alt="프로필 사진">
+              <img
+                src="{% static 'reviews/images/default_profile.png' %}"
+                alt="프로필 사진"
+              />
             </div>
             <!-- 바꿀 프사 미리보기 -->
             <div class="preview-img hidden">
-              <img src="" alt="프로필 사진">  
+              <img src="" alt="프로필 사진" />
             </div>
             <label for="edit" class="camera-btn">
-              <input type="file" id="edit" accept="image/*">
-              <img src="/accounts/static/accounts/images/camera-btn.png" alt="">
+              <input type="file" id="edit" accept="image/*" name="profile_image"/>
+              <img
+                src="{% static 'reviews/images/camera-btn.png' %}"
+                alt=""
+              />
             </label>
           </div>
         </div>
@@ -84,12 +91,12 @@
           <div class="error-msg hidden" id="username-err">
             필수 입력 사항입니다.
           </div>
-      <!-- {% if messages %} -->
+          {% if messages %}
           <!-- 중복 확인 결과 출력 / 수정하셔도 됩니다!! -->
-        <!-- {% for message in messages %} -->
-          <!-- <div class="message {{ message.tags }}">{{ message }}</div> -->
-        <!-- {% endfor %} -->
-      <!-- {% endif %} -->
+          {% for message in messages %}
+          <div class="message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+          {% endif %}
         </div>
         <div class="button-wrapper">
           <button type="submit" class="submit-btn">등록하기</button>

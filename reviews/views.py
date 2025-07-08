@@ -13,6 +13,7 @@ from requests.enums import Status
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
 from accounts.models import Member
+from django.contrib.auth import get_user_model
 
 @login_required
 def create_review(request, request_type, request_id):
@@ -155,9 +156,26 @@ def my_page(request):
 def edit_profile(request):
     member = request.user
     if request.method == 'POST':
+        action = request.POST.get("action")
+        username = request.POST.get("username")
         nickname = request.POST.get('nickname')
         profile_image = request.FILES.get('profile_image')
+        User = get_user_model()
 
+        # 아이디 중복확인 (signup에서 가져옴)
+        if action == "check_id":
+            if User.objects.filter(username=username).exists():
+                messages.error(request, "이미 사용하고 있는 아이디입니다.")
+            else:
+                messages.success(request, "사용하실 수 있는 아이디입니다.")
+            #작성해놨던 아이디, 닉네임 다시 채워주기
+            return render(request, "reviews/edit.html", {
+                "username": username,
+                "nickname": nickname,
+                "profile_image": profile_image,
+            })
+
+        member.username = username
         member.nickname = nickname
         if profile_image:
             member.profile_image = profile_image
