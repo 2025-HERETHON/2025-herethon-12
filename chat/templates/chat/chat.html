@@ -16,7 +16,7 @@
       <div class="x-divide"></div>
       <form method="POST" action="">
         {% csrf_token %}
-        
+
         <button type="button" id="cancel">아니오</button>
         <div class="y-divide"></div>
         <button type="submit" id="ok">네</button>
@@ -26,7 +26,7 @@
 
     <div class="header">
       <a href="" class="back-btn">
-        <img src="/chat/static/chat/images/back.svg" alt="뒤로가기" />
+        <img src="{% static 'chat/images/back.svg' %}" alt="뒤로가기" />
       </a>
       <div class="header-title">쪽지</div>
       <p></p>
@@ -137,18 +137,12 @@
       <form method="post" action="" class="chat-input">
         <label for="img-input" id="img-input-label">
           <input type="file" accept="image/*" id="img-input" />
-          <img
-            src="/chat/static/chat/images/camera.svg"
-            alt="사진 등록 아이콘"
-          />
+          <img src="{% static 'chat/images/camera.svg' %}" alt="사진 등록 아이콘" />
         </label>
         <input type="text" id="text-input" />
         <label for="send-btn" id="send-btn-label">
           <input type="submit" id="send-btn" />
-          <img
-            src="/chat/static/chat/images/send.svg"
-            alt="메세지 전송 아이콘"
-          />
+          <img src="{% static 'chat/images/send.svg' %}" alt="메세지 전송 아이콘" />
         </label>
       </form>
     </div>

@@ -58,5 +58,8 @@ class ExchangeImage(models.Model):
 
     request = models.ForeignKey(ExchangeRequest, on_delete=models.CASCADE, related_name="image")
 
+    class Meta:
+        ordering = ['image_order']
+
     def __str__(self):
         return f"{self.request.request_id}번 교환신청 이미지 {self.image_order}"

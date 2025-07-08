@@ -42,228 +42,65 @@
             </div>
           </div>
         </div>
-        <!-- 날짜에 따른 신청들 구분 -->
-        <div class="requests-container">
-          <div class="date">6/30</div>
-          <!-- 각 신청(대기중) -->
-          <div class="r-container">
-            <div class="top-wrapper">
-              <div class="text-container">
-                <div class="profile-bar">
-                  <img
-                    src="{% static 'requests/images/default_profile.png' %}"
-                    alt="기본 프로필 사진"
-                  />
-                  <!-- 프로필 사진이 있다면 <img ... / >-->
-                  <div class="profile">
-                    <!-- 닉네임, 시간, 위치 -->
-                    <div class="nickname-time">
-                      <div class="nickname">닉네임</div>
-                      <div class="time">13:20</div>
-                    </div>
-                    <div class="region">
-                      <img
-                        src="{% static 'requests/images/place.svg' %}"
-                        alt="위치 아이콘"
-                      />
-                      <p>상계동</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="title">미끄럼 방지 여아 신발</div>
-                <!-- 거래 희망 장소 -->
-                <div class="place">
-                  <div class="dot"></div>
-                  <p>상계동 하나로 마트 앞</p>
-                </div>
+       {% for date, requests in grouped_requests %}
+  <div class="requests-container">
+    <div class="date">{{ date }}</div>
+
+    {% for request in requests %}
+    <div class="r-container">
+      <div class="top-wrapper">
+        <div class="text-container">
+          <div class="profile-bar">
+            <img src="{% static 'requests/images/default_profile.png' %}" alt="기본 프로필 사진" />
+            <div class="profile">
+              <div class="nickname-time">
+                <div class="nickname">{{ request.item.member.nickname }}</div>
+                <div class="time">{{ request.created_at|time:"H:i" }}</div>
               </div>
-              <!-- 썸네일 -->
-              <div class="image-container">
-                <img
-                  src="{% static 'requests/images/sample-img.png' %}"
-                  alt="상품 이미지"
-                />
+              <div class="region">
+                <img src="{% static 'requests/images/place.svg' %}" alt="위치 아이콘" />
+                <p>{{ request.item.place }}</p>
               </div>
-            </div>
-            <div class="description">
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-            </div>
-            <div class="button-wrapper">
-              <!-- 버튼 - 대기중(신청 취소 버튼) -->
-              <button class="txt-btn">신청 취소</button>
-              <p class="waiting">대기중</p>
-
-              <!-- 거절됨일 때(삭제 버튼) -->
-              <!-- <button class="txt-btn">삭제</button>
-              <p class="rejected">거절됨</p> -->
-
-              <!-- 거래중일 때(버튼 없음) -->
-              <!-- <div></div>
-              <p class="trading">거래중</p> -->
-
-              <!-- 거래 완료일 때(삭제 버튼)-->
-              <!-- <button class="txt-btn">삭제</button>
-              <p class="completed">거래 완료</p> -->
             </div>
           </div>
-          <!-- 각 신청(거절됨) -->
-          <div class="r-container">
-            <div class="top-wrapper">
-              <div class="text-container">
-                <div class="profile-bar">
-                  <img
-                    src="{% static 'requests/images/default_profile.png' %}"
-                    alt="기본 프로필 사진"
-                  />
-                  <!-- 프로필 사진이 있다면 <img ... / >-->
-                  <div class="profile">
-                    <!-- 닉네임, 시간, 위치 -->
-                    <div class="nickname-time">
-                      <div class="nickname">닉네임</div>
-                      <div class="time">13:20</div>
-                    </div>
-                    <div class="region">
-                      <img
-                        src="{% static 'requests/images/place.svg' %}"
-                        alt="위치 아이콘"
-                      />
-                      <p>상계동</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="title">미끄럼 방지 여아 신발</div>
-                <!-- 거래 희망 장소 -->
-                <div class="place">
-                  <div class="dot"></div>
-                  <p>상계동 하나로 마트 앞</p>
-                </div>
-              </div>
-              <!-- 썸네일 -->
-              <div class="image-container">
-                <img
-                  src="{% static 'requests/images/sample-img.png' %}"
-                  alt="상품 이미지"
-                />
-              </div>
-            </div>
-            <div class="description">
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-            </div>
-            <!-- 버튼 - 거절됨(삭제 버튼) -->
-            <div class="button-wrapper">
-              <button class="txt-btn">삭제</button>
-              <p class="rejected">거절됨</p>
-            </div>
-          </div>
-          <!-- 각 신청(거래 중) -->
-          <div class="r-container">
-            <div class="top-wrapper">
-              <div class="text-container">
-                <div class="profile-bar">
-                  <img
-                    src="{% static 'requests/images/default_profile.png' %}"
-                    alt="기본 프로필 사진"
-                  />
-                  <!-- 프로필 사진이 있다면 <img ... / >-->
-                  <div class="profile">
-                    <!-- 닉네임, 시간, 위치 -->
-                    <div class="nickname-time">
-                      <div class="nickname">닉네임</div>
-                      <div class="time">13:20</div>
-                    </div>
-                    <div class="region">
-                      <img
-                        src="{% static 'requests/images/place.svg' %}"
-                        alt="위치 아이콘"
-                      />
-                      <p>상계동</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="title">미끄럼 방지 여아 신발</div>
-                <!-- 거래 희망 장소 -->
-                <div class="place">
-                  <div class="dot"></div>
-                  <p>상계동 하나로 마트 앞</p>
-                </div>
-              </div>
-              <!-- 썸네일 -->
-              <div class="image-container">
-                <img
-                  src="{% static 'requests/images/sample-img.png' %}"
-                  alt="상품 이미지"
-                />
-              </div>
-            </div>
-            <div class="description">
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-            </div>
-            <!-- 버튼 - 거래 중(버튼 없음) -->
-            <div class="button-wrapper">
-              <!-- 형태 깨트리지 않기 위한 div -->
-              <div></div>
-              <p class="trading">거래중</p>
-            </div>
+          <div class="title">{{ request.item.title }}</div>
+          <div class="place">
+            <div class="dot"></div>
+            <p>{{ request.place }}</p>
           </div>
         </div>
+        <div class="image-container">
+                {% if request.item.images.first %}
+                  <img src="{{ request.item.images.first.image.url }}" alt="상품 이미지" />
+                {% else %}
+                  <img src="{% static 'requests/images/sample-img.png' %}" alt="기본 이미지" />
+                {% endif %}
+              </div>
+      </div>
 
-        <!-- 날짜에 따른 신청들 구분 -->
-        <div class="requests-container">
-          <div class="date">7/1</div>
-          <!-- 각 신청 (거래 완료) -->
-          <div class="r-container">
-            <div class="top-wrapper">
-              <div class="text-container">
-                <div class="profile-bar">
-                  <img
-                    src="{% static 'requests/images/default_profile.png' %}"
-                    alt="기본 프로필 사진"
-                  />
-                  <!-- 프로필 사진이 있다면 <img ... / >-->
-                  <div class="profile">
-                    <!-- 닉네임, 시간, 위치 -->
-                    <div class="nickname-time">
-                      <div class="nickname">닉네임</div>
-                      <div class="time">13:20</div>
-                    </div>
-                    <div class="region">
-                      <img
-                        src="{% static 'requests/images/place.svg' %}"
-                        alt="위치 아이콘"
-                      />
-                      <p>상계동</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="title">미끄럼 방지 여아 신발</div>
-                <!-- 거래 희망 장소 -->
-                <div class="place">
-                  <div class="dot"></div>
-                  <p>상계동 하나로 마트 앞</p>
-                </div>
-              </div>
-              <!-- 썸네일 -->
-              <div class="image-container">
-                <img
-                  src="{% static 'requests/images/sample-img.png' %}"
-                  alt="상품 이미지"
-                />
-              </div>
-            </div>
-            <div class="description">
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-            </div>
-            <!-- 버튼 - 거래 완료(삭제 버튼) -->
-            <div class="button-wrapper">
-              <button class="txt-btn">삭제</button>
-              <p class="completed">거래 완료</p>
-            </div>
-          </div>
-        </div>
+      <div class="description">
+        {{ request.memo }}
+      </div>
+
+      <div class="button-wrapper">
+        {% if request.status == 'WAITING' %}
+          <button class="txt-btn">신청 취소</button>
+          <p class="waiting">대기중</p>
+        {% elif request.status == 'REJECTED' %}
+          <button class="txt-btn">삭제</button>
+          <p class="rejected">거절됨</p>
+        {% elif request.status == 'IN_PROGRESS' %}
+          <div></div>
+          <p class="trading">거래중</p>
+        {% elif request.status == 'COMPLETED' %}
+          <button class="txt-btn">삭제</button>
+          <p class="completed">거래 완료</p>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endfor %}
 
         <!-- 하단 네비게이션 -->
         <footer class="bottom-nav">
