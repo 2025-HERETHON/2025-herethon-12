@@ -6,6 +6,7 @@ from posts.models import Item
 from requests.enums import Status
 from django.utils.timezone import localtime
 from django.contrib.auth.decorators import login_required
+from collections import defaultdict
 
 
 # ------------------------
@@ -15,12 +16,28 @@ from django.contrib.auth.decorators import login_required
 # 나눔-받은 신청 목록 조회
 @login_required
 def received_donation_requests(request):
-    member = request.user # 현재 로그인한 유저 
-    my_items = Item.objects.filter(member=member) # 내가 올린 용품
-    donation_requests = DonationRequest.objects.filter(item__in=my_items).order_by('-created_at') # 최신순 정렬
+    print("로그인 상태:", request.user.is_authenticated)  # True면 로그인됨
+    print("현재 사용자:", request.user.username)
+
+    member = request.user
+    my_items = Item.objects.filter(member=member)
+    donation_requests = DonationRequest.objects.filter(item__in=my_items).order_by('-created_at')
+
+    grouped = defaultdict(list)
+    for req in donation_requests:
+        date = localtime(req.created_at).strftime("%Y.%m.%d")
+        grouped[date].append(req)
+
+    print("donation_requests 개수:", donation_requests.count())
+    print("grouped keys:", grouped.keys())
+
+    for date, reqs in grouped.items():
+        print("날짜:", date)
+        for r in reqs:
+            print("닉네임:", r.member.nickname, "| 제목:", r.item.title, "| 메모:", r.memo)
 
     return render(request, 'requests/received_donation_list.html', {
-        'donation_requests': donation_requests
+        'grouped': dict(grouped)
     })
 
 
@@ -28,10 +45,15 @@ def received_donation_requests(request):
 @login_required
 def sent_donation_requests(request):
     member = request.user
-    donation_requests = DonationRequest.objects.filter(member=member).order_by('-created_at')
+    requests = DonationRequest.objects.filter(member=member).order_by('-created_at')
+
+    grouped_requests = defaultdict(list)
+    for req in requests:
+        date_str = localtime(req.created_at).strftime('%-m/%-d')  # 예: 7/8
+        grouped_requests[date_str].append(req)
 
     return render(request, 'requests/sent_donation_list.html', {
-        'donation_requests': donation_requests
+        'grouped_requests': grouped_requests.items()  # list of (date, [req, ...])
     })
 
 # 나눔-받은신청(거절처리)
@@ -46,7 +68,7 @@ def reject_donation_request(request, request_id):
     donation_request.status = Status.REJECTED
     donation_request.save()
 
-    return redirect('received_donation_requests')
+    return redirect('requests:received_donation_requests')
 
 # 나눔-보낸신청(삭제 or 취소 처리)
 @login_required
@@ -55,7 +77,7 @@ def manage_sent_donation_request(request, request_id, action):
 
     if donation_request.member != request.user:
         messages.error(request, "해당 요청을 처리할 권한이 없습니다.")
-        return redirect('sent_donation_requests')
+        return redirect('requests:sent_donation_requests')
 
     # 상태에 따라 처리
     if action == "cancel":
@@ -73,7 +95,7 @@ def manage_sent_donation_request(request, request_id, action):
         else:
             messages.error(request, "삭제할 수 없는 상태입니다.")
 
-    return redirect('sent_donation_requests')
+    return redirect('requests:sent_donation_requests')
 
 
 
@@ -105,12 +127,12 @@ def reject_exchange_request(request, request_id):
 
     if exchange_request.item.member != request.user:
         messages.error(request, "해당 신청을 거절할 권한이 없습니다.")
-        return redirect('received_exchange_requests')
+        return redirect('requests:received_exchange_requests')
 
     exchange_request.status = Status.REJECTED
     exchange_request.save()
 
-    return redirect('received_exchange_requests')
+    return redirect('requests:received_exchange_requests')
 
 # 교환-보낸신청(취소/삭제)
 @login_required
@@ -119,7 +141,7 @@ def manage_sent_exchange_request(request, request_id, action):
 
     if exchange_request.member != request.user:
         messages.error(request, "해당 요청을 처리할 권한이 없습니다.")
-        return redirect('sent_exchange_requests')
+        return redirect('requests:sent_exchange_requests')
 
     if action == "cancel":
         if exchange_request.status == Status.WAITING:
@@ -136,5 +158,5 @@ def manage_sent_exchange_request(request, request_id, action):
         else:
             messages.error(request, "삭제할 수 없는 상태입니다.")
 
-    return redirect('sent_exchange_requests')
+    return redirect('requests:sent_exchange_requests')
 

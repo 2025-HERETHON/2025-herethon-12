@@ -20,7 +20,7 @@ def start_chat(request, request_type, request_id):
     else:
         return redirect('home')
 
-    return redirect('chat_room', thread_id=thread.thread_id)
+    return redirect('chat:chat_room', thread_id=thread.thread_id)
 
 
 # 2. 쪽지방 목록 조회
@@ -72,7 +72,7 @@ def send_message(request, thread_id):
             messages.error(request, "메시지 전송 중 오류가 발생했습니다.")
 
     # chat_room으로 다시 이동해 새 메시지가 보이게 됨
-    return redirect('chat_room', thread_id=thread_id)
+    return redirect('chat:chat_room', thread_id=thread_id)
 
 # 5. 거래 완료 처리
 @login_required
@@ -86,4 +86,4 @@ def complete_trade(request, thread_id):
         thread.exchange.status = Status.COMPLETED
         thread.exchange.save()
 
-    return redirect('chat_room', thread_id=thread_id)
+    return redirect('chat:chat_room', thread_id=thread_id)
