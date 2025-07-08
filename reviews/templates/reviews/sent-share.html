@@ -21,13 +21,36 @@
 
 
         <div class="section">
-        <div class="date-label">6/30</div>
-        <button class="dropdown-btn">
+            <!-- <div class="date-label">6/30</div> -->
+
+            {% for date, donations in grouped.items %}
+            <div class="date-label">{{ date }}</div>
+
+            <button class="dropdown-btn">
                 보낸 나눔
                 <img src="{% static 'reviews/images/down-icon.svg' %}" alt="아래 화살표" class="down-icon" />
-            </button></div>
+            </button>
+        </div>
 
+
+        {% for donation in donations %}
         <div class="item-card">
+            <img src="{{ donation.item.image.url }}" {# 실제 이미지 필드명이 다르면 수정해야 함 #} alt="{{ donation.item.title }}"
+                class="item-img" />
+            <div class="item-info">
+                <p class="item-title">{{ donation.item.title }}</p>
+                <p class="item-people">
+                    <span class="who">{{ donation.member.nickname }}</span>와의 거래
+                </p>
+                <p class="item-detail">{{ donation.item.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+        {% empty %}
+        <p>보낸 나눔 내역이 없습니다.</p>
+        {% endfor %}
+
+        <!-- <div class="item-card">
             <img src="/reviews//static/reviews/images/item-img1.png" alt="" class="item-img">
             <div class="item-info">
                 <p class="item-title">하트 모양 변기</p>
@@ -75,24 +98,24 @@
                 <p class="item-detail">우리 아이 너무 빨리 커버려서 나눔합니다~</p>
                 <button class="review-btn">후기 작성하기</button>
             </div>
-        </div>
+        </div> -->
 
         <footer class="bottom-nav">
             <nav>
                 <ul>
-            <li>
-              <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-            </li>
-            <li>
-              <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-            </li>
-            <li>
-              <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-            </li>
-            <li class="active">
-              <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
-            </li>
-          </ul>
+                    <li>
+                        <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+                    </li>
+                    <li>
+                        <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+                    </li>
+                    <li>
+                        <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+                    </li>
+                    <li class="active">
+                        <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
+                    </li>
+                </ul>
             </nav>
         </footer>
     </div>
