@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item, ItemImage
-from requests.models import DonationRequest, ExchangeRequest
+from requests.models import DonationRequest, ExchangeRequest, ExchangeImage
 from .enums import Category, TradeType, Condition, RecommendedAge
 from django.db.models import Max
 
@@ -188,12 +188,49 @@ def exchange_request(request, item_id):
     if request.user == item.member:
         return HttpResponse("<script>history.back();</script>")  # 작성자이면 본인 게시글에 대한 신청 막아둠
 
-    #신청한 적 있냐
-    if ExchangeRequest.objects.filter(item=item, member=request.user).exists():  # 신청한 적 있음
-        return HttpResponse("<script>history.back();</script>")
+    # 신청
+    if request.method == "POST":
+        # 신청한 적 있냐
+        if ExchangeRequest.objects.filter(item=item, member=request.user).exists():
+            return HttpResponse("<script>history.back();</script>")
 
+        place = request.POST.get("place")
+        title = request.POST.get("title")
+        memo = request.POST.get("description")
+        condition_text = request.POST.get("condition")
+        age_text = request.POST.get("age")
 
-    return render(request, 'posts/exchange.html')
+        # enum 변환
+        condition = CONDITION_MAP.get(condition_text)
+        age = AGE_MAP.get(age_text)
+
+        exchange_request_obj = ExchangeRequest.objects.create(
+            place=place,
+            memo=memo,
+            offered_title=title,
+            offered_condition=condition,
+            offered_age=age,
+            item=item,
+            member=request.user,
+        )
+
+        # 이미지 저장
+        images = request.FILES.getlist("photos")
+        for idx, image_file in enumerate(images):
+            ExchangeImage.objects.create(
+                request=exchange_request_obj,
+                image=image_file,
+                image_order=idx + 1
+            )
+
+        #return redirect(f"{reverse('exchange_request', args=[item_id])}?success=1")
+        return JsonResponse({'redirect_url': reverse('post_detail', args=[item_id])})
+    #GET 요청 처리
+    show_modal = request.GET.get("success") == "1"
+    return render(request, 'posts/exchange.html', {
+        'item': item,
+        'show_modal': show_modal,
+    })
 
 
 #나눔 신청

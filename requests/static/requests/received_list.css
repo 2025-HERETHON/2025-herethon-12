@@ -366,14 +366,14 @@ p {
   background-color: #fff;
 }
 
-.bottom-nav nav ul {
+.bottom-nav nav {
   padding: 8px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.bottom-nav nav li {
+.bottom-nav nav a {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -384,12 +384,12 @@ p {
   color: var(--color-light-main);
 }
 
-.bottom-nav nav li img {
+.bottom-nav nav a img {
   width: 30px;
   height: 30px;
 }
 
-.bottom-nav nav .active {
+.bottom-nav .active {
   color: var(--color-deep-main);
 }
 

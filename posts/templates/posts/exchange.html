@@ -17,7 +17,7 @@
       <!-- 신청 완료 모달 -->
       <div class="modal hidden">
         <p>교환 신청이 완료 되었습니다.</p>
-        <a href="" id="ok">확인</a>
+        <button type="button" id="ok">확인</button>
       </div>
       <div class="darken hidden"></div>
 
@@ -35,7 +35,7 @@
           <div class="photo-box">
             <div class="photo-select">
               <label for="photo-input" id="photo-input-label">
-                <input type="file" accept="image/*" id="photo-input" multiple />
+                <input type="file" accept="image/*" id="photo-input" name="photos" multiple />
                 <img
                   src="{% static 'posts/images/add.svg' %}"
                   alt="사진 추가"
@@ -149,7 +149,7 @@
             id="age"
             name="age"
             class="hidden-input"
-            placeholder="추천 월령"
+            placeholder="추천 월 령"
           />
           <div class="selected age-selected">
             <p>추천 월령</p>
@@ -178,4 +178,12 @@
       </form>
     </div>
   </body>
+{% if show_modal %}
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector(".modal").classList.remove("hidden");
+      document.querySelector(".darken").classList.remove("hidden");
+    });
+  </script>
+  {% endif %}
 </html>
