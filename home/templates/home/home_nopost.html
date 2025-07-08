@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'home/home_main.css' %}" /> -->
+    <link rel="stylesheet" href="/posts/static/posts/common.css" />
+    <link rel="stylesheet" href="/home/static/home/home_nopost.css" />
+    <title>Dearbebe</title>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="top-bar">
+                <div class="top-location">성북구</div>
+                <form method="get" action="">
+                    <div class="search-box">
+                        <img src="/home/static/home/images/search-icon.svg" alt="검색 아이콘" class="search-icon" />
+                        <input type="text" class="search-input" id="searchInput" name="q" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ✅ 카테고리 메뉴 -->
+        <div class="category-list">
+            <button class="category-btn" onclick="location.href='?category=전체'">전체</button>
+            <button class="category-btn" onclick="location.href='?category=의류'">의류</button>
+            <button class="category-btn" onclick="location.href='?category=수유'">수유</button>
+            <button class="category-btn" onclick="location.href='?category=위생'">위생</button>
+            <button class="category-btn" onclick="location.href='?category=장난감'">장난감</button>
+            <button class="category-btn" onclick="location.href='?category=기타'">기타</button>
+        </div>
+
+        <div class="main">
+            <img src="/home/static/home/images/home_nopost_bgi.png" alt="" class="bgi">
+            <p class="nopost">아직 등록된 게시글이 없습니다. <br />첫 게시물을 작성해 보세요!</p>
+        </div>
+
+      
+        <footer class="bottom-nav">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="/home/">
+                            <img src="/reviews/static/reviews/images/home.svg" alt=""><br />홈
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="/reviews/static/reviews/images/message.svg" alt=""><br />쪽지
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="/reviews/static/reviews/images/form.svg" alt=""><br />신청 관리
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="/reviews/static/reviews/images/my-active.svg" alt=""><br />마이페이지
+                        </a>
+                    </li>
+                </ul>
+            </nav> 
+             <div class="plus_btn">
+            <img src="/home/static/home/images/nopost_plus.svg" alt="" class="plus_bg">
+            <img src="/home/static/home/images/plusbtn.svg" alt="" class="plus">
+        </div>
+        </footer>
+
+    </div>
+</body>
+
+</html>
