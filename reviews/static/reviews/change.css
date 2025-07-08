@@ -120,14 +120,14 @@
   z-index: 10;
 }
 
-.bottom-nav ul {
+.bottom-nav nav {
+  padding: 8px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 8px 0;
 }
 
-.bottom-nav li {
+.bottom-nav nav a {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -136,14 +136,13 @@
   text-align: center;
   font-size: 11px;
   color: var(--color-light-main);
-  cursor: pointer;
 }
 
-.bottom-nav li img {
+.bottom-nav nav a img {
   width: 30px;
   height: 30px;
 }
 
-.bottom-nav nav .active {
+.bottom-nav .active {
   color: var(--color-deep-main);
 }

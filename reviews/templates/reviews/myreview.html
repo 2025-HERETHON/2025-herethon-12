@@ -15,7 +15,10 @@
       <!-- 헤더 -->
       <header class="header">
         <button class="back-btn">
-          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="뒤로가기" />
+          <img
+            src="{% static 'reviews/images/back-btn.svg' %}"
+            alt="뒤로가기"
+          />
         </button>
         <h1 class="page-title">나의 후기</h1>
       </header>
@@ -61,7 +64,11 @@
           <h3>거래 후기</h3>
           <button class="dropdown-btn">
             작성 후기
-            <img src="{% static 'reviews/images/down-icon.svg' %}" alt="화살표" class="down-icon" />
+            <img
+              src="{% static 'reviews/images/down-icon.svg' %}"
+              alt="화살표"
+              class="down-icon"
+            />
           </button>
         </div>
 
@@ -142,7 +149,11 @@
             </div>
             <div class="review-meta">
               <span class="date">3일전</span>
-              <img src="{% static 'reviews/images/trash.svg' %}" alt="삭제" class="delete-btn" />
+              <img
+                src="{% static 'reviews/images/trash.svg' %}"
+                alt="삭제"
+                class="delete-btn"
+              />
             </div>
           </li>
         </ul>
@@ -151,20 +162,21 @@
       <!-- 하단 네비게이션 -->
       <footer class="bottom-nav">
         <nav>
-          <ul>
-            <li>
-              <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-            </li>
-            <li>
-              <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-            </li>
-            <li>
-              <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-            </li>
-            <li class="active">
-              <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
-            </li>
-          </ul>
+          <a href="{% url 'home' %}">
+            <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+          </a>
+          <a href="{% url 'chat:thread_list' %}">
+            <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+          </a>
+          <a href="{% url 'requests:received_donation_requests' %}">
+            <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+          </a>
+          <a href="{% url 'my_page' %}" class="active">
+            <img
+              src="{% static 'reviews/images/my-active.svg' %}"
+              alt=""
+            />마이페이지
+          </a>
         </nav>
       </footer>
     </div>
