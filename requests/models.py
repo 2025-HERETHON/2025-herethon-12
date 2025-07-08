@@ -53,7 +53,7 @@ class DonationRequest(models.Model):
 
 class ExchangeImage(models.Model):
     image_id = models.AutoField(primary_key=True)
-    image_url = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='exchange_images/') #기존 charfiled > imagefiled 변경 / 이미지 자체 저장
     image_order = models.IntegerField()
 
     request = models.ForeignKey(ExchangeRequest, on_delete=models.CASCADE, related_name="image")
