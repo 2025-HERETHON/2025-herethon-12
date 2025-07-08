@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item, ItemImage
@@ -136,7 +137,11 @@ def donation_request(request, item_id):
             item=item,
             member=request.user, #신청자
         )
-        return redirect("post_detail", item_id=item_id)
+        return redirect(f"{reverse('donation_request', args=[item_id])}?success=1")
 
-    #item = get_object_or_404(Item, item_id=item_id)
-    return render(request, 'posts/free.html')
+    #모달 띄울 여부 전달
+    show_modal = request.GET.get("success") == "1"
+    return render(request, 'posts/free.html', {
+        'item': item,
+        'show_modal': show_modal,
+    })
