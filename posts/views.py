@@ -145,22 +145,39 @@ def post_update(request, item_id):
             ItemImage.objects.filter(item=item).aggregate(Max("image_order"))["image_order__max"] or 0
         )
 
-        #이미지 저장
+        # 기존 이미지 개수 확인
+        existing_count = ItemImage.objects.filter(item=item).count()
+        # 새로 업로드된 이미지들
         images = request.FILES.getlist("photos")
+
+        # 최대 3장까지 허용
+        max_allowed = max(0, 3 - existing_count)
+        images = images[:max_allowed]  # 초과된 사진은 무시
+
+        # 이미지 저장
         for idx, image in enumerate(images):
             ItemImage.objects.create(
                 item=item,
-                image=image,            
-                image_order= last_order + idx + 1  #업로드 순서 저장 (수정 로직 추가 필요)
+                image=image,
+                image_order=last_order + idx + 1
             )
+
+        # #이미지 저장
+        # images = request.FILES.getlist("photos")
+        # for idx, image in enumerate(images):
+        #     ItemImage.objects.create(
+        #         item=item,
+        #         image=image,
+        #         image_order= last_order + idx + 1  #업로드 순서 저장 (수정 로직 추가 필요)
+        #     )
 
         return redirect('post_detail', item_id=item.item_id)
     
     # 기존 이미지 조회
     item_images = ItemImage.objects.filter(item=item).order_by("image_order")
     image_urls = [img.image.url for img in item_images]
-    existing_images = [""] + image_urls # 인덱스 012 말고 123으로 image_order랑 맞추기
-
+    #existing_images = [""] + image_urls # 인덱스 012 말고 123으로 image_order랑 맞추기
+    existing_images = image_urls
     return render(request, "posts/update.html", {
             "item": item,
             "existing_images": existing_images

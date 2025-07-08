@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load custom_filters %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,11 +17,11 @@
   <body>
     <div class="main-container">
       <div class="header">
-        <a href="" class="back-btn">
+        <a href="javascript:history.back()" class="back-btn">
           <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
           <!--          <img src="/posts/static/posts/images/back.svg" alt="뒤로가기" />-->
         </a>
-        <div class="header-title">글쓰기</div>
+        <div class="header-title">게시글</div>
         <p></p>
       </div>
       <form
@@ -50,81 +51,77 @@
                 <div class="photo-input-status">0/3</div>
               </label>
             </div>
+            {% for i in "012"|make_list %}
+              {% with img_url=existing_images|index:forloop.counter0 %}
             <div class="photo-slot">
-            {% if existing_images.1 %}
-            <!-- 고른 사진이 있을 때 -->
-              <div class="photo-preview">
-                <img src="{{ existing_images.1 }}" alt="사진" />
-              </div>
-              <div class="photo-preview-unknown hidden">
-                <img
-                  src="{% static 'posts/images/image.svg' %}"
-                  alt="사진 없음"
-                />
-              </div>
-            {% else %}
-            <!-- 고른 사진이 없을 때 -->
-              <div class="photo-preview hidden">
-                <img src="" alt="사진" />
-              </div>
-              <div class="photo-preview-unknown">
-                <img
-                  src="{% static 'posts/images/image.svg' %}"
-                  alt="사진 없음"
-                />
-              </div>
-            {% endif %}
+              {% if img_url and img_url|length > 0 %}
+                <div class="photo-preview">
+                  <img src="{{ img_url }}" alt="사진" />
+                </div>
+                <div class="photo-preview-unknown hidden">
+                  <img src="{% static 'posts/images/image.svg' %}" alt="사진 없음" />
+                </div>
+              {% else %}
+                <div class="photo-preview hidden">
+                  <img src="" alt="사진" />
+                </div>
+                <div class="photo-preview-unknown">
+                  <img src="{% static 'posts/images/image.svg' %}" alt="사진 없음" />
+                </div>
+              {% endif %}
             </div>
-            <div class="photo-slot">
-            {% if existing_images.2 %}
-            <!-- 고른 사진이 있을 때 -->
-              <div class="photo-preview">
-                <img src="{{ existing_images.2 }}" alt="사진" />
-              </div>
-              <div class="photo-preview-unknown hidden">
-                <img
-                  src="{% static 'posts/images/image.svg' %}"
-                  alt="사진 없음"
-                />
-              </div>
-            {% else %}
-            <!-- 고른 사진이 없을 때 -->
-              <div class="photo-preview hidden">
-                <img src="" alt="사진" />
-              </div>
-              <div class="photo-preview-unknown">
-                <img
-                  src="{% static 'posts/images/image.svg' %}"
-                  alt="사진 없음"
-                />
-              </div>
-            {% endif %}
-            </div>
-            <div class="photo-slot">
-            {% if existing_images.3 %}
-            <!-- 고른 사진이 있을 때 -->
-              <div class="photo-preview">
-                <img src="{{ existing_images.3 }}" alt="사진" />
-              </div>
-              <div class="photo-preview-unknown hidden">
-                <img
-                  src="{% static 'posts/images/image.svg' %}"
-                  alt="사진 없음"
-                />
-              </div>
-            {% else %}
-            <!-- 고른 사진이 없을 때 -->
-              <div class="photo-preview hidden">
-                <img src="" alt="사진" />
-              </div>
-              <div class="photo-preview-unknown">
-                <img
-                  src="{% static 'posts/images/image.svg' %}"
-                  alt="사진 없음"
-                />
-              </div>
-            {% endif %}
-            </div>
+            {% endwith %}
+            {% endfor %}
+<!--            <div class="photo-slot">-->
+<!--            {% if existing_images.2 %}-->
+<!--            &lt;!&ndash; 고른 사진이 있을 때 &ndash;&gt;-->
+<!--              <div class="photo-preview">-->
+<!--                <img src="{{ existing_images.2 }}" alt="사진" />-->
+<!--              </div>-->
+<!--              <div class="photo-preview-unknown hidden">-->
+<!--                <img-->
+<!--                  src="{% static 'posts/images/image.svg' %}"-->
+<!--                  alt="사진 없음"-->
+<!--                />-->
+<!--              </div>-->
+<!--            {% else %}-->
+<!--            &lt;!&ndash; 고른 사진이 없을 때 &ndash;&gt;-->
+<!--              <div class="photo-preview hidden">-->
+<!--                <img src="" alt="사진" />-->
+<!--              </div>-->
+<!--              <div class="photo-preview-unknown">-->
+<!--                <img-->
+<!--                  src="{% static 'posts/images/image.svg' %}"-->
+<!--                  alt="사진 없음"-->
+<!--                />-->
+<!--              </div>-->
+<!--            {% endif %}-->
+<!--            </div>-->
+<!--            <div class="photo-slot">-->
+<!--            {% if existing_images.3 %}-->
+<!--            &lt;!&ndash; 고른 사진이 있을 때 &ndash;&gt;-->
+<!--              <div class="photo-preview">-->
+<!--                <img src="{{ existing_images.3 }}" alt="사진" />-->
+<!--              </div>-->
+<!--              <div class="photo-preview-unknown hidden">-->
+<!--                <img-->
+<!--                  src="{% static 'posts/images/image.svg' %}"-->
+<!--                  alt="사진 없음"-->
+<!--                />-->
+<!--              </div>-->
+<!--            {% else %}-->
+<!--            &lt;!&ndash; 고른 사진이 없을 때 &ndash;&gt;-->
+<!--              <div class="photo-preview hidden">-->
+<!--                <img src="" alt="사진" />-->
+<!--              </div>-->
+<!--              <div class="photo-preview-unknown">-->
+<!--                <img-->
+<!--                  src="{% static 'posts/images/image.svg' %}"-->
+<!--                  alt="사진 없음"-->
+<!--                />-->
+<!--              </div>-->
+<!--            {% endif %}-->
+<!--            </div>-->
           </div>
           <div class="error-msg hidden" id="photo-err">
             사진을 1장 이상으로 등록해주세요.
