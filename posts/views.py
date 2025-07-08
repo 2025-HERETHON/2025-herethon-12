@@ -41,6 +41,8 @@ AGE_MAP = {
     "10세 이상": RecommendedAge.AGE_UP,
 }
 
+#------------------<<게시글>>---------------------
+
 @login_required
 def post_add(request):
     if request.method == "POST":
@@ -90,7 +92,20 @@ def post_add(request):
 @login_required
 def post_detail(request, item_id):
     item = get_object_or_404(Item, item_id=item_id)
-    return render(request, 'posts/detail.html', {'item': item})
+    is_writer = request.user == item.member #본인 여부
+    already_request = False
+
+    if not is_writer: #작성자 아닐 경우, 이미 신청한 적 있는지 검사
+        if(item.trade_type == "무료 나눔"):
+            already_request = DonationRequest.objects.filter(item=item, member=request.user).exists()
+        else:
+            already_request = ExchangeRequest.objects.filter(item=item, member=request.user).exists()
+
+    return render(request, 'posts/detail.html', {
+        'item': item,
+        'is_writer': is_writer,
+        'already_request': already_request
+    })
 
 #게시글 수정
 
@@ -107,16 +122,21 @@ def post_delete(request, item_id):
 
     return HttpResponse("<script>history.back();</script>")
 
+#------------------<<교환>>---------------------
 #교환 신청
 @login_required
 def exchange_request(request, item_id):
     item = get_object_or_404(Item, item_id=item_id)
+
     if request.user == item.member:
         return HttpResponse("<script>history.back();</script>")  # 작성자이면 본인 게시글에 대한 신청 막아둠
 
+    #신청한 적 있냐
+    if ExchangeRequest.objects.filter(item=item, member=request.user).exists():  # 신청한 적 있음
+        return HttpResponse("<script>history.back();</script>")
+
 
     return render(request, 'posts/exchange.html')
-
 
 
 #나눔 신청
@@ -127,7 +147,12 @@ def donation_request(request, item_id):
     if request.user == item.member:
         return HttpResponse("<script>history.back();</script>") #작성자이면 본인 게시글에 대한 신청 막아둠
 
+    #신청
     if request.method == "POST":
+        #신청한 적 있냐
+        if DonationRequest.objects.filter(item=item, member=request.user).exists():
+            return HttpResponse("<script>history.back();</script>")
+
         place = request.POST.get("place")
         memo = request.POST.get("description")
 
