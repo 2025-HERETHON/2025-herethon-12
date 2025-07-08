@@ -40,7 +40,7 @@
         </button>
         <!-- 수정 삭제 드롭다운 -->
         <div class="header-dropdown hidden">
-          <a href="" class="dropdown-modify">수정</a>
+          <a href="{% url 'post_update' item.item_id %}" class="dropdown-modify">수정</a>
           <div class="x-divide"></div>
           <button class="dropdown-delete">삭제</button>
         </div>

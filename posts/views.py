@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item, ItemImage
 from .enums import Category, TradeType, Condition, RecommendedAge
+from django.db.models import Max
 
 #enum 매핑
 CATEGORY_MAP = {
@@ -91,6 +92,62 @@ def post_detail(request, item_id):
     return render(request, 'posts/detail.html', {'item': item})
 
 #게시글 수정
+@login_required
+def post_update(request, item_id):
+    item = get_object_or_404(Item, item_id=item_id)
+    if request.user != item.member:
+        return HttpResponse("<script>history.back();</script>") #작성자가 아니면 수정 권한 X
+
+    if request.method == 'POST':
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        category_text = request.POST.get("category")
+        place = request.POST.get("place")
+        trade_type_text = request.POST.get("trade_type")
+        condition_text = request.POST.get("condition")
+        age_text = request.POST.get("age")
+
+        #enum 변환
+        category = CATEGORY_MAP.get(category_text)
+        trade_type = TRADE_TYPE_MAP.get(trade_type_text)
+        condition = CONDITION_MAP.get(condition_text)
+        age = AGE_MAP.get(age_text)
+
+        # 게시글 수정
+        item.title = title
+        item.description = description
+        item.category = category
+        item.place = place
+        item.trade_type = trade_type
+        item.condition = condition
+        item.age = age
+        item.save()
+
+        # 기존 이미지에 추가하기 위한 정보 확인
+        last_order = (
+            ItemImage.objects.filter(item=item).aggregate(Max("image_order"))["image_order__max"] or 0
+        )
+
+        #이미지 저장
+        images = request.FILES.getlist("photos")
+        for idx, image in enumerate(images):
+            ItemImage.objects.create(
+                item=item,
+                image=image,            
+                image_order= last_order + idx + 1  #업로드 순서 저장 (수정 로직 추가 필요)
+            )
+
+        return redirect('post_detail', item_id=item.item_id)
+    
+    # 기존 이미지 조회
+    item_images = ItemImage.objects.filter(item=item).order_by("image_order")
+    image_urls = [img.image.url for img in item_images]
+    existing_images = [""] + image_urls # 인덱스 012 말고 123으로 image_order랑 맞추기
+
+    return render(request, "posts/update.html", {
+            "item": item,
+            "existing_images": existing_images
+        })
 
 #게시글 삭제
 @login_required
