@@ -116,24 +116,26 @@
       </div>
     </div> -->
 
-    <footer class="bottom-nav">
-      <nav>
-        <ul>
-          <li>
+    <!-- 하단 네비게이션 -->
+      <footer class="bottom-nav">
+        <nav>
+          <a href="{% url 'home' %}">
             <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-          </li>
-          <li>
+          </a>
+          <a href="{% url 'chat:thread_list' %}">
             <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-          </li>
-          <li>
+          </a>
+          <a href="{% url 'requests:received_donation_requests' %}">
             <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-          </li>
-          <li class="active">
-            <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
-          </li>
-        </ul>
-      </nav>
-    </footer>
+          </a>
+          <a href="{% url 'my_page' %}" class="active">
+            <img
+              src="{% static 'reviews/images/my-active.svg' %}"
+              alt=""
+            />마이페이지
+          </a>
+        </nav>
+      </footer>
   </div>
 </body>
 

@@ -1,168 +1,176 @@
 /* === 헤더 === */
 .header {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    position: relative;
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  position: relative;
 }
 
 .back-btn {
-    background: none;
-    padding: 0;
+  background: none;
+  padding: 0;
 }
 
 .page-title {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 /* === 유저 정보 카드 === */
 .user-summary {
-    padding: 16px;
+  padding: 16px;
 }
 
 .user-card {
-    display: flex;
-    align-items: center;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
 }
 
 .profile-img {
-    width: 62px;
-    height: 62px;
-    margin-right: 12px;
+  width: 62px;
+  height: 62px;
+  margin-right: 12px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .user-info .username {
-    font-weight: 600;
-    font-size: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
 }
 
 .user-info .user-id {
-    font-size: 12px;
-    color: var(--color-gray);
-    margin-top: 4px;
+  font-size: 12px;
+  color: var(--color-gray);
+  margin: 0;
 }
 
 .modify {
-    width: 100px;
-    height: 42px;
-    margin-left: 120px;
-    border-radius: 30px;
-    background-color: #4ABAD9;
-    color: #fff;
+  width: 100px;
+  height: 42px;
+  margin-left: 20px;
+  border-radius: 30px;
+  background-color: #4abad9;
+  color: #fff;
 }
 
 .category {
-    padding: 0px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 16px;
+  padding: 0px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
 }
 
 .excange,
 .share,
 .review {
-    width: 45px;
-    height: 45px;
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    background-color: #D6EEF5;
+  width: 45px;
+  height: 45px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #d6eef5;
 }
 
 .ex-img,
 .sh-img,
 .re-img {
-    width: 42px;
-    height: 24px;
+  width: 42px;
+  height: 24px;
 }
 
 .ex-text {
-    font-size: 11px;
-    font-weight: 600;
-    margin-left: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 2px;
 }
 
 .sh-text {
-    font-size: 11px;
-    font-weight: 600;
-    margin-left: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 3px;
 }
 
 .re-text {
-    font-size: 11px;
-    font-weight: 600;
-    margin-left: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 3px;
 }
 
 .logout {
-    margin-top: 320px;
-    background-color: transparent;
-    margin-left: 330px;
+  margin-top: 320px;
+  background-color: transparent;
+  margin-left: 330px;
 }
 
 .logout-text {
   font-size: 14px;
   font-weight: 400;
-  color: #8A8A8A;
+  color: #8a8a8a;
 }
 
 /* ===== 하단 네비게이션 ===== */
 .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 430px;
-    background-color: #fff;
-    z-index: 10;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background-color: #fff;
+  z-index: 10;
 }
 
-.bottom-nav nav ul,
-.bottom-nav ul {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 8px 0;
+.bottom-nav nav {
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.bottom-nav nav li,
-.bottom-nav li {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    text-align: center;
-    font-size: 11px;
-    color: var(--color-light-main);
-    cursor: pointer;
+.bottom-nav nav a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-light-main);
 }
 
-.bottom-nav nav li img,
-.bottom-nav li img {
-    width: 30px;
-    height: 30px;
+.bottom-nav nav a img {
+  width: 30px;
+  height: 30px;
 }
 
-.bottom-nav nav .active {
-    color: var(--color-deep-main);
-}
-
-.bottom-nav nav .active {
-    color: var(--color-deep-main);
+.bottom-nav .active {
+  color: var(--color-deep-main);
 }
 
 .pm {
-    color:#FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
 }
