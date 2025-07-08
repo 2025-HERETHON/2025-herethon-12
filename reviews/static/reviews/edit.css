@@ -147,3 +147,19 @@ button {
 .submit-btn {
   box-shadow: 3px 4px 20px 8px rgba(0, 0, 0, 0.16);
 }
+
+.description,
+.error-msg,
+.message {
+  font-weight: 300;
+  font-size: 12px;
+  align-self: flex-start;
+}
+
+.error-msg, .error {
+  color: var(--color-red);
+}
+
+.success {
+  color: #4EC789;
+}

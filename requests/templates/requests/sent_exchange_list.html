@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
     <link rel="stylesheet" href="{% static 'requests/common.css' %}" />
-    <link rel="stylesheet" href="{% static 'requests/sent_list' %}" />
-    <script defer src="{% static 'requests/js/sent_list' %}"></script>
+    <link rel="stylesheet" href="{% static 'requests/sent_list.css' %}" />
+    <script defer src="{% static 'requests/js/sent_list.js' %}"></script>
   </head>
   <body>
     <!-- 신청 취소, 삭제도 모달 염두에 두기 -->
@@ -20,22 +20,18 @@
         <!-- 받은 신청 보낸 신청-->
         <div class="mini-header">
           <div class="request-radio">
-            <a href="./received_exchange_list.html">받은 신청</a>
+            <a href="{% url 'requests:received_exchange_requests' %}">받은 신청</a>
             <a href="#" class="marked">보낸 신청</a>
           </div>
           <!-- 나눔 교환 드롭다운 -->
           <div class="mini-dropdown">
             <div class="selected">
               <p>교환</p>
-              <img
-                src="/requests/static/requests/images/down-icon-white.svg"
-                alt="드롭다운 버튼"
-              />
               <img src="{% static 'requests/images/down-icon-white.svg' %}" alt="드롭다운 버튼" />
             </div>
             <div class="options hidden">
               <a href="#" class="item">교환</a>
-              <a href="./sent_donation_list.html" class="item">나눔</a>
+              <a href="{% url 'requests:sent_donation_requests' %}" class="item">나눔</a>
             </div>
           </div>
         </div>
