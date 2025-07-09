@@ -329,3 +329,15 @@
 .review-item .rating span:nth-child(even) {
     margin-right: 5px;
 }
+
+/* 접힘 토글용 */
+.toggle-content.collapsed {
+  display: none;
+}
+
+/* 리스트 스크롤 */
+.post-list,
+.review_list {
+  max-height: 300px;
+  overflow-y: auto;
+}
