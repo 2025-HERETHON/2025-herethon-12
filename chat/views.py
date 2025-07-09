@@ -8,6 +8,7 @@ from .forms import MessageForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from datetime import datetime
 
 # 1. 쪽지방 생성
 @login_required
@@ -40,7 +41,19 @@ def thread_list(request):
         Q(exchange__member=member) | Q(exchange__item__member=member)
     ).annotate(last_msg_time=Max("messages__sent_at")).order_by('-last_msg_time')
 
-    return render(request, 'chat/chat_list.html', {'threads': threads})
+    # 안읽음 인디케이터 띄우기 위한 읽음 상태 확인 (마지막 읽은 시간 세션에 저장)
+    thread_data = []
+    for thread in threads:
+        last_read_str = request.session.get(f'last_read_{thread.thread_id}')
+        last_read = datetime.fromisoformat(last_read_str) if last_read_str else None
+
+        unread = thread.last_msg_time and (not last_read or thread.last_msg_time > last_read)
+
+        thread_data.append((thread, unread))
+
+    return render(request, 'chat/chat_list.html', {
+        'threads': thread_data
+    })
 
 
 # 3. 쪽지방 상세 채팅 화면
@@ -65,6 +78,11 @@ def chat_room(request, thread_id):
         is_completed = thread.donation.status == Status.COMPLETED
     elif thread.exchange:
         is_completed = thread.exchange.status == Status.COMPLETED
+
+    # 안읽음 인디케이터를 위해 마지막으로 읽은 시간 기록
+    last_msg = messages.last()
+    if last_msg:
+        request.session[f'last_read_{thread_id}'] = last_msg.sent_at.isoformat()
 
     context = {
         'thread': thread,

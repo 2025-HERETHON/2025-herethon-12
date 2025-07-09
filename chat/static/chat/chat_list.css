@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #BCBCBC;
+  border-bottom: 1px solid #bcbcbc;
 }
 
 .header-title {
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   padding: 7px 15px;
-  border-bottom: 1px solid #BCBCBC;
+  border-bottom: 1px solid #bcbcbc;
   position: relative;
 }
 
@@ -44,7 +44,7 @@
 
 .chat-start {
   font-size: 13px;
-  color: #8A8A8A;
+  color: #8a8a8a;
   margin-top: 10px;
 }
 
@@ -53,6 +53,18 @@
   color: #aaa;
   position: absolute;
   right: 30px;
+  top: 15px;
+}
+
+/* 새 채팅 인디케이터 */
+.indicator {
+  background-color: #ff6c23;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  right: 10px;
   top: 15px;
 }
 
