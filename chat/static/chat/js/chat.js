@@ -4,9 +4,8 @@ const cancel = document.getElementById("cancel");
 const completeBtn = document.getElementById("complete-btn");
 const imgInput = document.getElementById("img-input");
 const ok = document.getElementById("ok");
-const preview = document.querySelector(".img-preview")
-const previewDarken = document.querySelector(".preview-darken")
-const completeForm = document.getElementById("complete-form")
+const preview = document.querySelector(".img-preview");
+const previewDarken = document.querySelector(".preview-darken");
 
 // 모달창 닫는 함수
 function closeAll() {
@@ -53,11 +52,6 @@ ok.addEventListener("click", () => {
   // 폼은 그대로 submit 됨
 });
 
-// 거래완료 form 제출 시 버튼 색 변경
-completeForm.addEventListener("submit", () => {
-  completeBtn.style.backgroundColor = "#8A8A8A"; // 거래완료 시 회색 버튼 됨
-})
-
 // 사진 여러 장 업로드 금지
 imgInput.addEventListener("change", () => {
   const photos = Array.from(imgInput.files);
@@ -75,7 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".chat-input");
   const textInput = document.getElementById("text-input");
   const imgInput = document.getElementById("img-input");
-  const sendBtn = document.getElementById("send-btn")
+  const sendBtn = document.getElementById("send-btn");
+  const isCompleted = document.getElementById("is-completed").dataset.completed === "True";
 
   // 초기화
   textInput.removeAttribute("disabled"); 
@@ -114,4 +109,9 @@ document.addEventListener("DOMContentLoaded", () => {
       previewDarken.classList.add("hidden");
     }
   });
+
+  // 거래 완료 상태 확인 (버튼 색 변경)
+  if (isCompleted) {
+    completeBtn.style.backgroundColor = "#8A8A8A"; // 거래완료 시 회색 버튼 됨
+  }
 });
