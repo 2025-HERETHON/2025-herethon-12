@@ -115,3 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
     completeBtn.style.backgroundColor = "#8A8A8A"; // 거래완료 시 회색 버튼 됨
   }
 });
+
+// 리다이렉트 시 최신 채팅으로 스크롤 이동
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const anchor = document.getElementById("scroll-anchor");
+      anchor?.scrollIntoView({ behavior: "auto" });
+    }, 50) // 일부러 지연시켜서 타이밍 어긋나지 않게
+  });

@@ -35,7 +35,9 @@
         <img src="{% static 'chat/images/back.svg' %}" alt="뒤로가기" />
       </a>
       <div class="header-title">쪽지</div>
-      <p></p>
+      <a href="" class="refresh-btn">
+        <img src="{% static 'chat/images/refresh-btn.svg' %}" alt="새로고침">
+      </a>
     </div>
 
     <div class="main-container">
@@ -86,6 +88,7 @@
                 </div>
               {% endif %}
             {% endfor %}
+            <div id="scroll-anchor"></div> 
           </div>
         {% endfor %}
       </div>
