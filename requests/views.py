@@ -104,16 +104,42 @@ def manage_sent_donation_request(request, request_id, action):
     return redirect('requests:sent_donation_requests')
 
 
-# 교환-받은 신청 목록 조회
+# 교환 - 받은 신청 목록 조회
 @login_required
 def received_exchange_requests(request):
+    print("로그인 상태:", request.user.is_authenticated)
+    print("현재 사용자:", request.user.username)
+
     member = request.user
     my_items = Item.objects.filter(member=member)
-    exchange_requests = ExchangeRequest.objects.filter(item__in=my_items).order_by('-created_at')
+
+    # 거절된 요청 제외
+    exchange_requests = ExchangeRequest.objects.filter(
+        item__in=my_items
+    ).exclude(
+        status=Status.REJECTED
+    ).order_by('-created_at')
+
+    grouped = defaultdict(list)
+    for req in exchange_requests:
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
+        grouped[date_str].append(req)
+
+    print("exchange_requests 개수:", exchange_requests.count())
+    print("grouped keys:", grouped.keys())
+
+    for date, reqs in grouped.items():
+        print("날짜:", date)
+        for r in reqs:
+            print("닉네임:", r.member.nickname, "| 제목:", r.item.title, "| 메모:", r.memo)
 
     return render(request, 'requests/received_exchange_list.html', {
-        'exchange_requests': exchange_requests
+        'grouped': dict(grouped)
     })
+
 
 # 교환-보낸 신청 목록 조회
 @login_required
@@ -148,20 +174,16 @@ def manage_sent_exchange_request(request, request_id, action):
         messages.error(request, "해당 요청을 처리할 권한이 없습니다.")
         return redirect('requests:sent_exchange_requests')
 
-    if action == "cancel":
-        if exchange_request.status == Status.WAITING:
-            exchange_request.status = Status.REJECTED
-            exchange_request.save()
-            messages.success(request, "신청이 취소되었습니다.")
-        else:
-            messages.error(request, "취소할 수 없는 상태입니다.")
-
-    elif action == "delete":
-        if exchange_request.status in [Status.REJECTED, Status.COMPLETED]:
+    # 취소(cancel)와 삭제(delete) 모두 삭제로 처리
+    if action in ["cancel", "delete"]:
+        # WAITING, REJECTED, COMPLETED 상태일 때만 삭제 가능
+        if exchange_request.status in [Status.WAITING, Status.REJECTED, Status.COMPLETED]:
             exchange_request.delete()
             messages.success(request, "신청이 삭제되었습니다.")
         else:
             messages.error(request, "삭제할 수 없는 상태입니다.")
+    else:
+        messages.error(request, "잘못된 요청입니다.")
 
     return redirect('requests:sent_exchange_requests')
 
