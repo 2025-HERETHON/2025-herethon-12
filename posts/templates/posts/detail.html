@@ -67,10 +67,14 @@
 
         <div class="text-container">
           <div class="profile-bar">
+            {% if item.member.image %}
+            <img src="{{ item.member.image.url }}" alt="프로필 사진">
+            {% else %}
             <img
               src="{% static 'posts/images/default_profile.png' %}"
               alt="기본 프로필 사진"
             />
+            {% endif %}
             <div class="profile">
               <div class="detail-nickname">{{item.member.nickname}}</div>
               <div class="detail-region">
