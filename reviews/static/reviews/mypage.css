@@ -42,6 +42,7 @@
   width: 62px;
   height: 62px;
   margin-right: 12px;
+  border-radius: 50%;
 }
 
 .user-info {
