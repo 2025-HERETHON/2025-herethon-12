@@ -90,24 +90,18 @@ def manage_sent_donation_request(request, request_id, action):
         messages.error(request, "해당 요청을 처리할 권한이 없습니다.")
         return redirect('requests:sent_donation_requests')
 
-    # 상태에 따라 처리
-    if action == "cancel":
-        if donation_request.status == Status.WAITING:
-            donation_request.status = Status.REJECTED  # 취소도 거절로 처리
-            donation_request.save()
-            messages.success(request, "신청이 취소되었습니다.")
-        else:
-            messages.error(request, "취소할 수 없는 상태입니다.")
-
-    elif action == "delete":
-        if donation_request.status in [Status.REJECTED, Status.COMPLETED]:
+    # 취소(cancel)와 삭제(delete) 모두 삭제로 처리
+    if action in ["cancel", "delete"]:
+        # WAITING, REJECTED, COMPLETED 상태일 때만 삭제 가능
+        if donation_request.status in [Status.WAITING, Status.REJECTED, Status.COMPLETED]:
             donation_request.delete()
             messages.success(request, "신청이 삭제되었습니다.")
         else:
             messages.error(request, "삭제할 수 없는 상태입니다.")
+    else:
+        messages.error(request, "잘못된 요청입니다.")
 
     return redirect('requests:sent_donation_requests')
-
 
 
 # 교환-받은 신청 목록 조회
