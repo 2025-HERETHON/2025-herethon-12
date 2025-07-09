@@ -59,10 +59,18 @@ def chat_room(request, thread_id):
         date = localtime(msg.sent_at).strftime("%Y.%m.%d")
         grouped.setdefault(date, []).append(msg)
 
+    # 거래 완료 여부 확인 (쪽지방 내 거래 완료 버튼 UI를 위해 임의로 수정했습니다)
+    is_completed = False
+    if thread.donation:
+        is_completed = thread.donation.status == Status.COMPLETED
+    elif thread.exchange:
+        is_completed = thread.exchange.status == Status.COMPLETED
+
     context = {
         'thread': thread,
         'grouped_messages': grouped,
         'redirect_url': redirect_url,
+        'is_completed' : is_completed,
     }
     return render(request, 'chat/chat.html', context)
 
