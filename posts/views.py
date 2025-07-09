@@ -138,6 +138,15 @@ def post_update(request, item_id):
         item.trade_type = trade_type
         item.condition = condition
         item.age = age
+
+        # 사용자의 동과 post 작성 당시 동이 다르면 > 광역시, 시군구는 같은데,
+        if (
+                request.user.region_city == item.region_city and
+                request.user.region_district == item.region_district and
+                request.user.region_dong != item.region_dong
+        ):#현재 사용자의 동과 동일하게 바꿈
+            item.region_dong = request.user.region_dong
+
         item.save()
 
         # 기존 이미지에 추가하기 위한 정보 확인
