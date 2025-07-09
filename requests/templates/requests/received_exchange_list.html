@@ -62,7 +62,11 @@
             <div class="r-container">
               <div class="text-container">
                 <div class="profile-bar">
+                  {% if request.member.image %}
+                  <img src="{{ request.member.image.url }}" alt="프로필">
+                  {% else %}
                   <img src="{% static 'requests/images/default_profile.png' %}" alt="기본 프로필" />
+                  {% endif %}
                   <div class="profile">
                     <div class="nickname-time">
                       <div class="nickname">{{ request.member.nickname }}</div>
