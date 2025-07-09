@@ -83,19 +83,29 @@
       </div>
 
       <div class="button-wrapper">
-        {% if request.status == 'WAITING' %}
-          <button class="txt-btn">신청 취소</button>
-          <p class="waiting">대기중</p>
-        {% elif request.status == 'REJECTED' %}
-          <button class="txt-btn">삭제</button>
-          <p class="rejected">거절됨</p>
-        {% elif request.status == 'IN_PROGRESS' %}
-          <div></div>
-          <p class="trading">거래중</p>
-        {% elif request.status == 'COMPLETED' %}
-          <button class="txt-btn">삭제</button>
-          <p class="completed">거래 완료</p>
-        {% endif %}
+          <!-- 신청 상태가 WAITING인 경우: 삭제(=취소) 버튼 -->
+          {% if request.status == 'WAITING' %}
+            <form method="POST" action="{% url 'requests:manage_sent_donation_request' request.pk 'delete' %}">
+              {% csrf_token %}
+              <button type="submit" class="txt-btn">신청 취소</button>
+            </form>
+            <p class="waiting">대기중</p>
+
+          <!-- 신청 상태가 REJECTED or COMPLETED인 경우: 삭제 버튼 -->
+          {% elif request.status == 'REJECTED' or request.status == 'COMPLETED' %}
+            <form method="POST" action="{% url 'requests:manage_sent_donation_request' request.pk 'delete' %}">
+              {% csrf_token %}
+              <button type="submit" class="txt-btn">삭제</button>
+            </form>
+            <p class="{% if request.status == 'REJECTED' %}rejected{% else %}completed{% endif %}">
+              {% if request.status == 'REJECTED' %}거절됨{% else %}거래 완료{% endif %}
+            </p>
+
+          <!-- 거래중일 경우: 버튼 없음 -->
+          {% elif request.status == 'IN_PROGRESS' %}
+            <div></div>
+            <p class="trading">거래중</p>
+          {% endif %}
       </div>
     </div>
     {% endfor %}
