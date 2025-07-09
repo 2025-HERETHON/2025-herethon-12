@@ -44,6 +44,11 @@ def create_review(request, request_type, request_id):
                 review.receiver = receiver
                 review.exchange_request = exchange
                 review.save()
+
+                #별점 평균 receiver에 반영
+                receiver.star = Review.objects.filter(receiver=receiver).aggregate(avg=Avg('rating'))['avg'] or 0
+                receiver.save()
+
                 messages.success(request, "후기가 등록되었습니다.")
                 return redirect('my_exchange_history')
         else:
