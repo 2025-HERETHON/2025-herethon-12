@@ -13,6 +13,11 @@ class Thread(models.Model):
             return self.donation.member if self.donation.item.member != current_user else self.donation.item.member
         elif self.exchange:
             return self.exchange.member if self.exchange.item.member != current_user else self.exchange.item.member
+    
+    # 상대 프로필 사진 불러오기 위한 메서드
+    def get_opponent_image(self, current_user):
+        opponent = self.get_opponent(current_user)
+        return opponent.image.url if opponent and opponent.image else None
 
     def get_item_title(self):
         return self.donation.item.title if self.donation else self.exchange.item.title

@@ -70,7 +70,11 @@
               {% else %}
                 <div class="your-chats">
                   <div class="your-profile-img">
+                    {% if msg.member.image %}
+                    <img src="{{ msg.member.image.url }}" alt="상대 프로필 사진">
+                    {% else %}
                     <img src="{% static 'chat/images/default_profile.png' %}" alt="상대 프로필 사진">
+                    {% endif %}
                   </div>
                   <div class="your-msgs">
                     <div class="your-nickname">{{ msg.member.nickname }}</div>
