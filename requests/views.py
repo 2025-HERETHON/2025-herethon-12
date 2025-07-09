@@ -145,10 +145,18 @@ def received_exchange_requests(request):
 @login_required
 def sent_exchange_requests(request):
     member = request.user
-    exchange_requests = ExchangeRequest.objects.filter(member=member).order_by('-created_at')
+    requests = ExchangeRequest.objects.filter(member=member).order_by('-created_at')
+
+    grouped_requests = defaultdict(list)
+    for req in requests:
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')
+        day = date.strftime('%d').lstrip('0')
+        date_str = f"{month}/{day}"  # 예: 7/8
+        grouped_requests[date_str].append(req)
 
     return render(request, 'requests/sent_exchange_list.html', {
-        'exchange_requests': exchange_requests
+        'grouped_requests': grouped_requests.items()
     })
 
 # 교환-받은신청(거절처리)
