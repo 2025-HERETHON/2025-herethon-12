@@ -104,16 +104,42 @@ def manage_sent_donation_request(request, request_id, action):
     return redirect('requests:sent_donation_requests')
 
 
-# 교환-받은 신청 목록 조회
+# 교환 - 받은 신청 목록 조회
 @login_required
 def received_exchange_requests(request):
+    print("로그인 상태:", request.user.is_authenticated)
+    print("현재 사용자:", request.user.username)
+
     member = request.user
     my_items = Item.objects.filter(member=member)
-    exchange_requests = ExchangeRequest.objects.filter(item__in=my_items).order_by('-created_at')
+
+    # 거절된 요청 제외
+    exchange_requests = ExchangeRequest.objects.filter(
+        item__in=my_items
+    ).exclude(
+        status=Status.REJECTED
+    ).order_by('-created_at')
+
+    grouped = defaultdict(list)
+    for req in exchange_requests:
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
+        grouped[date_str].append(req)
+
+    print("exchange_requests 개수:", exchange_requests.count())
+    print("grouped keys:", grouped.keys())
+
+    for date, reqs in grouped.items():
+        print("날짜:", date)
+        for r in reqs:
+            print("닉네임:", r.member.nickname, "| 제목:", r.item.title, "| 메모:", r.memo)
 
     return render(request, 'requests/received_exchange_list.html', {
-        'exchange_requests': exchange_requests
+        'grouped': dict(grouped)
     })
+
 
 # 교환-보낸 신청 목록 조회
 @login_required

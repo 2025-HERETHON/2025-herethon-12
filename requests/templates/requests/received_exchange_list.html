@@ -8,18 +8,18 @@
     <link rel="stylesheet" href="{% static 'requests/common.css' %}" />
     <link rel="stylesheet" href="{% static 'requests/received_list.css' %}" />
     <script defer src="{% static 'requests/js/received_list.js' %}"></script>
+    <script src="{% static 'requests/js/reject_modal.js' %}"></script>
   </head>
   <body>
-    <div class="main-container">
+      <div class="main-container">
       <!-- 신청 거절 모달 -->
       <div class="reject-modal hidden">
         <p>거절하시겠습니까?</p>
         <div class="x-divide"></div>
-        <form method="POST" action="">
-          <button type="button" id="cancel">취소</button>
-          <div class="y-divide"></div>
-          <button type="submit" id="ok">확인</button>
-          <!-- 거절 시 받은 신청란에서 사라짐 -->
+        <form method="POST" id="reject-form">
+            {% csrf_token %}
+            <button type="button" id="cancel">취소</button>
+            <button type="submit" id="ok">확인</button>
         </form>
       </div>
       <div class="darken hidden"></div>
@@ -53,237 +53,71 @@
             </div>
           </div>
         </div>
-        <!-- 날짜에 따른 신청들 구분 -->
+         <!-- 날짜별 신청 목록 -->
+      {% for date, requests in grouped.items %}
         <div class="requests-container">
-          <div class="date">6/30</div>
-          <!-- 각 신청 -->
-          <div class="r-container">
-            <div class="text-container">
-              <div class="profile-bar">
-                <img
-                  src="/requests/static/requests/images/default_profile.png"
-                  alt="기본 프로필 사진"
-                />
-                <!-- 프로필 사진이 있다면 <img ... / >-->
-                <div class="profile">
-                  <!-- 닉네임, 시간, 위치 -->
-                  <div class="nickname-time">
-                    <div class="nickname">닉네임</div>
-                    <div class="time">13:20</div>
-                  </div>
-                  <div class="region">
-                    <img
-                      src="/requests/static/requests/images/place.svg"
-                      alt="위치 아이콘"
-                    />
-                    <p id="region">상계동</p>
+          <div class="date">{{ date }}</div>
+
+          {% for request in requests %}
+            <div class="r-container">
+              <div class="text-container">
+                <div class="profile-bar">
+                  <img src="{% static 'requests/images/default_profile.png' %}" alt="기본 프로필" />
+                  <div class="profile">
+                    <div class="nickname-time">
+                      <div class="nickname">{{ request.member.nickname }}</div>
+                      <div class="time">{{ request.created_at|time:"H:i" }}</div>
+                    </div>
+                    <div class="region">
+                      <img src="{% static 'requests/images/place.svg' %}" alt="위치 아이콘" />
+                      <p id="region">{{ request.item.region }}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="title">미끄럼 방지 여아 신발</div>
-            </div>
-            <div class="gray-divide"></div>
-            <!-- 썸네일 -->
-            <div class="images-box">
-              <!-- 고른 사진이 있을 때 -->
-              <div class="image">
-                <img
-                  src="/requests/static/requests/images/sample-img.png"
-                  alt="상품 이미지"
-                />
+                <div class="title">{{ request.item.title }}</div>
               </div>
 
-              <!-- 고른 사진이 없을 때 -->
-              <div class="image-unknown">
-                <img
-                  src="/requests/static/requests/images/image.svg"
-                  alt="사진 없음"
-                />
-              </div>
-              <div class="image-unknown">
-                <img
-                  src="/requests/static/requests/images/image.svg"
-                  alt="사진 없음"
-                />
-              </div>
-            </div>
-            <div class="title">
-              <span>7세 여아 의류</span>
-              <span class="gray-span">와 교환</span>
-            </div>
-            <!-- 거래 희망 장소 -->
-            <div class="place place-condition-age">
-              <div class="dot"></div>
-              <span id="place">상계동 하나로 마트 앞</span>
-              <span>/</span>
-              <span id="condition">상태 양호</span>
-              <span>/</span>
-              <span id="age">7-8세 추천</span>
-            </div>
-            <div class="description">
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-            </div>
-            <!-- 쪽지 버튼, 거절 버튼 -->
-            <div class="button-wrapper">
-              <a href="" class="send-message">쪽지하기</a>
-              <button class="reject">거절</button>
-            </div>
-          </div>
-          <!-- 각 신청 -->
-          <div class="r-container">
-            <div class="text-container">
-              <div class="profile-bar">
-                <img
-                  src="/requests/static/requests/images/default_profile.png"
-                  alt="기본 프로필 사진"
-                />
-                <!-- 프로필 사진이 있다면 <img ... / >-->
-                <div class="profile">
-                  <!-- 닉네임, 시간, 위치 -->
-                  <div class="nickname-time">
-                    <div class="nickname">닉네임</div>
-                    <div class="time">13:20</div>
+              <div class="gray-divide"></div>
+
+              <!-- 이미지 썸네일 -->
+              <div class="images-box">
+                {% for image in request.image.all %}
+                  <div class="image">
+                    <img src="{{ image.image.url }}" alt="신청 이미지" />
                   </div>
-                  <div class="region">
-                    <img
-                      src="/requests/static/requests/images/place.svg"
-                      alt="위치 아이콘"
-                    />
-                    <p id="region">상계동</p>
-                  </div>
-                </div>
-              </div>
-              <div class="title">미끄럼 방지 여아 신발</div>
-            </div>
-            <div class="gray-divide"></div>
-            <!-- 썸네일 -->
-            <div class="images-box">
-              <!-- 고른 사진이 있을 때 -->
-              <div class="image">
-                <img
-                  src="/requests/static/requests/images/sample-img.png"
-                  alt="상품 이미지"
-                />
+                {% empty %}
+                  {% for _ in "123"|make_list %}
+                    <div class="image-unknown">
+                      <img src="{% static 'requests/images/image.svg' %}" alt="사진 없음" />
+                    </div>
+                  {% endfor %}
+                {% endfor %}
               </div>
 
-              <!-- 고른 사진이 없을 때 -->
-              <div class="image-unknown">
-                <img
-                  src="/requests/static/requests/images/image.svg"
-                  alt="사진 없음"
-                />
+              <div class="title">
+                <span>{{ request.offered_title }}</span>
+                <span class="gray-span">와 교환</span>
               </div>
-              <div class="image-unknown">
-                <img
-                  src="/requests/static/requests/images/image.svg"
-                  alt="사진 없음"
-                />
+
+              <div class="place place-condition-age">
+                <div class="dot"></div>
+                <span id="place">{{ request.place }}</span>
+                <span>/</span>
+                <span id="condition">{{ request.get_offered_condition_display }}</span>
+                <span>/</span>
+                <span id="age">{{ request.get_offered_age_display }} 추천</span>
+              </div>
+
+              <div class="description">{{ request.memo }}</div>
+              <!-- 쪽지 버튼, 거절 버튼 -->
+              <div class="button-wrapper">
+                <a href="{% url 'chat:start_chat' 'exchange' request.pk %}">쪽지하기</a>
+                <button class="reject" data-request-id="{{ request.request_id }}">거절</button>
               </div>
             </div>
-            <div class="title">
-              <span>7세 여아 의류</span>
-              <span class="gray-span">와 교환</span>
-            </div>
-            <!-- 거래 희망 장소 -->
-            <div class="place place-condition-age">
-              <div class="dot"></div>
-              <span id="place">상계동 하나로 마트 앞</span>
-              <span>/</span>
-              <span id="condition">상태 양호</span>
-              <span>/</span>
-              <span id="age">7-8세 추천</span>
-            </div>
-            <div class="description">
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-            </div>
-            <!-- 쪽지 버튼, 거절 버튼 -->
-            <div class="button-wrapper">
-              <a href="" class="send-message">쪽지하기</a>
-              <button class="reject">거절</button>
-            </div>
-          </div>
+          {% endfor %}
         </div>
-
-        <!-- 날짜에 따른 신청들 구분 -->
-        <div class="requests-container">
-          <div class="date">7/1</div>
-          <!-- 각 신청 -->
-          <div class="r-container">
-            <div class="text-container">
-              <div class="profile-bar">
-                <img
-                  src="/requests/static/requests/images/default_profile.png"
-                  alt="기본 프로필 사진"
-                />
-                <!-- 프로필 사진이 있다면 <img ... / >-->
-                <div class="profile">
-                  <!-- 닉네임, 시간, 위치 -->
-                  <div class="nickname-time">
-                    <div class="nickname">닉네임</div>
-                    <div class="time">13:20</div>
-                  </div>
-                  <div class="region">
-                    <img
-                      src="/requests/static/requests/images/place.svg"
-                      alt="위치 아이콘"
-                    />
-                    <p id="region">상계동</p>
-                  </div>
-                </div>
-              </div>
-              <div class="title">미끄럼 방지 여아 신발</div>
-            </div>
-            <div class="gray-divide"></div>
-            <!-- 썸네일 -->
-            <div class="images-box">
-              <!-- 고른 사진이 있을 때 -->
-              <div class="image">
-                <img
-                  src="/requests/static/requests/images/sample-img.png"
-                  alt="상품 이미지"
-                />
-              </div>
-
-              <!-- 고른 사진이 없을 때 -->
-              <div class="image-unknown">
-                <img
-                  src="/requests/static/requests/images/image.svg"
-                  alt="사진 없음"
-                />
-              </div>
-              <div class="image-unknown">
-                <img
-                  src="/requests/static/requests/images/image.svg"
-                  alt="사진 없음"
-                />
-              </div>
-            </div>
-            <div class="title">
-              <span>7세 여아 의류</span>
-              <span class="gray-span">와 교환</span>
-            </div>
-            <!-- 거래 희망 장소 -->
-            <div class="place place-condition-age">
-              <div class="dot"></div>
-              <span id="place">상계동 하나로 마트 앞</span>
-              <span>/</span>
-              <span id="condition">상태 양호</span>
-              <span>/</span>
-              <span id="age">7-8세 추천</span>
-            </div>
-            <div class="description">
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-              간단하게 입력된 설명 간단하게 입력된 설명 간단하게 입력된 설명
-            </div>
-            <!-- 쪽지 버튼, 거절 버튼 -->
-            <div class="button-wrapper">
-              <a href="" class="send-message">쪽지하기</a>
-              <button class="reject">거절</button>
-            </div>
-          </div>
-        </div>
+      {% endfor %}
 
         <!-- 하단 네비게이션 -->
         <footer class="bottom-nav">
