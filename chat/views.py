@@ -87,6 +87,19 @@ def send_message(request, thread_id):
             message.thread = thread # 쪽지방 연결
             message.member = request.user # 보낸 사람
             message.save() # 최종 저장
+            
+            # 메시지 저장 이후 상태 변경 처리
+            if thread.donation:
+                donation_request = thread.donation
+                if donation_request.status == Status.WAITING.value:
+                    donation_request.status = Status.IN_PROGRESS.value
+                    donation_request.save()
+            elif thread.exchange:
+                exchange_request = thread.exchange
+                if exchange_request.status == Status.WAITING.value:
+                    exchange_request.status = Status.IN_PROGRESS.value
+                    exchange_request.save()
+
         else:
             messages.error(request, "메시지 전송 중 오류가 발생했습니다.")
 
