@@ -7,6 +7,7 @@ from requests.enums import Status
 from .forms import MessageForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 # 1. 쪽지방 생성
 @login_required
@@ -14,9 +15,13 @@ def start_chat(request, request_type, request_id):
     if request_type == "donation":
         donation = get_object_or_404(DonationRequest, pk=request_id)
         thread, created = Thread.objects.get_or_create(donation=donation)
+        # 신청 관리에서 들어온 경우
+        request.session['previous_page'] = reverse('requests:received_donation_requests')
     elif request_type == "exchange":
         exchange = get_object_or_404(ExchangeRequest, pk=request_id)
         thread, created = Thread.objects.get_or_create(exchange=exchange)
+        # 교환 신청 관리에서 들어온 경우로 수정 가능
+        request.session['previous_page'] = reverse('requests:received_exchange_requests')
     else:
         return redirect('home')
 
@@ -26,13 +31,14 @@ def start_chat(request, request_type, request_id):
 # 2. 쪽지방 목록 조회
 @login_required
 def thread_list(request):
-    # 현재 로그인한 사용자와 관련된 쪽지방들을 조회
+    # 쪽지 목록에서 들어온 경우를 세션에 기록
+    request.session['previous_page'] = reverse('chat:thread_list')
+
     member = request.user
-    # 내가 신청자이거나, 내가 올린 아이템의 소유자인 경우
     threads = Thread.objects.filter(
         Q(donation__member=member) | Q(donation__item__member=member) |
         Q(exchange__member=member) | Q(exchange__item__member=member)
-    ).annotate(last_msg_time=Max("messages__sent_at")).order_by('-last_msg_time')  # 최근 메시지 순으로 쪽지방을 정렬해서 보여줌
+    ).annotate(last_msg_time=Max("messages__sent_at")).order_by('-last_msg_time')
 
     return render(request, 'chat/chat_list.html', {'threads': threads})
 
@@ -44,16 +50,21 @@ def chat_room(request, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id)
     messages = thread.messages.all().order_by('sent_at')
 
+    # 이전 페이지 세션 없으면 쪽지 목록으로
+    redirect_url = reverse('chat:thread_list')
+
     # 날짜별로 그룹화하여 전달 ex) 2025.07.04: [msg1, msg2]  
     grouped = {}
     for msg in messages:
         date = localtime(msg.sent_at).strftime("%Y.%m.%d")
         grouped.setdefault(date, []).append(msg)
 
-    return render(request, 'chat/chat.html', {
+    context = {
         'thread': thread,
         'grouped_messages': grouped,
-    })
+        'redirect_url': redirect_url,
+    }
+    return render(request, 'chat/chat.html', context)
 
 
 # 4. 메시지 전송
@@ -79,11 +90,23 @@ def send_message(request, thread_id):
 def complete_trade(request, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id)
 
+    # 로그인한 유저가 거래 주인인지 확인 (예: 게시물 주인 or 신청자)
     if thread.donation:
-        thread.donation.status = Status.COMPLETED
-        thread.donation.save()
+        donation_request = thread.donation
+        if donation_request.item.member != request.user and donation_request.member != request.user:
+            return redirect('chat:chat_room', thread_id=thread_id)
+
+        # 상태 변경
+        donation_request.status = Status.COMPLETED
+        donation_request.save()
+
     elif thread.exchange:
-        thread.exchange.status = Status.COMPLETED
-        thread.exchange.save()
+        exchange_request = thread.exchange
+        if exchange_request.item.member != request.user and exchange_request.member != request.user:
+            return redirect('chat:chat_room', thread_id=thread_id)
+
+        # 상태 변경
+        exchange_request.status = Status.COMPLETED
+        exchange_request.save()
 
     return redirect('chat:chat_room', thread_id=thread_id)
