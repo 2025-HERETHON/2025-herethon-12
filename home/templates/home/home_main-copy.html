@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
     <link rel="stylesheet" href="{% static 'home/home_main.css' %}" />
 
-<!--    <link rel="stylesheet" href="/posts/static/posts/common.css" />-->
-<!--    <link rel="stylesheet" href="/home/static/home/home_main.css" />-->
+
+    <!--    <link rel="stylesheet" href="/posts/static/posts/common.css" />-->
+    <!--    <link rel="stylesheet" href="/home/static/home/home_main.css" />-->
     <title>Dearbebe</title>
 </head>
 
@@ -20,18 +21,33 @@
                 <div class="top-location">{{ request.user.region_district }}</div>
                 <div class="search-box">
                     <img src="{% static 'home/images/search-icon.svg' %}" alt="검색 아이콘" class="search-icon" />
-<!--                    <img src="/home/static/home/images/search-icon.svg" alt="검색 아이콘" class="search-icon" />-->
+                    <!--                    <img src="/home/static/home/images/search-icon.svg" alt="검색 아이콘" class="search-icon" />-->
                     <input type="text" class="search-input" id="searchInput" />
-                </div> </div>
-
+                </div>
+            </div>
+            <!-- ✅ 카테고리 메뉴 -->
+            <div class="category-list">
+                <button class="category-btn {% if selected_category == '전체' %}active{% endif %}"
+                    onclick="location.href='?category=전체'">전체</button>
+                <button class="category-btn {% if selected_category == '의류' %}active{% endif %}"
+                    onclick="location.href='?category=의류'">의류</button>
+                <button class="category-btn {% if selected_category == '수유' %}active{% endif %}"
+                    onclick="location.href='?category=수유'">수유</button>
+                <button class="category-btn {% if selected_category == '위생' %}active{% endif %}"
+                    onclick="location.href='?category=위생'">위생</button>
+                <button class="category-btn {% if selected_category == '장난감' %}active{% endif %}"
+                    onclick="location.href='?category=장난감'">장난감</button>
+                <button class="category-btn {% if selected_category == '기타' %}active{% endif %}"
+                    onclick="location.href='?category=기타'">기타</button>
+            </div>
         </div>
 
-        <ul class="post-list">
+        <div class="post-list">
             <h2 class="title">최신 등록글</h2>
-
+            <img src="{% static 'home/images/home_nopost_bgi.png' %}" alt="" class="bgi">
             <div class="item-card">
                 <img src="{% static 'reviews/images/item-img1.png' %}" alt="" class="item-img">
-<!--                <img src="/reviews//static/reviews/images/item-img1.png" alt="" class="item-img">-->
+                <!--                <img src="/reviews//static/reviews/images/item-img1.png" alt="" class="item-img">-->
                 <div class="item-info">
                     <p class="item-title">하트 모양 변기</p>
                     <div class="state-line">
@@ -42,7 +58,7 @@
                     <div class="loca-min">
                         <div class="location">
                             <img src="{% static 'home/images/location.svg' %}" alt="" class="location-icon">
-<!--                            <img src="/home/static/home/images/location.svg" alt="" class="location-icon">-->
+                            <!--                            <img src="/home/static/home/images/location.svg" alt="" class="location-icon">-->
 
                             <p class="loca">상계동</p>
                         </div>
@@ -180,23 +196,54 @@
             </div>
 
 
-        </ul>
+        </div>
+        {% if page_obj.has_other_pages %}
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" class="page-btn">&lt;</a>
+    {% else %}
+      <span class="page-btn disabled">&lt;</span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <span class="page-btn active">{{ num }}</span>
+      {% else %}
+        <a href="?page={{ num }}" class="page-btn">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="page-btn">&gt;</a>
+    {% else %}
+      <span class="page-btn disabled">&gt;</span>
+    {% endif %}
+  </div>
+{% endif %}
+ </div>
+        <!-- 하단 네비게이션 -->
         <footer class="bottom-nav">
             <nav>
-                <ul>
-                    <li><img src="{% static 'reviews/images/home.svg' %}" alt=""><br />홈</li>
-                    <li><img src="{% static 'reviews/images/message.svg' %}" alt=""><br />쪽지</li>
-                    <li><img src="{% static 'reviews/images/form.svg' %}" alt=""><br />신청 관리</li>
-                    <li><img src="{% static 'reviews/images/my-active.svg' %}" alt=""><br />마이페이지</li>
-
-<!--                    <li><img src="/reviews/static/reviews/images/home.svg" alt=""><br />홈</li>-->
-<!--                    <li><img src="/reviews/static/reviews/images/message.svg" alt=""><br />쪽지</li>-->
-<!--                    <li><img src="/reviews/static/reviews/images/form.svg" alt=""><br />신청 관리</li>-->
-<!--                    <li><img src="/reviews/static/reviews/images/my.svg" alt=""><br />마이페이지</li>-->
-                </ul>
+                <a href="{% url 'home' %}" class="active">
+                    <img src="{% static 'home/images/home-active.svg' %}" alt="" />홈
+                </a>
+                <a href="{% url 'chat:thread_list' %}">
+                    <img src="{% static 'home/images/message.svg' %}" alt="" />쪽지
+                </a>
+                <a href="{% url 'requests:received_donation_requests' %}">
+                    <img src="{% static 'home/images/form.svg' %}" alt="" />신청 관리
+                </a>
+                <a href="{% url 'my_page' %}">
+                    <img src="{% static 'home/images/my.svg' %}" alt="" />마이페이지
+                </a>
             </nav>
+            <div class="plus_btn">
+                <img src="{% static 'home/images/nopost_plus.svg' %}" alt="" class="plus_bg">
+                <img src="{% static 'home/images/plusbtn.svg' %}" alt="" class="plus">
+            </div>
+
         </footer>
-    </div>
+   
 
 </body>
 
