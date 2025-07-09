@@ -4,11 +4,31 @@ const cancel = document.getElementById("cancel");
 const completeBtn = document.getElementById("complete-btn");
 const imgInput = document.getElementById("img-input");
 const ok = document.getElementById("ok");
+const preview = document.querySelector(".img-preview")
+const previewDarken = document.querySelector(".preview-darken")
+const completeForm = document.getElementById("complete-form")
 
 // 모달창 닫는 함수
 function closeAll() {
   darken.classList.add("hidden");
   completeModal.classList.add("hidden");
+}
+
+// 사진 미리보기 함수
+function renderPreview(photo) {
+  // 초기화
+  preview.classList.add("hidden");
+  previewDarken.classList.add("hidden");
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const previewImg = preview.querySelector("img");
+    previewImg.src = e.target.result;
+
+    preview.classList.remove("hidden");
+    previewDarken.classList.remove("hidden");
+  }
+  reader.readAsDataURL(photo);
 }
 
 // 거래완료 버튼 누르면 화면 어두워지고 모달창 뜸
@@ -33,6 +53,11 @@ ok.addEventListener("click", () => {
   // 폼은 그대로 submit 됨
 });
 
+// 거래완료 form 제출 시 버튼 색 변경
+completeForm.addEventListener("submit", () => {
+  completeBtn.style.backgroundColor = "#8A8A8A"; // 거래완료 시 회색 버튼 됨
+})
+
 // 사진 여러 장 업로드 금지
 imgInput.addEventListener("change", () => {
   const photos = Array.from(imgInput.files);
@@ -41,21 +66,52 @@ imgInput.addEventListener("change", () => {
     imgInput.value = "";
     return;
   }
+  // 사진 미리보기
+  renderPreview(photos[0]);
 });
 
-// 입력 없을 경우 전송되지 않게 (여전히 전송됨.. 해결해야함)
+// 입력 없을 경우 전송되지 않게 (여전히 전송됨.. 해결해야함) => 해결 완료!
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".chat-input");
   const textInput = document.getElementById("text-input");
   const imgInput = document.getElementById("img-input");
+  const sendBtn = document.getElementById("send-btn")
 
-  form.addEventListener("submit", function (e) {
+  // 초기화
+  textInput.removeAttribute("disabled"); 
+  textInput.removeAttribute("readonly"); 
+
+  // 사진 파일이 올라와 있으면 text 입력은 못하게
+  imgInput.addEventListener("change", () => {
+    textInput.setAttribute("readonly", true);
+    // text도 같이 보내진다고 착각하지 않게 입력창 비움
+    textInput.value = "";
+  // 나중에 사진 삭제하는 기능이 만약에,, 나와서 사진 삭제되면 다시 text 입력할 수 있게
+  //   if (imgInput.files.length > 0) {
+  //   textInput.setAttribute("readonly", true);
+  //   textInput.value = "";
+  // } else {
+  //   textInput.removeAttribute("readonly");
+  // }
+  })
+
+  sendBtn.addEventListener("click", function (e) {
     const text = textInput.value.trim();
     const image = imgInput.files[0];
+
+    // 현재 템플릿 조건문이 image 먼저 체크하므로 text image 둘 다 올리면 image만 올라가게
+    if (text && image) {
+      textInput.setAttribute("disabled", true);
+    }
 
     if (!text && !image) {
       // alert 없이 조용히 전송 막기
       e.preventDefault();
+      form.style.borderColor = "var(--color-red)"; // 경고 표시로 input창 테두리 색 변경
+    } else {
+      form.style.borderColor = "#bebebe"; // 테두리 색 원상복구
+      preview.classList.add("hidden");
+      previewDarken.classList.add("hidden");
     }
   });
 });
