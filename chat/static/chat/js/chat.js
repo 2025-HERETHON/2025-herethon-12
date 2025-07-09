@@ -3,6 +3,7 @@ const completeModal = document.querySelector(".complete-modal");
 const cancel = document.getElementById("cancel");
 const completeBtn = document.getElementById("complete-btn");
 const imgInput = document.getElementById("img-input");
+const ok = document.getElementById("ok");
 
 // 모달창 닫는 함수
 function closeAll() {
@@ -26,6 +27,12 @@ completeModal.addEventListener("click", (e) => {
 document.addEventListener("click", closeAll);
 cancel.addEventListener("click", closeAll);
 
+// ✅ 네 버튼을 눌렀을 때도 모달창 닫기
+ok.addEventListener("click", () => {
+  closeAll();  // 모달 닫기
+  // 폼은 그대로 submit 됨
+});
+
 // 사진 여러 장 업로드 금지
 imgInput.addEventListener("change", () => {
   const photos = Array.from(imgInput.files);
@@ -34,4 +41,21 @@ imgInput.addEventListener("change", () => {
     imgInput.value = "";
     return;
   }
+});
+
+// 입력 없을 경우 전송되지 않게 (여전히 전송됨.. 해결해야함)
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector(".chat-input");
+  const textInput = document.getElementById("text-input");
+  const imgInput = document.getElementById("img-input");
+
+  form.addEventListener("submit", function (e) {
+    const text = textInput.value.trim();
+    const image = imgInput.files[0];
+
+    if (!text && !image) {
+      // alert 없이 조용히 전송 막기
+      e.preventDefault();
+    }
+  });
 });

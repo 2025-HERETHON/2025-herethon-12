@@ -17,78 +17,33 @@
         </div>
 
         <ul class="chat_list">
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
+        {% for thread in threads %}
+        <!-- 오류는 아니고 vscode 상에서 인식이 안되는 문제인 것 같습니다. 일단 수정하지말아주세요 ! -->
+            <li class="chat-item" onclick="location.href='{% url 'chat:chat_room' thread.thread_id %}'">
+            <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
+            <div class="chat-content">
+                <p class="chat-title">
+                {% if thread.donation %}
+                    {{ thread.donation.item.title }}
+                {% elif thread.exchange %}
+                    {{ thread.exchange.item.title }}
+                {% endif %}
+                </p>
+                <p class="chat-start">
+                {% if thread.messages.exists %}
+                    {{ thread.messages.last.content|default:"사진을 보냈어요." }}
+                {% else %}
+                    대화가 시작되었어요! 지금 바로 대화를 시작해보세요
+                {% endif %}
+                </p>
+            </div>
+            <span class="time">
+                {% if thread.messages.exists %}
+                {{ thread.messages.last.sent_at|time:"H:i" }}
+                {% endif %}
+            </span>
             </li>
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
-            </li>
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
-            </li>
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
-            </li>
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
-            </li>
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
-            </li>
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
-            </li>
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
-            </li>
-            <li class="chat-item">
-                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
-                <div class="chat-content">
-                    <p class="chat-title">미끄럼 방지 여아 신발</p>
-                    <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
-                </div>
-                <span class="time">12:50</span>
-            </li>
+        {% endfor %}
         </ul>
     </div>
     <!-- 하단 네비게이션 -->

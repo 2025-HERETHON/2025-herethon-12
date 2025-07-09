@@ -22,7 +22,7 @@ def received_donation_requests(request):
     member = request.user
     my_items = Item.objects.filter(member=member)
 
-    # ✅ 거절된(REJECTED) 요청 제외
+    # 거절된(REJECTED) 요청 제외
     donation_requests = DonationRequest.objects.filter(
         item__in=my_items
     ).exclude(
