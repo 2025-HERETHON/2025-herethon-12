@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'chat/common.css' %}" />
-    <link rel="stylesheet" href="{% static 'chat/chat.css' %}" />
+    <link rel="stylesheet" href="{% static 'chat/chat_list.css' %}" />
     <title>Dearbebe</title>
 </head>
 
@@ -18,7 +18,7 @@
 
         <ul class="chat_list">
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -26,7 +26,7 @@
                 <span class="time">12:50</span>
             </li>
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -34,7 +34,7 @@
                 <span class="time">12:50</span>
             </li>
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -42,7 +42,7 @@
                 <span class="time">12:50</span>
             </li>
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -50,7 +50,7 @@
                 <span class="time">12:50</span>
             </li>
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -58,7 +58,7 @@
                 <span class="time">12:50</span>
             </li>
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -66,7 +66,7 @@
                 <span class="time">12:50</span>
             </li>
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -74,7 +74,7 @@
                 <span class="time">12:50</span>
             </li>
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -82,7 +82,7 @@
                 <span class="time">12:50</span>
             </li>
             <li class="chat-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+                <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
                 <div class="chat-content">
                     <p class="chat-title">미끄럼 방지 여아 신발</p>
                     <p class="chat-start">대화가 시작되었어요! 지금 바로 대화를 시작해보세요</p>
@@ -91,24 +91,35 @@
             </li>
         </ul>
     </div>
-    <footer class="bottom-nav">
-        <nav>
-            <ul>
-              <li>
-                <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-              </li>
-              <li>
-                <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-              </li>
-              <li>
-                <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-              </li>
-              <li class="active">
-                <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
-              </li>
-            </ul>
-        </nav>
-    </footer>
+    <!-- 하단 네비게이션 -->
+        <footer class="bottom-nav">
+          <nav>
+            <a href="{% url 'home' %}">
+              <img src="{% static 'chat/images/home.svg' %}" alt="" />홈
+            </a>
+            <a href="{% url 'chat:thread_list' %}" class="active">
+              <img
+                src="{% static 'chat/images/message-active.svg' %}"
+                alt=""
+              />쪽지
+            </a>
+            <a
+              href="{% url 'requests:received_donation_requests' %}"
+              
+            >
+              <img
+                src="{% static 'chat/images/form.svg' %}"
+                alt=""
+              />신청 관리
+            </a>
+            <a href="{% url 'my_page' %}">
+              <img
+                src="{% static 'chat/images/my.svg' %}"
+                alt=""
+              />마이페이지
+            </a>
+          </nav>
+        </footer>
 
     </div>
 </body>

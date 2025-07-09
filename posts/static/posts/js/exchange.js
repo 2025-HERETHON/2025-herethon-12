@@ -185,32 +185,55 @@ mainForm.addEventListener("submit", (e) => {
 });
 
 // 모달창의 확인 버튼을 눌러야 최종 submit 되는 방식
+//ok.addEventListener("click", () => {
+//  // 확인 버튼이 submit이니까 중복 제출되지 않도록
+//  ok.disabled = true;
+//
+//  const formData = new FormData(mainForm);
+//  formData.delete("photos"); // 중복 제거
+//  allPhotos.forEach((photo) => formData.append("photos", photo));
+//  photoInput.value = ""; // 초기화
+//
+//  fetch(mainForm.action, {
+//    method: "POST",
+//    body: formData,
+//  })
+//    .then((res) => res.json())
+//    .then((data) => {
+//        if (data.redirect_url) {
+//        window.location.href = data.redirect_url;
+//        } else {
+//        alert("다시 시도해주세요.");
+//        ok.disabled = false;
+//        }
+//    })
+//    .catch(() => {
+//        alert("다시 시도해주세요.");
+//        ok.disabled = false;
+//   });
+// });
+//alert 삭제
 ok.addEventListener("click", () => {
-  // 확인 버튼이 submit이니까 중복 제출되지 않도록
   ok.disabled = true;
 
   const formData = new FormData(mainForm);
-  formData.delete("photos"); // 중복 제거
+  formData.delete("photos");
   allPhotos.forEach((photo) => formData.append("photos", photo));
-  photoInput.value = ""; // 초기화
+  photoInput.value = "";
 
   fetch(mainForm.action, {
     method: "POST",
     body: formData,
   })
-    .then((res) => {
-      if (res.redirected) {
-        window.location.href = res.url;
-        // 성공시 모달창 닫음
-        darken.classList.add("hidden");
-        modal.classList.add("hidden");
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.redirect_url) {
+        window.location.href = data.redirect_url;
       } else {
-        alert("다시 시도해주세요.");
-        ok.disabled = false; // 문제시 다시 클릭 가능하도록
+        ok.disabled = false;
       }
     })
     .catch(() => {
-      alert("다시 시도해주세요.");
-      ok.disabled = false; // 문제시 다시 클릭 가능하도록
+      ok.disabled = false;
     });
 });

@@ -3,6 +3,8 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+app_name = 'chat'  # 템플릿이나 reverse 함수에서 네임스페이스로 사용 가능
+
 urlpatterns = [
     # 받은 신청에서 "쪽지하기" 누르면 쪽지방 생성 (거래 종류와 id 기반)
     path('start/<str:request_type>/<int:request_id>/', views.start_chat, name='start_chat'),

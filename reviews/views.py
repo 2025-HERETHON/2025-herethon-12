@@ -6,10 +6,10 @@ from .models import Review
 from .forms import ReviewForm
 from django.db.models import Avg
 from django.utils.timezone import localtime, now
-from requests.models import ExchangeRequest, DonationRequest
+from user_requests.models import ExchangeRequest, DonationRequest
 from collections import defaultdict
 from reviews.models import Review
-from requests.enums import Status
+from user_requests.enums import Status
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
 from accounts.models import Member

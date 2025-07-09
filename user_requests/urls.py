@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'requests'  # 템플릿이나 reverse 함수에서 네임스페이스로 사용 가능
+app_name = 'user_requests'  # 템플릿이나 reverse 함수에서 네임스페이스로 사용 가능
 
 urlpatterns = [
     path('donation/received/', views.received_donation_requests, name='received_donation_requests'),

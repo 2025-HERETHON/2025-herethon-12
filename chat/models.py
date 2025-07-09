@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import Member
-from requests.models import ExchangeRequest, DonationRequest
+from user_requests.models import ExchangeRequest, DonationRequest
 
 class Thread(models.Model):
     thread_id = models.AutoField(primary_key=True)

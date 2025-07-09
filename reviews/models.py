@@ -23,10 +23,10 @@ class Review(models.Model):
 
     # 거래 기록 연결: 교환 또는 나눔 중 하나만 연결됨
     exchange_request = models.ForeignKey(
-        'requests.ExchangeRequest', on_delete=models.SET_NULL, null=True, blank=True
+        'user_requests.ExchangeRequest', on_delete=models.SET_NULL, null=True, blank=True
     )
     donation_request = models.ForeignKey(
-        'requests.DonationRequest', on_delete=models.SET_NULL, null=True, blank=True
+        'user_requests.DonationRequest', on_delete=models.SET_NULL, null=True, blank=True
     )
 
     def __str__(self):

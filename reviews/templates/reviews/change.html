@@ -21,7 +21,7 @@
 
       <div class="item-card">
         <img
-          src="/reviews//static/reviews/images/item-img1.png"
+          src="{% static 'reviews/images/item-img1.png' %}"
           alt=""
           class="item-img"
         />
@@ -40,7 +40,7 @@
 
       <div class="item-card">
         <img
-          src="/reviews//static/reviews/images/item-img2.png"
+          src="{% static 'reviews/images/item-img2.png' %}"
           alt=""
           class="item-img"
         />
@@ -60,7 +60,7 @@
 
       <div class="item-card">
         <img
-          src="/reviews//static/reviews/images/item-img3.png"
+          src="{% static 'reviews/images/item-img3.png' %}"
           alt=""
           class="item-img"
         />
@@ -79,7 +79,7 @@
 
       <div class="item-card">
         <img
-          src="/reviews//static/reviews/images/item-img4.png"
+          src="{% static 'reviews/images/item-img4.png' %}"
           alt=""
           class="item-img"
         />
@@ -93,22 +93,24 @@
         </div>
       </div>
 
+      <!-- 하단 네비게이션 -->
       <footer class="bottom-nav">
         <nav>
-          <ul>
-            <li>
-              <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-            </li>
-            <li>
-              <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-            </li>
-            <li>
-              <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-            </li>
-            <li class="active">
-              <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
-            </li>
-          </ul>
+          <a href="{% url 'home' %}">
+            <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+          </a>
+          <a href="{% url 'chat:thread_list' %}">
+            <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+          </a>
+          <a href="{% url 'requests:received_donation_requests' %}">
+            <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+          </a>
+          <a href="{% url 'my_page' %}" class="active">
+            <img
+              src="{% static 'reviews/images/my-active.svg' %}"
+              alt=""
+            />마이페이지
+          </a>
         </nav>
       </footer>
     </div>
