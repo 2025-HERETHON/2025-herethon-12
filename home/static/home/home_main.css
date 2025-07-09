@@ -1,25 +1,56 @@
-.main-countainer {
+.main-container {
   display: flex;
   flex-direction: column;
+  padding-bottom: 100px;
 }
 
 .header {
   position: fixed;
   max-width: 430px;
   background-color: white;
-  /* 투명하면 뒤 내용 비침 */
   z-index: 999;
-  /* 항상 위로 */
   padding: 12px 16px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 12px 16px 0px;
   width: 100%;
+}
+
+/*  카테고리 버튼 */
+.main-container .category-list {
+  display: flex;
+  justify-content: space-between;
+  gap: 0;
+  padding: 0;
+  margin-top: 0px;
+}
+
+.category-btn {
+  flex: 1;
+  /* 모든 버튼 동일 너비 */
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-deep-main);
+  cursor: pointer;
+  padding: 6px 0;
+  text-align: center;
+  border-bottom: 1px solid var(--color-light-main);
+}
+
+.category-btn.active {
+  color: var(--color-deep-main);
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-deep-main);
 }
 
 .search-box {
@@ -35,11 +66,12 @@
   font-weight: 700;
   font-weight: bold;
   color: var(--color-deep-main);
+  white-space: nowrap;
 }
 
 .search-input {
-  width: 100%;
-  padding: 8px 12px 8px 36px;
+  width: 90%;
+  padding: 8px 12px 8px 30px;
   /* 왼쪽 패딩: 아이콘 공간 확보 */
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -60,16 +92,36 @@
 }
 
 /* ===== 아이템 카드 ===== */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 200px);
+  position: relative;
+}
+
+.bgi {
+  width: 209px;
+  height: 254px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 40px;
+}
+
 .title {
   font-size: 16px;
   font-weight: bold;
   padding: 8px 16px;
   margin-bottom: 0;
 }
+
 .post-list {
   display: flex;
   flex-direction: column;
-  padding-top: 15px;
+  padding-top: 60px;
+  margin-bottom: 90px;
 }
 
 .item-card {
@@ -161,6 +213,65 @@
   font-size: 17px;
   font-weight: 600;
   margin-top: 60px;
+}
+
+.plus_btn {
+  position: fixed;
+  bottom: 100px;
+  /* nav보다 살짝 위 */
+  left: 40%;
+  transform: translateX(150px);
+  /* 오른쪽 정렬 + nav 폭 고려 (430px 기준이면 약 +150px) */
+  width: 52px;
+  height: 52px;
+  z-index: 20;
+  /* nav보다 위에 오게 */
+  pointer-events: auto;
+}
+
+.plus_bg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+  font-size: 14px;
+  position: relative;
+  margin-bottom: 140px;
+}
+
+.page-btn {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  color: #333;
+  text-decoration: none;
+}
+
+.page-btn.active {
+  background-color: var(--color-deep-main);
+  color: white;
+  border-color: var(--color-deep-main);
+}
+
+.page-btn.disabled {
+  color: #ccc;
+  border-color: #eee;
+  pointer-events: none;
 }
 
 /* ===== 하단 네비게이션 ===== */
