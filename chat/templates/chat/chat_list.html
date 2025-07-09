@@ -17,10 +17,14 @@
         </div>
 
         <ul class="chat_list">
-        {% for thread, unread in threads %}
+        {% for thread, unread, opponent_image in threads %}
         <!-- 오류는 아니고 vscode 상에서 인식이 안되는 문제인 것 같습니다. 일단 수정하지말아주세요 ! -->
             <li class="chat-item" onclick="location.href='{% url 'chat:chat_room' thread.thread_id %}'">
+            {% if opponent_image %}
+            <img src="{{ opponent_image }}" class="review-profile" alt="프로필" />
+            {% else %}
             <img src="{% static 'chat/images/profile-icon.png' %}" class="review-profile" alt="프로필" />
+            {% endif %}
             <div class="chat-content">
                 <p class="chat-title">
                 {% if thread.donation %}

@@ -173,12 +173,13 @@ def edit_profile(request):
                 "username": username,
                 "nickname": nickname,
                 "profile_image": profile_image,
+                "member": member, 
             })
 
         member.username = username
         member.nickname = nickname
         if profile_image:
-            member.profile_image = profile_image
+            member.image = profile_image
         member.save()
         return redirect('my_page')
 
