@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
     <link rel="stylesheet" href="{% static 'home/home_search.css' %}" />
+    <link rel="stylesheet" href="{% static 'home/home_nopost.css' %}" />
 <!--    <link rel="stylesheet" href="/posts/static/posts/common.css" />-->
 <!--    <link rel="stylesheet" href="/home/static/home/home_search.css" />-->
     <title>Dearbebe</title>
@@ -39,7 +40,7 @@
                 </div>
         </div>
 
-
+    {% if items %}
         <ul class="post-list">
             <h2 class="title">최신 등록글</h2>
             {% for item in items %}
@@ -57,7 +58,7 @@
                             <p class="age">
                             {% if item.condition %}{{ item.get_condition_display }}{% endif %}
                             {% if item.condition and item.age %} / {% endif %}
-                                {% if item.age %}{{ item.get_age_display }}{% endif %}
+                                {% if item.age %}{{ item.get_age_display }} 추천{% endif %}
                             </p>
                         {% endif %}
                     </div>
@@ -74,6 +75,13 @@
             </div>
             {% endfor %}
         </ul>
+        {% else %}
+        <div class="main">
+            <img src="{% static 'home/images/home_nopost_bgi.png' %}" alt="" class="bgi">
+            <p class="nopost">아직 등록된 게시글이 없습니다. <br />첫 게시물을 작성해 보세요!</p>
+        </div>
+        {% endif %}
+
         <!-- 하단 네비게이션 -->
         <footer class="bottom-nav">
           <nav>
