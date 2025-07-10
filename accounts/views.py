@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib import messages
@@ -78,6 +79,7 @@ def signup_page(request):
     return render(request, "accounts/signup.html")
 
 #동네 설정
+@login_required
 def my_region(request):
     if request.method == 'POST':
         member = request.user
@@ -89,6 +91,7 @@ def my_region(request):
     return render(request, 'accounts/location.html')
 
 #상대방 프로필
+@login_required
 def profile_view(request, pk):
     user = get_object_or_404(Member, pk=pk)
 
@@ -97,8 +100,11 @@ def profile_view(request, pk):
 
     #유저가 받은 후기들
     received_reviews = Review.objects.filter(receiver=user).order_by('-created_at')
+    received_review_count = received_reviews.count()
 
     return render(request, 'home/profile.html', {
         'profile_user': user,
-        'posts': posts
+        'posts': posts,
+        'received_reviews': received_reviews,
+        'received_review_count': received_review_count,
     })

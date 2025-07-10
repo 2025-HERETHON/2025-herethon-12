@@ -26,7 +26,11 @@
         </header>
         <section class="user-summary">
             <div class="user-card">
+                {% if profile_user.image %}
+                <img src="{{ profile_user.image.url }}" alt="프로필" class="profile-img" />
+                {% else %}
                 <img src="{% static 'reviews/images/profile-icon.png' %}" alt="프로필" class="profile-img" />
+                {% endif %}
 <!--                <img src="/reviews/static/reviews/images/profile-icon.png" alt="프로필" class="profile-img" />-->
                 <div class="user-info">
                     <p class="username">{{profile_user.nickname}}</p>
@@ -50,7 +54,7 @@
                         <span class="star-icon star5.0"></span>
                     </div>
                     <!-- 이 숫자에 따라 별점 표시 달라짐 -->
-                    <div class="rating-score">4.5</div>
+                    <div class="rating-score">{{profile_user.star}}</div>
                 </div>
             </div>
 
@@ -58,7 +62,7 @@
         <ul class="post-list">
             <div class="title_line">
                 <h2 class="title">{{profile_user.nickname}}님의 게시글</h2>
-                <img src="../../static/home/images/profile_down.svg" alt="" class="down">
+                <img src="{% static 'home/images/profile_down.svg' %}" alt="" class="down">
             </div>
             {% for item in posts %}
             <div class="item-card" onclick="location.href='{% url 'post_detail' item.item_id %}'">
@@ -88,11 +92,18 @@
         </ul>
         <div class="review_list">
             <div class="title_line">
-                <h2 class="review-title">받은 거래 후기 몇개</h2>
-                <img src="../../static/home/images/profile_down.svg" alt="" class="review-down">
+                <h2 class="review-title">받은 거래 후기 {{received_review_count}}</h2>
+                <img src="{% static 'home/images/profile_down.svg' %}" alt="" class="review-down">
             </div>
+            {% for review in received_reviews %}
             <li class="review-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
+            <a href="{%url 'profile' review.writer.pk%}">
+                {% if review.writer.image %}
+                <img src="{{ review.writer.image.url }}" alt="프로필" class="profile-img" />
+                {% else %}
+                <img src="{% static 'reviews/images/profile-icon.png' %}" alt="프로필" class="review-profile" />
+                {% endif %}
+            </a>
                 <div class="review-content">
                     <div class="rating-box">
                         <div class="rating">
@@ -107,74 +118,20 @@
                             <span class="star-icon star4.5"></span>
                             <span class="star-icon star5.0"></span>
                         </div>
-                        <div class="rating-score">4.5</div>
+                        <div class="rating-score">{{ review.rating }}</div>
                     </div>
 
                     <p class="review-text">
-                        유모차 무료 나눔 받았는데 너무 좋았습니다!! 감사합니다.</p>
+                        {{review.content}}</p>
                 </div>
 
                 <div class="review-meta">
-                    <span class="date">3일전</span>
+                    <span class="date">{{review.created_at|time_since_custom}}</span>
 
                 </div>
+
             </li>
-            <li class="review-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
-                <div class="review-content">
-           <div class="rating-box">
-                        <div class="rating">
-                            <span class="star-icon star0.5"></span>
-                            <span class="star-icon star1.0"></span>
-                            <span class="star-icon star1.5"></span>
-                            <span class="star-icon star2.0"></span>
-                            <span class="star-icon star2.5"></span>
-                            <span class="star-icon star3.0"></span>
-                            <span class="star-icon star3.5"></span>
-                            <span class="star-icon star4.0"></span>
-                            <span class="star-icon star4.5"></span>
-                            <span class="star-icon star5.0"></span>
-                        </div>
-                        <div class="rating-score">4.5</div>
-                    </div>
-
-                    <p class="review-text">
-                        유모차 무료 나눔 받았는데 너무 좋았습니다!! 감사합니다.</p>
-                </div>
-
-                <div class="review-meta">
-                    <span class="date">3일전</span>
-
-                </div>
-            </li>
-            <li class="review-item">
-                <img src="/reviews/static/reviews/images/profile-icon.png" class="review-profile" alt="프로필" />
-                <div class="review-content">
-           <div class="rating-box">
-                        <div class="rating">
-                            <span class="star-icon star0.5"></span>
-                            <span class="star-icon star1.0"></span>
-                            <span class="star-icon star1.5"></span>
-                            <span class="star-icon star2.0"></span>
-                            <span class="star-icon star2.5"></span>
-                            <span class="star-icon star3.0"></span>
-                            <span class="star-icon star3.5"></span>
-                            <span class="star-icon star4.0"></span>
-                            <span class="star-icon star4.5"></span>
-                            <span class="star-icon star5.0"></span>
-                        </div>
-                        <div class="rating-score">4.5</div>
-                    </div>
-
-                    <p class="review-text">
-                        유모차 무료 나눔 받았는데 너무 좋았습니다!! 감사합니다.</p>
-                </div>
-
-                <div class="review-meta">
-                    <span class="date">3일전</span>
-
-                </div>
-            </li>
+            {% endfor %}
         </div>
     </div>
     <script src="{% static 'home/js/profile.js' %}"></script>
