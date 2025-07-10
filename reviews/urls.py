@@ -16,5 +16,5 @@ urlpatterns = [
     path('mypage/donations/received', views.my_received_donations, name='my_received_donations'),
 
     path('mypage/reviews/', views.my_reviews_view, name='my_reviews_view'),
-    path('reviews/delete/<int:review_id>/', views.delete_review, name='delete_review'),
+    path('delete/<int:review_id>/', views.delete_review, name='delete_review'),
 ]

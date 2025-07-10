@@ -35,6 +35,12 @@ def create_review(request, request_type, request_id):
         else:
             return HttpResponseForbidden("후기를 작성할 권한이 없습니다.")
 
+        #별점 평균 receiver에 반영 > 반올림
+        avg_rating = Review.objects.filter(receiver=receiver).aggregate(avg=Avg('rating'))['avg'] or 0
+        filled_count = int(round(avg_rating * 2))
+        stars = range(10)
+        receiver.save()
+            
         #이미 리뷰를 작성한 경우
         if request.method == 'POST': #post일 때만 검증.. > 토글은 get이라 해당 로직 제외
             if Review.objects.filter(exchange_request=exchange, writer=writer).exists():
@@ -50,11 +56,6 @@ def create_review(request, request_type, request_id):
                 review.exchange_request = exchange
                 review.save()
 
-                #별점 평균 receiver에 반영 > 반올림
-                avg_rating = Review.objects.filter(receiver=receiver).aggregate(avg=Avg('rating'))['avg'] or 0
-                receiver.star = round(avg_rating, 1)
-                receiver.save()
-
                 #messages.success(request, "후기가 등록되었습니다.")
                 #return redirect('my_exchange_history')
                 return redirect(f"{request.path}?success=1")
@@ -68,6 +69,9 @@ def create_review(request, request_type, request_id):
             'request_type': request_type,
             'writer_role': writer_role,
             'show_modal': request.GET.get('success') == '1',
+            'avg_rating': avg_rating,
+            'filled_count': filled_count,
+            'stars': stars,
         })
 
     # --- 나눔 후기 작성 ---
@@ -79,6 +83,12 @@ def create_review(request, request_type, request_id):
             return HttpResponseForbidden("후기를 작성할 권한이 없습니다.")
 
         receiver = donation.item.member
+
+        #별점 평균 receiver에 반영 > 반올림
+        avg_rating = Review.objects.filter(receiver=receiver).aggregate(avg=Avg('rating'))['avg'] or 0
+        filled_count = int(round(avg_rating * 2))
+        stars = range(10)
+        receiver.save()
 
         if request.method == 'POST':  # post일 때만 검증.. > 토글은 get이라 해당 로직 제외
             if Review.objects.filter(donation_request=donation, writer=writer).exists():
@@ -105,6 +115,9 @@ def create_review(request, request_type, request_id):
             'receiver': receiver,
             'request_type': request_type,
             'show_modal': request.GET.get('success') == '1',
+            'avg_rating': avg_rating,
+            'filled_count': filled_count,
+            'stars': stars,
         })
 
     # 잘못된 request_type 처리
@@ -139,7 +152,9 @@ def my_reviews_view(request):
         'rating': r.rating,
         'content': r.content,
         'image': r.image.url if r.image else None,
-        'days_ago': time_since_display(localtime(r.created_at))
+        'days_ago': time_since_display(localtime(r.created_at)),
+        'filled_count': int(round(r.rating * 2)),
+        'avg_rating': r.rating,
     } for r in received]
 
     # 작성한 후기: 내가 쓴 후기들 (삭제 가능)
@@ -147,16 +162,22 @@ def my_reviews_view(request):
     written_reviews = [{
         'review': r,
         'image': r.image.url if r.image else None,
-        'days_ago': time_since_display(localtime(r.created_at))
+        'days_ago': time_since_display(localtime(r.created_at)),
+        'filled_count': int(round(r.rating * 2)),
+        'avg_rating': r.rating,
     } for r in written]
 
     avg_rating = received.aggregate(avg=Avg('rating'))['avg'] or 0
+    filled_count = int(round(avg_rating * 2)) # 반별 몇 칸을 채울 지
+    stars = range(10) # 총 반별
 
     return render(request, 'reviews/myreview.html', {
         'user' : user,
         'nickname': user.nickname,
         'username': user.username,
-        'avg_rating': round(avg_rating, 1),
+        'avg_rating': avg_rating,
+        'filled_count': filled_count,
+        'stars': stars,
         'view_type': view_type,
         'received_reviews': received_reviews,
         'written_reviews': written_reviews,
