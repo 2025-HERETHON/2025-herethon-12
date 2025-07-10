@@ -18,14 +18,11 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 0;
-<<<<<<< Updated upstream
   width: 100%;
   display: flex;
   flex-direction: column;
   height: 60px;
-=======
   margin-bottom: 0px;
->>>>>>> Stashed changes
 }
 
 .top-bar {
@@ -36,7 +33,6 @@ h2 {
   gap: 20px;
 }
 
-<<<<<<< Updated upstream
 /*  카테고리 버튼 */
 .main-container .category-list {
   display: flex;
@@ -73,8 +69,6 @@ h2 {
   font-weight: bold;
   border-bottom: 2px solid var(--color-deep-main);
 }
-=======
->>>>>>> Stashed changes
 
 .search-box {
   display: flex;
@@ -132,7 +126,7 @@ h2 {
   transform: translate(-50%, -50%);
   margin-top: 40px;
   pointer-events: none;
-   z-index: 0;
+  z-index: 0;
 }
 
 .title {
@@ -145,15 +139,10 @@ h2 {
 .post-list {
   display: flex;
   flex-direction: column;
-<<<<<<< Updated upstream
-  margin-top: 90px;
+  margin-top: 60px;
   padding-bottom: 90px;
-=======
-  padding-top: 12px;
-  margin-bottom: 90px;
   position: relative;
   z-index: 1; /* ✅ bgi보다 높게 설정 */
->>>>>>> Stashed changes
 }
 
 .item-card {

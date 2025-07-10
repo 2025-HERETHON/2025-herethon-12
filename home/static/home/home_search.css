@@ -125,16 +125,11 @@ h2 {
 .post-list {
   display: flex;
   flex-direction: column;
-<<<<<<< Updated upstream
   margin-top: 90px;
   padding-bottom: 90px;
-=======
-  padding-top: 60px;
-  margin-bottom: 90px;
   position: relative;
   /* ✅ 추가! */
   z-index: 1;
->>>>>>> Stashed changes
 }
 
 .item-card {
