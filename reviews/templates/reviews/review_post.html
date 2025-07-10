@@ -28,21 +28,32 @@
       <form method="POST" action="" class="main-form">
         <div class="review-title">
           <div class="text-label">
-            <span class="review-nickname">닉네임</span>
-            <span> 님의 나눔, 어떠셨나요?</span>
+            <span class="review-nickname"></span>
+<!--            <span> 님의 나눔, 어떠셨나요?</span>-->
+            {% if request_type == "exchange" %}
+              {% if writer_role == "requester" %}
+                <span class="review-nickname">{{ receiver.nickname }}</span> 님과의 교환, 어떠셨나요?
+              {% elif writer_role == "owner" %}
+                <span class="review-nickname">{{ receiver.nickname }}</span> 님과의 교환, 어떠셨나요?
+              {% endif %}
+            {% elif request_type == "donation" %}
+              <span class="review-nickname">{{ receiver.nickname }}</span> 님의 나눔, 어떠셨나요?
+            {% endif %}
             <!-- 교환일 경우 -->
             <!-- <span> 님과의 교환, 어떠셨나요?</span> -->
           </div>
         </div>
         <div class="star-container">
           <div class="thumbnail">
-            <img
-              src="/reviews/static/reviews/images/sample-img.png"
-              alt="후기 물품 썸네일"
-            />
+            {% if item.images.all %}
+              <img src="{{ item.images.all.0.image.url }}" alt="후기 물품 썸네일" />
+            {% else %}
+              <img src="{% static 'reviews/images/sample-img.png' %}" alt="후기 물품 썸네일" />
+            {% endif %}
+
           </div>
           <div class="star-box">
-            <div class="text-label">신형 유모차</div>
+            <div class="text-label">{{item.title}}</div>
             <div class="rating">
               <label for="star0.5" class="rating-label">
                 <input
@@ -150,9 +161,14 @@
           </div>
         </div>
         <div class="desc-container">
-          <label for="description" class="text-label"
-            >나눔 후기를 작성해 주세요!</label
-          >
+          <label for="description" class="text-label">
+            {% if request_type == "exchange" %}
+            교환
+            {% elif request_type == "donation" %}
+            나눔
+            {% endif %}
+            후기를 작성해 주세요!
+          </label>
           <!-- 교환일 경우 -->
           <!-- <label for="description" class="text-label">교환 후기를 작성해 주세요!</label> -->
           <div class="wrapper">

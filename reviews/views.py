@@ -26,8 +26,10 @@ def create_review(request, request_type, request_id):
         # 쌍방 모두 후기를 남길 수 있도록 조건 분기
         if writer == exchange.member: # 내가 신청한 경우
             receiver = exchange.item.member
+            writer_role = 'requester'
         elif writer == exchange.item.member: # 상대방이 신청한 경우 
             receiver = exchange.member
+            writer_role = 'owner'
         else:
             return HttpResponseForbidden("후기를 작성할 권한이 없습니다.")
 
@@ -55,10 +57,12 @@ def create_review(request, request_type, request_id):
         else:
             form = ReviewForm()
 
-        return render(request, 'reviews/review_form.html', {
+        return render(request, 'reviews/review_post.html', {
             'form': form,
             'item': exchange.item,
-            'receiver': receiver
+            'receiver': receiver,
+            'request_type': request_type,
+            'writer_role': writer_role
         })
 
     # --- 나눔 후기 작성 ---
@@ -88,10 +92,11 @@ def create_review(request, request_type, request_id):
         else:
             form = ReviewForm()
 
-        return render(request, 'reviews/review_form.html', {
+        return render(request, 'reviews/review_post.html', {
             'form': form,
             'item': donation.item,
-            'receiver': receiver
+            'receiver': receiver,
+            'request_type': request_type,
         })
 
     # 잘못된 request_type 처리

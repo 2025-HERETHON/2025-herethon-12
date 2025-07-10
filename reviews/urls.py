@@ -1,8 +1,10 @@
 from django.urls import path
+from django.views.generic import TemplateView
 from . import views
 
 urlpatterns = [
     path('write/<str:request_type>/<int:request_id>/', views.create_review, name='create_review'),
+    path('test/', TemplateView.as_view(template_name='reviews/review_post.html'), name='review_test'),
     #path('my/', views.my_review_view, name='my_reviews'),
     path('delete/<int:review_id>/', views.delete_review, name='delete_review'),
     path('mypage/', views.my_page, name='my_page'),
