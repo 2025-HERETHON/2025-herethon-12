@@ -5,6 +5,8 @@ const username = document.getElementById("username");
 const usernameErr = document.getElementById("username-err");
 const nickname = document.getElementById("nickname");
 const nicknameErr = document.getElementById("nickname-err");
+const form = document.querySelector("form");
+const idChecked = document.getElementById("idChecked");
 
 // 프로필 사진 미리보기 함수
 function renderPreview(photo) {
@@ -53,20 +55,24 @@ function validUsername() {
 
 function validNickname() {
   const regex = /^[a-zA-Z\dㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
+  let valid = true;
   if (!regex.test(nickname.value)) {
+    valid = false;
     nickname.style.borderColor = "var(--color-red)";
     nicknameErr.classList.remove("hidden");
   } else {
     nickname.style.borderColor = "#ababab";
     nicknameErr.classList.add("hidden");
   }
+  return valid;
 }
 
 // 아이디 중복 확인 로직
 function checkId() {
-  document.getElementById("nickname").removeAttribute("required");
+  // 아이디 중복확인 전에도 아이디 유효성 검사 먼저
+  if (!validUsername()) return;
 
-  const form = document.querySelector("form");
+  document.getElementById("nickname").removeAttribute("required");
 
   // 중복확인 input 초기화
   const exist = form.querySelector('input[name="action"]');
@@ -79,11 +85,7 @@ function checkId() {
   actionInput.name = "action";
   actionInput.value = "check_id";
   form.appendChild(actionInput);
-  // 아이디 중복확인 전에도 아이디 유효성 검사 먼저
-  const usernameValid = validUsername();
-  if (usernameValid) {
-    form.submit();
-  }
+  form.submit();
 }
 
 function restoreRequired() {
@@ -97,10 +99,33 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (msg.classList.contains("error")) {
     username.style.borderColor = "var(--color-red)";
+    idChecked.value = "false";
   } else if (msg.classList.contains("success")) {
     username.style.borderColor = "#4EC789";
+    idChecked.value = "true";
   }
 });
 
-username.addEventListener("input", validUsername);
+username.addEventListener("input", () => {
+  validUsername();
+  idChecked.value = "false"; // 중복확인 이후에 아이디 값이 바뀌면 재확인
+});
 nickname.addEventListener("input", validNickname);
+
+// 제출 시 필수항목 확인
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  restoreRequired();
+
+  const valid = validUsername() && validNickname();
+
+  // 중복확인 없이 아이디 변경 진행할 경우
+  if (idChecked.value === "false") {
+    alert("아이디 중복확인을 진행해 주세요.");
+    return;
+  }
+
+  if (valid && idChecked.value === "true") {
+    form.submit();
+  }
+});
