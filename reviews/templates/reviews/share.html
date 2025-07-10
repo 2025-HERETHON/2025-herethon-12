@@ -17,6 +17,7 @@
                 <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
             </a>
       <div class="header-title">나눔 내역</div>
+      <p></p>
     </div>
 
     <div class="section">
@@ -28,11 +29,13 @@
         <div class="options hidden">
           <a href="{% url 'my_sent_donations' %}" class="dropdown-item">보낸 나눔</a>
         </div>
-        {% for date, donations in grouped.items %}
+      </div>
+    </div>
+  {% for date, donations in grouped.items %}
   <div class="date-label">{{ date }}</div>
 
   {% for donation in donations %}
-  <div class="item-card">
+  <div class="item-card {% if forloop.last %}last{% endif %}">
       {# 이미지가 하나 이상 있을 때 첫 번째 이미지 출력 #}
       {% with donation.item.images.first as first_image %}
         {% if first_image %}
@@ -71,8 +74,6 @@
   {% endfor %}
   {% endfor %}
       </div>
-    </div>
-  </div>
 
   <!-- 하단 네비게이션 -->
   <footer class="bottom-nav">
