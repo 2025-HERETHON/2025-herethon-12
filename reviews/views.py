@@ -17,6 +17,8 @@ from django.contrib.auth import get_user_model
 
 @login_required
 def create_review(request, request_type, request_id):
+    print("로그인 상태:", request.user.is_authenticated)  # True면 로그인됨
+    print("현재 사용자:", request.user.username)
     writer = request.user
 
     # --- 교환 후기 작성 ---
@@ -110,43 +112,54 @@ def create_review(request, request_type, request_id):
         return HttpResponseForbidden("잘못된 요청입니다.")
 
 # --- 받은/작성한 후기 목록, 평균 별점 ---
+def time_since_display(date):
+    delta = now() - date
+    if delta.days == 0:
+        minutes = delta.seconds // 60
+        if minutes < 60:
+            return f"{minutes}분 전"
+        else:
+            return f"{delta.seconds // 3600}시간 전"
+    elif delta.days == 1:
+        return "어제"
+    else:
+        return f"{delta.days}일 전"
+
 @login_required
 def my_reviews_view(request):
     user = request.user
+    view_type = request.GET.get('type', 'received')  # 기본은 받은 후기
 
-    # 내가 작성한 후기
-    written_reviews = Review.objects.filter(writer=user).order_by('-created_at')
+    print("✅ user:", request.user)
+    print("✅ is_authenticated:", request.user.is_authenticated)
 
-    # 내가 받은 후기
-    received_reviews = Review.objects.filter(receiver=user).order_by('-created_at')
+    # 받은 후기: 내가 올린 글에 대해 작성된 후기들 (익명)
+    received = Review.objects.filter(receiver=user).order_by('-created_at')
+    received_reviews = [{
+        'rating': r.rating,
+        'content': r.content,
+        'image': r.image.url if r.image else None,
+        'days_ago': time_since_display(localtime(r.created_at))
+    } for r in received]
 
-    # 받은 별점 평균
-    avg_rating = received_reviews.aggregate(avg=Avg('rating'))['avg']
+    # 작성한 후기: 내가 쓴 후기들 (삭제 가능)
+    written = Review.objects.filter(writer=user).order_by('-created_at')
+    written_reviews = [{
+        'review': r,
+        'image': r.image.url if r.image else None,
+        'days_ago': time_since_display(localtime(r.created_at))
+    } for r in written]
 
-    # 작성일 -> "~일 전" 변환 함수
-    def days_ago_display(date):
-        delta = now().date() - date.date()
-        if delta.days == 0:
-            return "오늘"
-        elif delta.days == 1:
-            return "어제"
-        else:
-            return f"{delta.days}일 전"
+    avg_rating = received.aggregate(avg=Avg('rating'))['avg'] or 0
 
-    written_reviews_formatted = [{
-        "review": review,
-        "days_ago": days_ago_display(localtime(review.created_at))
-    } for review in written_reviews]
-
-    received_reviews_formatted = [{
-        "review": review,
-        "days_ago": days_ago_display(localtime(review.created_at))
-    } for review in received_reviews]
-
-    return render(request, 'reviews/my_reviews.html', {
-        'written_reviews': written_reviews_formatted,
-        'received_reviews': received_reviews_formatted,
-        'avg_rating': round(avg_rating or 0, 1)
+    return render(request, 'reviews/myreview.html', {
+        'user' : user,
+        'nickname': user.nickname,
+        'username': user.username,
+        'avg_rating': round(avg_rating, 1),
+        'view_type': view_type,
+        'received_reviews': received_reviews,
+        'written_reviews': written_reviews,
     })
 
 @login_required
@@ -159,7 +172,7 @@ def delete_review(request, review_id):
 
     review.delete()
     messages.success(request, "리뷰가 삭제되었습니다.")
-    return redirect('my_written_reviews')  # 혹은 적절한 리뷰 목록 url name으로 변경
+    return redirect('/reviews/mypage/reviews/?type=written') 
 
 
 

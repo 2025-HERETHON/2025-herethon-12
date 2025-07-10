@@ -111,6 +111,8 @@ h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   margin-top: 40px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .title {
@@ -125,6 +127,9 @@ h2 {
   flex-direction: column;
   margin-top: 90px;
   padding-bottom: 90px;
+  position: relative;
+  /* ✅ 추가! */
+  z-index: 1;
 }
 
 .item-card {
@@ -133,6 +138,8 @@ h2 {
   gap: 12px;
   border-top: 1px solid var(--color-light-main);
   position: relative;
+  z-index: 2;
+  /* ✅ bgi보다 위로 */
 }
 
 .item-card:last-child {
@@ -282,6 +289,7 @@ h2 {
   height: 20px;
   transform: translate(-50%, -50%);
 }
+
 .bottom-nav {
   position: fixed;
   bottom: 0;
