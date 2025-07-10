@@ -28,21 +28,7 @@
                     </div>
                 </form>
             </div>
-            <!-- ✅ 카테고리 메뉴 -->
-            <div class="category-list">
-                <button class="category-btn {% if selected_category == '전체' %}active{% endif %}"
-                    onclick="location.href='?category=전체'">전체</button>
-                <button class="category-btn {% if selected_category == '의류' %}active{% endif %}"
-                    onclick="location.href='?category=의류'">의류</button>
-                <button class="category-btn {% if selected_category == '수유' %}active{% endif %}"
-                    onclick="location.href='?category=수유'">수유</button>
-                <button class="category-btn {% if selected_category == '위생' %}active{% endif %}"
-                    onclick="location.href='?category=위생'">위생</button>
-                <button class="category-btn {% if selected_category == '장난감' %}active{% endif %}"
-                    onclick="location.href='?category=장난감'">장난감</button>
-                <button class="category-btn {% if selected_category == '기타' %}active{% endif %}"
-                    onclick="location.href='?category=기타'">기타</button>
-            </div>
+
         </div>
         {% if items %}
         <ul class="post-list">
