@@ -19,30 +19,42 @@
       <div class="darken hidden"></div>
 
       <div class="header">
-        <a href="" class="back-btn">
+        <a href="javascript:history.back()" class="back-btn">
           <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
         </a>
         <div class="header-title">후기 작성</div>
         <p></p>
       </div>
-      <form method="POST" action="" class="main-form">
+      <form method="POST" action="" class="main-form" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="review-title">
           <div class="text-label">
-            <span class="review-nickname">닉네임</span>
-            <span> 님의 나눔, 어떠셨나요?</span>
+            <span class="review-nickname"></span>
+<!--            <span> 님의 나눔, 어떠셨나요?</span>-->
+            {% if request_type == "exchange" %}
+              {% if writer_role == "requester" %}
+                <span class="review-nickname">{{ receiver.nickname }}</span> 님과의 교환, 어떠셨나요?
+              {% elif writer_role == "owner" %}
+                <span class="review-nickname">{{ receiver.nickname }}</span> 님과의 교환, 어떠셨나요?
+              {% endif %}
+            {% elif request_type == "donation" %}
+              <span class="review-nickname">{{ receiver.nickname }}</span> 님의 나눔, 어떠셨나요?
+            {% endif %}
             <!-- 교환일 경우 -->
             <!-- <span> 님과의 교환, 어떠셨나요?</span> -->
           </div>
         </div>
         <div class="star-container">
           <div class="thumbnail">
-            <img
-              src="/reviews/static/reviews/images/sample-img.png"
-              alt="후기 물품 썸네일"
-            />
+            {% if item.images.all %}
+              <img src="{{ item.images.all.0.image.url }}" alt="후기 물품 썸네일" />
+            {% else %}
+              <img src="{% static 'reviews/images/sample-img.png' %}" alt="후기 물품 썸네일" />
+            {% endif %}
+
           </div>
           <div class="star-box">
-            <div class="text-label">신형 유모차</div>
+            <div class="text-label">{{item.title}}</div>
             <div class="rating">
               <label for="star0.5" class="rating-label">
                 <input
@@ -150,14 +162,19 @@
           </div>
         </div>
         <div class="desc-container">
-          <label for="description" class="text-label"
-            >나눔 후기를 작성해 주세요!</label
-          >
+          <label for="description" class="text-label">
+            {% if request_type == "exchange" %}
+            교환
+            {% elif request_type == "donation" %}
+            나눔
+            {% endif %}
+            후기를 작성해 주세요!
+          </label>
           <!-- 교환일 경우 -->
           <!-- <label for="description" class="text-label">교환 후기를 작성해 주세요!</label> -->
           <div class="wrapper">
             <textarea
-              name="description"
+              name="content"
               id="description"
               maxlength="200"
             ></textarea>
@@ -172,7 +189,7 @@
           <div class="photo-box">
             <div class="photo-select">
               <label for="photo-input" id="photo-input-label">
-                <input type="file" accept="image/*" id="photo-input" />
+                <input type="file" accept="image/*" id="photo-input" name="image" />
                 <img src="{% static 'posts/images/add.svg' %}" alt="사진 추가" />
                 <div class="photo-input-status">0/1</div>
               </label>
@@ -195,4 +212,25 @@
       </form>
     </div>
   </body>
+{% if show_modal %}
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === '1') {
+      document.querySelector('.modal').classList.remove('hidden');
+      document.querySelector('.darken').classList.remove('hidden');
+
+      document.querySelector('#ok').addEventListener('click', function (e) {
+        e.preventDefault();
+        {% if request_type == "exchange" %}
+          window.location.href = "{% url 'my_exchange_history' %}";
+        {% elif request_type == "donation" %}
+          window.location.href = "{% url 'my_received_donations' %}";
+        {% endif %}
+      });
+    }
+  });
+</script>
+
+  {% endif %}
 </html>

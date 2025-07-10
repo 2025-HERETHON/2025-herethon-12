@@ -26,15 +26,18 @@ def create_review(request, request_type, request_id):
         # 쌍방 모두 후기를 남길 수 있도록 조건 분기
         if writer == exchange.member: # 내가 신청한 경우
             receiver = exchange.item.member
-        elif writer == exchange.item.member: # 상대방이 신청한 경우 
+            writer_role = 'requester'
+        elif writer == exchange.item.member: # 상대방이 신청한 경우
             receiver = exchange.member
+            writer_role = 'owner'
         else:
             return HttpResponseForbidden("후기를 작성할 권한이 없습니다.")
 
-        # 이미 리뷰를 작성한 경우
-        if Review.objects.filter(exchange_request=exchange, writer=writer).exists():
-            messages.error(request, "이미 후기를 작성하셨습니다.")
-            return redirect('my_exchange_history')
+        #이미 리뷰를 작성한 경우
+        if request.method == 'POST': #post일 때만 검증.. > 토글은 get이라 해당 로직 제외
+            if Review.objects.filter(exchange_request=exchange, writer=writer).exists():
+                messages.error(request, "이미 후기를 작성하셨습니다.")
+                return redirect('my_exchange_history')
 
         if request.method == 'POST':
             form = ReviewForm(request.POST, request.FILES)
@@ -50,15 +53,19 @@ def create_review(request, request_type, request_id):
                 receiver.star = round(avg_rating, 1)
                 receiver.save()
 
-                messages.success(request, "후기가 등록되었습니다.")
-                return redirect('my_exchange_history')
+                #messages.success(request, "후기가 등록되었습니다.")
+                #return redirect('my_exchange_history')
+                return redirect(f"{request.path}?success=1")
         else:
             form = ReviewForm()
 
-        return render(request, 'reviews/review_form.html', {
+        return render(request, 'reviews/review_post.html', {
             'form': form,
             'item': exchange.item,
-            'receiver': receiver
+            'receiver': receiver,
+            'request_type': request_type,
+            'writer_role': writer_role,
+            'show_modal': request.GET.get('success') == '1',
         })
 
     # --- 나눔 후기 작성 ---
@@ -71,9 +78,10 @@ def create_review(request, request_type, request_id):
 
         receiver = donation.item.member
 
-        if Review.objects.filter(donation_request=donation, writer=writer).exists():
-            messages.error(request, "이미 후기를 작성하셨습니다.")
-            return redirect('my_donation_history_received')
+        if request.method == 'POST':  # post일 때만 검증.. > 토글은 get이라 해당 로직 제외
+            if Review.objects.filter(donation_request=donation, writer=writer).exists():
+                messages.error(request, "이미 후기를 작성하셨습니다.")
+                return redirect('my_received_donations')
 
         if request.method == 'POST':
             form = ReviewForm(request.POST, request.FILES)
@@ -84,14 +92,17 @@ def create_review(request, request_type, request_id):
                 review.donation_request = donation
                 review.save()
                 messages.success(request, "후기가 등록되었습니다.")
-                return redirect('my_donation_history_received')
+                #return redirect('my_donation_history_received')
+                return redirect(f"{request.path}?success=1")
         else:
             form = ReviewForm()
 
-        return render(request, 'reviews/review_form.html', {
+        return render(request, 'reviews/review_post.html', {
             'form': form,
             'item': donation.item,
-            'receiver': receiver
+            'receiver': receiver,
+            'request_type': request_type,
+            'show_modal': request.GET.get('success') == '1',
         })
 
     # 잘못된 request_type 처리
