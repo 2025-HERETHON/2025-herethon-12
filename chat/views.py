@@ -8,6 +8,7 @@ from .forms import MessageForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from datetime import datetime
 
 # 1. 쪽지방 생성
 @login_required
@@ -40,7 +41,24 @@ def thread_list(request):
         Q(exchange__member=member) | Q(exchange__item__member=member)
     ).annotate(last_msg_time=Max("messages__sent_at")).order_by('-last_msg_time')
 
-    return render(request, 'chat/chat_list.html', {'threads': threads})
+    
+    thread_data = []
+    for thread in threads:
+        # 안읽음 인디케이터 띄우기 위한 읽음 상태 확인 (마지막 읽은 시간 세션에 저장)
+        last_read_str = request.session.get(f'last_read_{thread.thread_id}')
+        last_read = datetime.fromisoformat(last_read_str) if last_read_str else None
+        unread = thread.last_msg_time and (not last_read or thread.last_msg_time > last_read)
+        
+        # 상대방 프로필 사진 불러오기
+        opponent = thread.get_opponent(member)
+        opponent_image = opponent.image.url if opponent and opponent.image else None
+
+        thread_data.append((thread, unread, opponent_image))
+
+    return render(request, 'chat/chat_list.html', {
+        'threads': thread_data,
+        'current_user': request.user,
+    })
 
 
 # 3. 쪽지방 상세 채팅 화면
@@ -59,10 +77,23 @@ def chat_room(request, thread_id):
         date = localtime(msg.sent_at).strftime("%Y.%m.%d")
         grouped.setdefault(date, []).append(msg)
 
+    # 거래 완료 여부 확인 (쪽지방 내 거래 완료 버튼 UI를 위해 임의로 수정했습니다)
+    is_completed = False
+    if thread.donation:
+        is_completed = thread.donation.status == Status.COMPLETED
+    elif thread.exchange:
+        is_completed = thread.exchange.status == Status.COMPLETED
+
+    # 안읽음 인디케이터를 위해 마지막으로 읽은 시간 기록
+    last_msg = messages.last()
+    if last_msg:
+        request.session[f'last_read_{thread_id}'] = last_msg.sent_at.isoformat()
+
     context = {
         'thread': thread,
         'grouped_messages': grouped,
         'redirect_url': redirect_url,
+        'is_completed' : is_completed,
     }
     return render(request, 'chat/chat.html', context)
 
@@ -79,6 +110,19 @@ def send_message(request, thread_id):
             message.thread = thread # 쪽지방 연결
             message.member = request.user # 보낸 사람
             message.save() # 최종 저장
+            
+            # 메시지 저장 이후 상태 변경 처리
+            if thread.donation:
+                donation_request = thread.donation
+                if donation_request.status == Status.WAITING.value:
+                    donation_request.status = Status.IN_PROGRESS.value
+                    donation_request.save()
+            elif thread.exchange:
+                exchange_request = thread.exchange
+                if exchange_request.status == Status.WAITING.value:
+                    exchange_request.status = Status.IN_PROGRESS.value
+                    exchange_request.save()
+
         else:
             messages.error(request, "메시지 전송 중 오류가 발생했습니다.")
 

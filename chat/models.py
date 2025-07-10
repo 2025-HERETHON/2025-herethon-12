@@ -8,11 +8,28 @@ class Thread(models.Model):
     donation = models.ForeignKey(DonationRequest, on_delete=models.CASCADE, null=True, blank=True)
     exchange = models.ForeignKey(ExchangeRequest, on_delete=models.CASCADE, null=True, blank=True)
 
+    # def get_opponent(self, current_user):
+    #     if self.donation:
+    #         return self.donation.member if self.donation.item.member != current_user else self.donation.item.member
+    #     elif self.exchange:
+    #         return self.exchange.member if self.exchange.item.member != current_user else self.exchange.item.member
     def get_opponent(self, current_user):
         if self.donation:
-            return self.donation.member if self.donation.item.member != current_user else self.donation.item.member
+            if self.donation.member == current_user:
+                return self.donation.item.member
+            else:
+                return self.donation.member
         elif self.exchange:
-            return self.exchange.member if self.exchange.item.member != current_user else self.exchange.item.member
+            if self.exchange.member == current_user:
+                return self.exchange.item.member
+            else:
+                return self.exchange.member
+
+    
+    # 상대 프로필 사진 불러오기 위한 메서드
+    def get_opponent_image(self, current_user):
+        opponent = self.get_opponent(current_user)
+        return opponent.image.url if opponent and opponent.image else None
 
     def get_item_title(self):
         return self.donation.item.title if self.donation else self.exchange.item.title

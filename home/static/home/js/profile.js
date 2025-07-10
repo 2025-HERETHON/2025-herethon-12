@@ -14,3 +14,10 @@
       }
     }
   });
+
+  
+// 토글 함수 
+function toggleSection(id) {
+  const content = document.getElementById(id);
+  content.classList.toggle("collapsed");
+}

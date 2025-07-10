@@ -15,7 +15,7 @@
     <div class="complete-modal hidden">
       <p>거래를 완료하시겠어요?</p>
       <div class="x-divide"></div>
-      <form method="POST" action="{% url 'chat:complete_trade' thread.thread_id %}">
+      <form method="POST" action="{% url 'chat:complete_trade' thread.thread_id %}" id="complete-form">
         {% csrf_token %}
         <button type="button" id="cancel">아니오</button>
         <div class="y-divide"></div>
@@ -24,15 +24,25 @@
     </div>
     <div class="darken hidden"></div>
 
+    <!-- 이미지 미리보기 -->
+    <div class="img-preview hidden">
+      <img src="" alt="미리보기 이미지">
+    </div>
+    <div class="preview-darken hidden"></div>
+
     <div class="header">
       <a href="{{ request.session.previous_page|default:redirect_url }}" class="back-btn">
         <img src="{% static 'chat/images/back.svg' %}" alt="뒤로가기" />
       </a>
       <div class="header-title">쪽지</div>
-      <p></p>
+      <a href="" class="refresh-btn">
+        <img src="{% static 'chat/images/refresh-btn.svg' %}" alt="새로고침">
+      </a>
     </div>
 
     <div class="main-container">
+      <!-- 거래 완료 상태 확인을 위해 임의로 집어넣었습니다 -->
+      <div id="is-completed" data-completed="{{ is_completed }}"></div>
       <div class="complete-bar">
         <div class="complete-desc">거래가 끝나셨다면 버튼을 눌러 완료해 주세요.</div>
         <button id="complete-btn">거래 완료</button>
@@ -60,7 +70,11 @@
               {% else %}
                 <div class="your-chats">
                   <div class="your-profile-img">
+                    {% if msg.member.image %}
+                    <img src="{{ msg.member.image.url }}" alt="상대 프로필 사진">
+                    {% else %}
                     <img src="{% static 'chat/images/default_profile.png' %}" alt="상대 프로필 사진">
+                    {% endif %}
                   </div>
                   <div class="your-msgs">
                     <div class="your-nickname">{{ msg.member.nickname }}</div>
@@ -78,24 +92,24 @@
                 </div>
               {% endif %}
             {% endfor %}
+            <div id="scroll-anchor"></div> 
           </div>
         {% endfor %}
       </div>
-
-      <form method="POST" enctype="multipart/form-data"
-            action="{% url 'chat:send_message' thread.thread_id %}"
-            class="chat-input">
+      <div class="chat-input-wrapper">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'chat:send_message' thread.thread_id %}" class="chat-input">
         {% csrf_token %}
-        <label for="img-input" id="img-input-label">
-          <input type="file" name="image" accept="image/*" id="img-input">
-          <img src="{% static 'chat/images/camera.svg' %}" alt="사진 등록 아이콘">
-        </label>
-        <input type="text" name="content" id="text-input">
-        <label for="send-btn" id="send-btn-label">
-          <input type="submit" id="send-btn">
-          <img src="{% static 'chat/images/send.svg' %}" alt="메세지 전송 아이콘">
-        </label>
-      </form>
+          <label for="img-input" id="img-input-label">
+            <input type="file" name="image" accept="image/*" id="img-input">
+            <img src="{% static 'chat/images/camera.svg' %}" alt="사진 등록 아이콘">
+          </label>
+          <input type="text" name="content" id="text-input">
+          <label for="send-btn" id="send-btn-label">
+            <input type="submit" id="send-btn">
+            <img src="{% static 'chat/images/send.svg' %}" alt="메세지 전송 아이콘">
+          </label>
+        </form>
+      </div>
     </div>
     {% endblock %}
   </body>

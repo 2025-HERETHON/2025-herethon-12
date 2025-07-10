@@ -28,6 +28,21 @@
                     </div>
                 </form>
             </div>
+             <!-- ✅ 카테고리 메뉴 -->
+            <div class="category-list">
+                <button class="category-btn {% if selected_category == '전체' %}active{% endif %}"
+                    onclick="location.href='?category=전체'">전체</button>
+                <button class="category-btn {% if selected_category == '의류' %}active{% endif %}"
+                    onclick="location.href='?category=의류'">의류</button>
+                <button class="category-btn {% if selected_category == '수유' %}active{% endif %}"
+                    onclick="location.href='?category=수유'">수유</button>
+                <button class="category-btn {% if selected_category == '위생' %}active{% endif %}"
+                    onclick="location.href='?category=위생'">위생</button>
+                <button class="category-btn {% if selected_category == '장난감' %}active{% endif %}"
+                    onclick="location.href='?category=장난감'">장난감</button>
+                <button class="category-btn {% if selected_category == '기타' %}active{% endif %}"
+                    onclick="location.href='?category=기타'">기타</button>
+            </div>
         </div>
     {% if items %}
         <ul class="post-list">
@@ -67,11 +82,11 @@
         </ul>
         {% else %}
         <div class="main">
-            <img src="{% static 'home/images/home_nopost_bgi.png' %}" alt="" class="bgi">
+           
             <p class="nopost">아직 등록된 게시글이 없습니다. <br />첫 게시물을 작성해 보세요!</p>
         </div>
         {% endif %}
-
+   <img src="{% static 'home/images/home_nopost_bgi.png' %}" alt="배경" class="bgi">
         <!-- 하단 네비게이션 -->
         <footer class="bottom-nav">
           <nav>
@@ -100,8 +115,8 @@
             </a>
           </nav>
         </footer>
-    </div>
 
+    </div>
 </body>
 
 </html>

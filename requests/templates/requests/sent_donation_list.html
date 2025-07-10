@@ -51,15 +51,20 @@
       <div class="top-wrapper">
         <div class="text-container">
           <div class="profile-bar">
-            <img src="{% static 'requests/images/default_profile.png' %}" alt="기본 프로필 사진" />
+            <!-- 나눔글 작성자의 프로필 사진 -->
+            {% if request.item.member.image %}
+              <img src="{{ request.item.member.image.url }}" alt="프로필 이미지" />
+            {% else %}
+              <img src="{% static 'requests/images/default_profile.png' %}" alt="기본 프로필" />
+            {% endif %}
             <div class="profile">
               <div class="nickname-time">
                 <div class="nickname">{{ request.item.member.nickname }}</div>
-                <div class="time">{{ request.created_at|time:"H:i" }}</div>
+                <div class="time">{{ request.item.created_at|time:"H:i" }}</div>
               </div>
               <div class="region">
                 <img src="{% static 'requests/images/place.svg' %}" alt="위치 아이콘" />
-                <p>{{ request.item.place }}</p>
+                <p>{{ request.item.region_dong }}</p>
               </div>
             </div>
           </div>
