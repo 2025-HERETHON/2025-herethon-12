@@ -127,6 +127,24 @@ passwordCheck.addEventListener("input", checkPassword);
 nickname.addEventListener("input", validNickname);
 
 // 제출 시 필수항목 확인
+//form.addEventListener("submit", (e) => {
+//  e.preventDefault();
+//  restoreRequired();
+//
+//  const valid =
+//    validUsername() && validPassword() && checkPassword() && validNickname();
+//
+//  // 중복확인 없이 회원가입 진행할 경우
+//  if (idChecked.value === "false") {
+//    alert("아이디 중복확인을 진행해 주세요.");
+//    usernameDesc.classList.remove("hidden");
+//    return;
+//  }
+//
+//  if (valid && idChecked.value === "true") {
+//    form.submit();
+//  }
+//});
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   restoreRequired();
@@ -142,6 +160,18 @@ form.addEventListener("submit", (e) => {
   }
 
   if (valid && idChecked.value === "true") {
+    // 기존 action input 제거
+    const exist = form.querySelector('input[name="action"]');
+    if (exist) exist.remove();
+
+    // action=signup input 추가
+    const actionInput = document.createElement("input");
+    actionInput.type = "hidden";
+    actionInput.name = "action";
+    actionInput.value = "signup";
+    form.appendChild(actionInput);
+
+    // 최종 제출
     form.submit();
   }
 });
