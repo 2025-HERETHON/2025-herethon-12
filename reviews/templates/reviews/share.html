@@ -49,13 +49,23 @@
         </p>
         <p class="item-detail">{{ donation.item.description }}</p>
 
-      {% if donation.request_id %}
-        <a href="{% url 'create_review' 'donation' donation.request_id %}">
-          <button class="review-btn">후기 작성하기</button>
-        </a>
-      {% else %}
-        <button class="review-btn" disabled>후기 작성 불가</button>
-      {% endif %}
+<!--      {% if donation.request_id %}-->
+<!--        <a href="{% url 'create_review' 'donation' donation.request_id %}">-->
+<!--          <button class="review-btn">후기 작성하기</button>-->
+<!--        </a>-->
+<!--      {% else %}-->
+<!--        <button class="review-btn" disabled>후기 작성 완료</button>-->
+<!--      {% endif %}-->
+        {% if donation.review_written %}
+          <button class="review-btn" disabled>후기 작성 완료</button>
+        {% elif donation.request_id %}
+           <a href="{% url 'create_review' 'donation' donation.request_id %}">
+              <button class="review-btn">후기 작성하기</button>
+          </a>
+        {% else %}
+          <button class="review-btn" disabled>후기 작성 불가</button>
+        {% endif %}
+
     </div>
   </div>
   {% endfor %}

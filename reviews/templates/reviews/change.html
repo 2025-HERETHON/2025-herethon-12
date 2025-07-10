@@ -45,7 +45,7 @@
             <p class="item-detail">{{ req.item.description }}</p>
 
             {% if req.review_written %}
-              <button class="review-btn" disabled>리뷰 작성 완료</button>
+              <button class="review-btn" disabled>후기 작성 완료</button>
             {% elif req.request_id %}
               <a href="{% url 'create_review' 'exchange' req.request_id %}" class="review-btn">
                 <button class="review-btn">후기 작성하기</button>
