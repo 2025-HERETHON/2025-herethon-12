@@ -15,13 +15,21 @@
     <div class="complete-modal hidden">
       <p>거래를 완료하시겠어요?</p>
       <div class="x-divide"></div>
-      <form method="POST" action="{% url 'chat:complete_trade' thread.thread_id %}" id="complete-form">
-        {% csrf_token %}
+      <div class="complete-modal-bottom">
         <button type="button" id="cancel">아니오</button>
         <div class="y-divide"></div>
-        <button type="submit" id="ok">네</button>
+        <button type="button" id="ok">네</button>
+      </div>
+    </div>
+
+    <div class="success-modal hidden">
+      <form method="POST" action="{% url 'chat:complete_trade' thread.thread_id %}" id="complete-form">
+        {% csrf_token %}
+        <p>🎉거래가 완료 되었습니다!</p>
+        <button type="submit" id="check">확인</button>
       </form>
     </div>
+
     <div class="darken hidden"></div>
 
     <!-- 이미지 미리보기 -->
@@ -42,63 +50,78 @@
 
     <div class="main-container">
       <!-- 거래 완료 상태 확인을 위해 임의로 집어넣었습니다 -->
-      <div id="is-completed" data-completed="{{ is_completed }}"></div>
-      <div class="complete-bar">
-        <div class="complete-desc">거래가 끝나셨다면 버튼을 눌러 완료해 주세요.</div>
-        <button id="complete-btn">거래 완료</button>
-      </div>
+    <div class="complete-bar">
+      {% if is_receiver %}
+        {% if is_completed %}
+          <div class="complete-desc">거래가 완료되었습니다!</div>
+          <button id="complete-btn" disabled>거래 완료</button>
+        {% else %}
+          <div class="complete-desc">거래가 끝나셨다면 버튼을 눌러 완료해 주세요.</div>
+          <button id="complete-btn">거래 완료</button>
+        {% endif %}
+      {% else %}
+        <!-- 신청자 입장 -->
+        {% if status == 'IN_PROGRESS' %}
+          <div class="complete-desc">거래가 확정되면 거래 완료 안내가 표시됩니다.</div>
+          <button id="complete-btn">거래중</button>
+        {% elif status == 'COMPLETED' %}
+          <div class="complete-desc">거래가 완료되었습니다!</div>
+          <button id="complete-btn" disabled>거래 완료</button>
+        {% endif %}
+      {% endif %}
+    </div>
 
       <div class="chatting">
         {% for date, messages in grouped_messages.items %}
-          <div class="chat-container">
-            <div class="date">{{ date }}</div>
+        <div class="chat-container">
+          <div class="date">{{ date }}</div>
 
             {% for msg in messages %}
               {% if msg.member == request.user %}
-                <div class="my-chats">
-                  <div class="my-msg">
-                    {% if msg.image %}
-                      <div class="my-msg-content-photo">
+          <div class="my-chats">
+            <div class="my-msg">
+              {% if msg.image %}
+              <div class="my-msg-content-photo">
                         <img src="{{ msg.image.url }}" alt="사진">
-                      </div>
-                    {% elif msg.content %}
-                      <div class="my-msg-content">{{ msg.content }}</div>
-                    {% endif %}
-                    <div class="my-msg-time">{{ msg.sent_at|time:"H:i" }}</div>
-                  </div>
-                </div>
-              {% else %}
-                <div class="your-chats">
-                  <div class="your-profile-img">
-                    {% if msg.member.image %}
+              </div>
+              {% elif msg.content %}
+              <div class="my-msg-content">{{ msg.content }}</div>
+              {% endif %}
+              <div class="my-msg-time">{{ msg.sent_at|time:"H:i" }}</div>
+            </div>
+          </div>
+          {% else %}
+          <div class="your-chats">
+            <div class="your-profile-img">
+              {% if msg.member.image %}
                     <img src="{{ msg.member.image.url }}" alt="상대 프로필 사진">
-                    {% else %}
+              {% else %}
                     <img src="{% static 'chat/images/default_profile.png' %}" alt="상대 프로필 사진">
-                    {% endif %}
-                  </div>
-                  <div class="your-msgs">
-                    <div class="your-nickname">{{ msg.member.nickname }}</div>
-                    <div class="your-msg">
-                      {% if msg.image %}
-                        <div class="your-msg-content-photo">
+              {% endif %}
+            </div>
+            <div class="your-msgs">
+              <div class="your-nickname">{{ msg.member.nickname }}</div>
+              <div class="your-msg">
+                {% if msg.image %}
+                <div class="your-msg-content-photo">
                           <img src="{{ msg.image.url }}" alt="사진">
-                        </div>
-                      {% elif msg.content %}
-                        <div class="your-msg-content">{{ msg.content }}</div>
-                      {% endif %}
-                      <div class="your-msg-time">{{ msg.sent_at|time:"H:i" }}</div>
-                    </div>
-                  </div>
                 </div>
+                {% elif msg.content %}
+                <div class="your-msg-content">{{ msg.content }}</div>
+                {% endif %}
+                <div class="your-msg-time">{{ msg.sent_at|time:"H:i" }}</div>
+              </div>
+            </div>
+          </div>
               {% endif %}
             {% endfor %}
-            <div id="scroll-anchor"></div> 
-          </div>
+          <div id="scroll-anchor"></div>
+        </div>
         {% endfor %}
       </div>
       <div class="chat-input-wrapper">
         <form method="POST" enctype="multipart/form-data" action="{% url 'chat:send_message' thread.thread_id %}" class="chat-input">
-        {% csrf_token %}
+          {% csrf_token %}
           <label for="img-input" id="img-input-label">
             <input type="file" name="image" accept="image/*" id="img-input">
             <img src="{% static 'chat/images/camera.svg' %}" alt="사진 등록 아이콘">

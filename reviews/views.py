@@ -199,19 +199,19 @@ def edit_profile(request):
 def my_exchange_history(request):
     member = request.user
 
-    # 받은 교환: 내가 올린 글에 대해 누군가 신청한 교환 성사된 것
+    # 받은 교환: 내가 올린 글에 누군가 신청해서 성사된 것
     received = ExchangeRequest.objects.filter(
         item__member=member,
-        status=Status.COMPLETED 
+        status=Status.COMPLETED
     ).select_related('item', 'member')
 
-    # 보낸 교환: 내가 신청해서 성사된 교환
+    # 보낸 교환: 내가 신청해서 성사된 것
     sent = ExchangeRequest.objects.filter(
         member=member,
         status=Status.COMPLETED
     ).select_related('item', 'item__member')
 
-    # 리뷰 작성 여부 설정
+    # 리뷰 작성 여부 추가
     for req in list(received) + list(sent):
         req.review_written = Review.objects.filter(exchange_request=req, writer=member).exists()
 
@@ -221,11 +221,18 @@ def my_exchange_history(request):
 
     grouped = defaultdict(list)
     for req in all_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
-        grouped[date].append(req)
+        date = localtime(req.updated_at).date()
+        month = date.strftime('%m').lstrip('0')
+        day = date.strftime('%d').lstrip('0')
+        date_str = f"{month}/{day}"
+        grouped[date_str].append(req)
+
+    # 날짜 내림차순 정렬 (최신 날짜 위로)
+    grouped = dict(sorted(grouped.items(), reverse=True))
 
     return render(request, 'reviews/change.html', {
-        'grouped': grouped
+        'grouped': dict(grouped),
+        'user': request.user
     })
 
 @login_required
@@ -239,8 +246,14 @@ def my_sent_donations(request):
 
     grouped = defaultdict(list)
     for req in completed_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
+        date = localtime(req.created_at).date()
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
         grouped[date].append(req)
+
+    # 날짜 내림차순 정렬 (최신 날짜 위로)
+    grouped = dict(sorted(grouped.items(), reverse=True))
 
     return render(request, 'reviews/sent-share.html', {
         'grouped': grouped
@@ -249,23 +262,42 @@ def my_sent_donations(request):
 
 @login_required
 def my_received_donations(request):
+    print("🔥 my_received_donations 뷰 함수 호출됨")
     member = request.user
+    print("현재 로그인한 사용자:", member)
 
     completed_requests = DonationRequest.objects.filter(
         member=member,
         status=Status.COMPLETED
     ).select_related('item', 'item__member')
+    print("완료된 받은 나눔 개수:", completed_requests.count())
 
     for req in completed_requests:
         req.review_written = Review.objects.filter(donation_request=req, writer=member).exists()
+        print("리뷰 작성 여부:", req.review_written)
+        print("아이템 제목:", req.item.title)
+        print("아이템 작성자 닉네임:", req.item.member.nickname)
+        print("아이템 설명:", req.item.description)
+        
+        print("업데이트 일자:", req.updated_at)
 
     grouped = defaultdict(list)
     for req in completed_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
+        date = localtime(req.created_at).date()
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
         grouped[date].append(req)
 
+    # 날짜 내림차순 정렬 (최신 날짜 위로)
+    grouped = dict(sorted(grouped.items(), reverse=True))
+    
+    print("✅ 최종 grouped 전달 데이터:")
+    for k, v in grouped.items():
+        print(f"날짜: {k}, 개수: {len(v)}")
+
     return render(request, 'reviews/share.html', {
-        'grouped': grouped
+        'grouped': dict(grouped)
     })
 
 @require_GET
@@ -273,3 +305,15 @@ def check_id_duplicate(request):
     username = request.GET.get('username')
     exists = Member.objects.filter(username=username).exists()
     return JsonResponse({'exists': exists})
+
+def change_view(request):
+    return render(request, 'reviews/change.html')
+
+def share_view(request):
+    return render(request, 'reviews/share.html')
+
+def myreview_view(request):
+    return render(request, 'reviews/myreview.html')
+
+def mypage_view(request):
+    return render(request, 'reviews/mypage.html')

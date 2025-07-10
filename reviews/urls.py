@@ -11,4 +11,8 @@ urlpatterns = [
     path('mypage/exchanges/', views.my_exchange_history, name='my_exchange_history'),
     path('mypage/donations/sent', views.my_sent_donations, name='my_sent_donations'),
     path('mypage/donations/received', views.my_received_donations, name='my_received_donations'),
+
+    path('change/', views.change_view, name='change'),
+    path('myreview/', views.myreview_view, name='myreview'),
+    path('mypage/', views.mypage_view, name='mypage'),
 ]
