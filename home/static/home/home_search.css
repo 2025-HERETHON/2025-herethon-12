@@ -237,6 +237,34 @@
 }
 
 /* ===== 하단 네비게이션 ===== */
+.plus_btn {
+  position: fixed;
+  bottom: 100px;
+  /* nav보다 살짝 위 */
+  left: 40%;
+  transform: translateX(150px);
+  /* 오른쪽 정렬 + nav 폭 고려 (430px 기준이면 약 +150px) */
+  width: 52px;
+  height: 52px;
+  z-index: 20;
+  /* nav보다 위에 오게 */
+  pointer-events: auto;
+}
+
+.plus_bg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+}
 .bottom-nav {
   position: fixed;
   bottom: 0;
