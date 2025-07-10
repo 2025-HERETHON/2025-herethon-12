@@ -25,7 +25,8 @@
         <div class="header-title">후기 작성</div>
         <p></p>
       </div>
-      <form method="POST" action="" class="main-form">
+      <form method="POST" action="" class="main-form" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="review-title">
           <div class="text-label">
             <span class="review-nickname"></span>
@@ -173,7 +174,7 @@
           <!-- <label for="description" class="text-label">교환 후기를 작성해 주세요!</label> -->
           <div class="wrapper">
             <textarea
-              name="description"
+              name="content"
               id="description"
               maxlength="200"
             ></textarea>
@@ -188,7 +189,7 @@
           <div class="photo-box">
             <div class="photo-select">
               <label for="photo-input" id="photo-input-label">
-                <input type="file" accept="image/*" id="photo-input" />
+                <input type="file" accept="image/*" id="photo-input" name="image" />
                 <img src="{% static 'posts/images/add.svg' %}" alt="사진 추가" />
                 <div class="photo-input-status">0/1</div>
               </label>
@@ -211,4 +212,25 @@
       </form>
     </div>
   </body>
+{% if show_modal %}
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === '1') {
+      document.querySelector('.modal').classList.remove('hidden');
+      document.querySelector('.darken').classList.remove('hidden');
+
+      document.querySelector('#ok').addEventListener('click', function (e) {
+        e.preventDefault();
+        {% if request_type == "exchange" %}
+          window.location.href = "{% url 'my_exchange_history' %}";
+        {% elif request_type == "donation" %}
+          window.location.href = "{% url 'my_received_donations' %}";
+        {% endif %}
+      });
+    }
+  });
+</script>
+
+  {% endif %}
 </html>

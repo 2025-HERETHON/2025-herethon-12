@@ -108,8 +108,9 @@ mainForm.addEventListener("submit", (e) => {
     e.preventDefault();
     desc.style.borderColor = "var(--color-red)";
     descErr.classList.remove("hidden");
-  } else {
-    darken.classList.remove("hidden");
-    modal.classList.remove("hidden");
-  }
+    }
+//   else {
+//    darken.classList.remove("hidden");
+//    modal.classList.remove("hidden");
+//  }
 });

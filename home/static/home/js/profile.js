@@ -9,7 +9,7 @@
     for (let i = 0; i < stars.length; i++) {
       if (i < fill) {
         stars[i].classList.add("star-icon-filled");
-      } else {
+      } else {3
         stars[i].classList.remove("star-icon-filled");
       }
     }

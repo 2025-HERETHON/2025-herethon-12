@@ -149,18 +149,19 @@ def post_update(request, item_id):
 
         item.save()
 
-        # 기존 이미지에 추가하기 위한 정보 확인
+        # 기존 이미지에 추가하기 위한 정보 확인 / 마지막 이미지 order 값
         last_order = (
             ItemImage.objects.filter(item=item).aggregate(Max("image_order"))["image_order__max"] or 0
         )
 
-        #이미지 저장
+        #새 이미지 저장
         images = request.FILES.getlist("photos")
+        #기존 image_order 다음 순서 부터 +1 저장
         for idx, image in enumerate(images):
             ItemImage.objects.create(
                 item=item,
                 image=image,            
-                image_order= last_order + idx + 1  #업로드 순서 저장 (수정 로직 추가 필요)
+                image_order= last_order + idx + 1  #업로드 순서 저장
             )
 
         return redirect('post_detail', item_id=item.item_id)
