@@ -239,8 +239,14 @@ def my_sent_donations(request):
 
     grouped = defaultdict(list)
     for req in completed_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
+        date = localtime(req.created_at).date()
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
         grouped[date].append(req)
+
+    # 날짜 내림차순 정렬 (최신 날짜 위로)
+    grouped = dict(sorted(grouped.items(), reverse=True))
 
     return render(request, 'reviews/sent-share.html', {
         'grouped': grouped
@@ -278,6 +284,10 @@ def my_received_donations(request):
 
     # 날짜 내림차순 정렬 (최신 날짜 위로)
     grouped = dict(sorted(grouped.items(), reverse=True))
+    
+    print("✅ 최종 grouped 전달 데이터:")
+    for k, v in grouped.items():
+        print(f"날짜: {k}, 개수: {len(v)}")
 
     return render(request, 'reviews/share.html', {
         'grouped': dict(grouped)
