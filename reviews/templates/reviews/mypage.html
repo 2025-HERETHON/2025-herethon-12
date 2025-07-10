@@ -1,98 +1,83 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'reviews/common.css' %}" />
-    <link rel="stylesheet" href="{% static 'reviews/mypage.css' %}" />
 
-    <!-- <link rel="stylesheet" href="/accounts/static/accounts/common.css" />-->
-    <!--<link rel="stylesheet" href="/accounts/static/accounts/mypage.css" />-->
-    <title>Dearbebe</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'reviews/common.css' %}" />
+  <link rel="stylesheet" href="{% static 'reviews/mypage.css' %}" />
 
-  <body>
-    <div class="main-container">
-      <!-- 헤더 -->
-      <header class="header">
-        <h1 class="page-title">마이페이지</h1>
-      </header>
+  <!-- <link rel="stylesheet" href="/accounts/static/accounts/common.css" />-->
+  <!--<link rel="stylesheet" href="/accounts/static/accounts/mypage.css" />-->
+  <title>Dearbebe</title>
+</head>
 
-      <!-- 유저 정보 카드 -->
-      <section class="user-summary">
-        <div class="user-card">
-          <!-- <img src="/reviews/static/reviews/images/profile-icon.png" alt="프로필" class="profile-img" /> -->
-          <div class="user-box">
-            {% if user.image %}
-            <img src="{{ user.image.url }}" alt="프로필" class="profile-img">
-            {% else %}
-            <img
-              src="{% static 'reviews/images/profile-icon.png' %}"
-              alt="프로필"
-              class="profile-img"
-            />
-            {% endif %}
-            <div class="user-info">
-              <!-- <p class="username">베비몬스터</p>
+<body>
+  <div class="main-container">
+    <!-- 헤더 -->
+    <header class="header">
+      <h1 class="page-title">마이페이지</h1>
+    </header>
+
+    <!-- 유저 정보 카드 -->
+    <section class="user-summary">
+      <div class="user-card">
+        <!-- <img src="/reviews/static/reviews/images/profile-icon.png" alt="프로필" class="profile-img" /> -->
+        <div class="user-box">
+          {% if user.image %}
+          <img src="{{ user.image.url }}" alt="프로필" class="profile-img">
+          {% else %}
+          <img src="{% static 'reviews/images/profile-icon.png' %}" alt="프로필" class="profile-img" />
+          {% endif %}
+          <div class="user-info">
+            <!-- <p class="username">베비몬스터</p>
             <p class="user-id">@uyohmnn</p> -->
-              <p class="username">{{ user.nickname }}</p>
-              <p class="user-id">@{{ user.username }}</p>
-            </div>
+            <p class="username">{{ user.nickname }}</p>
+            <p class="user-id">@{{ user.username }}</p>
           </div>
-          <button class="modify">
-            <a href="{% url 'edit_profile' %}" class="pm">프로필 수정</a>
-          </button>
         </div>
-      </section>
-
-      <div class="category">
-        <div class="ex-btn">
-          <a class="excange" href="{% url 'my_exchange_history' %}">
-            <!-- <img src="../static/accounts/images/account_exchange.svg" alt="" class="ex-img"> -->
-            <a href="{% url 'change' %}">
-            <img
-              src="{% static 'reviews/images/account_exchange.svg' %}"
-              alt=""
-              class="ex-img"
-            />
-            </a>
-          </button>
-          <p class="ex-text">교환 내역</p>
-        </div>
-        <div class="sh-btn">
-          <a class="share" href="{% url 'my_received_donations' %}">
-            <!-- <img src="../static/accounts/images/account_share.svg" alt="" class="sh-img"> -->
-            <a href="{% url 'my_received_donations' %}">
-            <img
-              src="{% static 'reviews/images/account_share.svg' %}"
-              alt=""
-              class="sh-img"
-            />
-            </a>
-          </button>
-          <p class="sh-text">나눔 내역</p>
-        </div>
-        <div class="re-btn">
-          <button class="review">
-            <!-- <img src="../static/accounts/images/account_review.svg" alt="" class="re-img"> -->
-            <a href="{% url 'myreview' %}">
-            <img
-              src="{% static 'reviews/images/account_review.svg' %}"
-              alt=""
-              class="re-img"
-            />
-            </a>
-          </button>
-          <p class="re-text">나의 후기</p>
-        </div>
+        <button class="modify">
+          <a href="{% url 'edit_profile' %}" class="pm">프로필 수정</a>
+        </button>
       </div>
-      <button class="logout">
-        <p class="logout-text">로그아웃</p>
-      </button>
+    </section>
+
+    <div class="category">
+      <div class="cat-btn">
+        <a href="{% url 'my_exchange_history' %}">
+          <div class="circle-btn">
+            <img src="{% static 'reviews/images/account_exchange.svg' %}" alt="" class="cat-img" />
+          </div>
+          <p class="cat-text">교환 내역</p>
+        </a>
+      </div>
+
+      <div class="cat-btn">
+        <a href="{% url 'my_received_donations' %}">
+          <div class="circle-btn">
+            <img src="{% static 'reviews/images/account_share.svg' %}" alt="" class="cat-img" />
+          </div>
+          <p class="cat-text">나눔 내역</p>
+        </a>
+      </div>
+
+      <div class="cat-btn">
+        <a href="{% url 'myreview' %}">
+          <div class="circle-btn">
+            <img src="{% static 'reviews/images/account_review.svg' %}" alt="" class="cat-img" />
+          </div>
+          <p class="cat-text">나의 후기</p>
+        </a>
+      </div>
     </div>
 
-    <!-- <form method="post" action="{ url 'logout' }">
+    <button class="logout">
+      <p class="logout-text">로그아웃</p>
+    </button>
+  </div>
+
+  <!-- <form method="post" action="{ url 'logout' }">
     {% csrf_token %}
     <button class="logout" type="submit">
       <p class="logout-text">로그 아웃</p>
@@ -100,25 +85,23 @@
   </form>
 </div>  -->
 
-    <!-- 하단 네비게이션 -->
-    <footer class="bottom-nav">
-      <nav>
-        <a href="{% url 'home' %}">
-          <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-        </a>
-        <a href="{% url 'chat:thread_list' %}">
-          <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-        </a>
-        <a href="{% url 'requests:received_donation_requests' %}">
-          <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-        </a>
-        <a href="{% url 'my_page' %}" class="active">
-          <img
-            src="{% static 'reviews/images/my-active.svg' %}"
-            alt=""
-          />마이페이지
-        </a>
-      </nav>
-    </footer>
-  </body>
+  <!-- 하단 네비게이션 -->
+  <footer class="bottom-nav">
+    <nav>
+      <a href="{% url 'home' %}">
+        <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+      </a>
+      <a href="{% url 'chat:thread_list' %}">
+        <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+      </a>
+      <a href="{% url 'requests:received_donation_requests' %}">
+        <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+      </a>
+      <a href="{% url 'my_page' %}" class="active">
+        <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
+      </a>
+    </nav>
+  </footer>
+</body>
+
 </html>
