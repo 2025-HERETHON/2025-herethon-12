@@ -16,13 +16,6 @@
     <div class="main-container">
       <!-- 헤더 -->
       <header class="header">
-        <button class="back-btn">
-          <!-- <img src="/reviews/static/reviews/images/back-btn.svg" alt="뒤로가기" /> -->
-          <img
-            src="{% static 'reviews/images/back-btn.svg' %}"
-            alt="뒤로가기"
-          />
-        </button>
         <h1 class="page-title">마이페이지</h1>
       </header>
 
@@ -53,33 +46,39 @@
         <div class="ex-btn">
           <button class="excange">
             <!-- <img src="../static/accounts/images/account_exchange.svg" alt="" class="ex-img"> -->
+            <a href="{% url 'change' %}">
             <img
               src="{% static 'reviews/images/account_exchange.svg' %}"
               alt=""
               class="ex-img"
             />
+            </a>
           </button>
           <p class="ex-text">교환 내역</p>
         </div>
         <div class="sh-btn">
           <button class="share">
             <!-- <img src="../static/accounts/images/account_share.svg" alt="" class="sh-img"> -->
+            <a href="{% url 'my_received_donations' %}">
             <img
               src="{% static 'reviews/images/account_share.svg' %}"
               alt=""
               class="sh-img"
             />
+            </a>
           </button>
           <p class="sh-text">나눔 내역</p>
         </div>
         <div class="re-btn">
           <button class="review">
             <!-- <img src="../static/accounts/images/account_review.svg" alt="" class="re-img"> -->
+            <a href="{% url 'myreview' %}">
             <img
               src="{% static 'reviews/images/account_review.svg' %}"
               alt=""
               class="re-img"
             />
+            </a>
           </button>
           <p class="re-text">나의 후기</p>
         </div>

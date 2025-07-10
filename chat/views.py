@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from datetime import datetime
+from collections import defaultdict
 
 # 1. 쪽지방 생성
 @login_required
@@ -59,36 +60,49 @@ def thread_list(request):
 # 3. 쪽지방 상세 채팅 화면
 @login_required
 def chat_room(request, thread_id):
-    #특정 쪽지방 안의 메시지들을 시간순으로 불러옴
+    # 쪽지방 불러오기
     thread = get_object_or_404(Thread, pk=thread_id)
     messages = thread.messages.all().order_by('sent_at')
 
-    # 이전 페이지 세션 없으면 쪽지 목록으로
+    # 기본 이동 URL (뒤로가기 대비용)
     redirect_url = reverse('chat:thread_list')
 
-    # 날짜별로 그룹화하여 전달 ex) 2025.07.04: [msg1, msg2]  
-    grouped = {}
+    # 날짜별 메시지 묶기
+    grouped = defaultdict(list)
     for msg in messages:
         date = localtime(msg.sent_at).strftime("%Y.%m.%d")
-        grouped.setdefault(date, []).append(msg)
+        grouped[date].append(msg)
 
-    # 거래 완료 여부 확인 (쪽지방 내 거래 완료 버튼 UI를 위해 임의로 수정했습니다)
-    is_completed = False
-    if thread.donation:
-        is_completed = thread.donation.status == Status.COMPLETED
-    elif thread.exchange:
-        is_completed = thread.exchange.status == Status.COMPLETED
-
-    # 안읽음 인디케이터를 위해 마지막으로 읽은 시간 기록
+    # 안읽음 인디케이터용 마지막 읽은 메시지 시간 기록
     last_msg = messages.last()
     if last_msg:
         request.session[f'last_read_{thread_id}'] = last_msg.sent_at.isoformat()
 
+    # 거래 상태 및 사용자 역할 판단
+    is_completed = False
+    is_receiver = False
+    status = None
+
+    if thread.donation:
+        donation = thread.donation
+        status = donation.status  # 'WAITING', 'IN_PROGRESS', ...
+        is_completed = donation.status == Status.COMPLETED
+        is_receiver = donation.item.member == request.user
+
+    elif thread.exchange:
+        exchange = thread.exchange
+        status = exchange.status
+        is_completed = exchange.status == Status.COMPLETED
+        is_receiver = exchange.item.member == request.user
+
+    # 템플릿 렌더링
     context = {
         'thread': thread,
-        'grouped_messages': grouped,
+        'grouped_messages': dict(grouped),
         'redirect_url': redirect_url,
-        'is_completed' : is_completed,
+        'is_completed': is_completed,
+        'is_receiver': is_receiver,
+        'status': status,  # 템플릿에서 WAITING / IN_PROGRESS / COMPLETED 판단용
     }
     return render(request, 'chat/chat.html', context)
 
