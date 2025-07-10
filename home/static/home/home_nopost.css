@@ -1,3 +1,7 @@
+h2 {
+  margin: 0;
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
@@ -12,15 +16,18 @@
     /* 항상 위로 */
     padding: 12px 16px;
     box-sizing: border-box;
-
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 60px;
 }
 
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
     width: 100%;
+    gap: 20px;
 }
 
 /*  카테고리 버튼 */
@@ -29,8 +36,14 @@
     justify-content: space-between;
     gap: 0;
     /* 버튼 간격 없이 균등 분배 */
-    padding: 8px 0;
     margin-top: 70px;
+    max-width: 430px;
+    width: calc(100% + 16px * 2); 
+    margin-left: -16px;
+    position: fixed;
+    top: 60px;
+    height: 30px;
+    background-color: #ffffff;
 }
 
 .category-btn {
@@ -42,10 +55,11 @@
     font-weight: 600;
     color: var(--color-deep-main);
     cursor: pointer;
-    padding: 6px 0;
     text-align: center;
     border-bottom: 1px solid var(--color-light-main);
-}
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
 
 .category-btn.active {
     color: var(--color-deep-main);
@@ -56,9 +70,8 @@
 .search-box {
     display: flex;
     position: relative;
-    width: 290px;
     height: 34px;
-    margin-left: 20px;
+    width: 100%;
 }
 
 .top-location {
@@ -70,7 +83,7 @@
 
 .search-input {
     width: 100%;
-    padding: 8px 12px 8px 36px;
+    padding: 8px 12px 8px 60px;
     /* 왼쪽 패딩: 아이콘 공간 확보 */
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -119,6 +132,7 @@
   line-height: 1.5;
    text-align: center;
 }
+
 .plus_btn {
   position: fixed;
   bottom: 100px; /* nav보다 살짝 위 */
@@ -128,6 +142,7 @@
   height: 52px;
   z-index: 20; /* nav보다 위에 오게 */
   pointer-events: auto;
+  cursor: pointer;
 }
 
 .plus_bg {
