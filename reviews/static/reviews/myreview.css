@@ -124,24 +124,12 @@
   justify-content: space-between;
   align-items: center;
   margin: 12px 0;
+  width: 100%;
 }
 
 .review-header h2 {
   font-size: 14px;
   font-weight: 600;
-}
-
-.dropdown-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-main);
-  color: #fff;
-  border-radius: 8px;
-  padding: 4px 8px;
-  font-size: 12px;
-  gap: 4px;
-  height: 28px;
 }
 
 .down-icon {
@@ -396,4 +384,50 @@
   height: 100%;
   width: 1px;
   border-right: 1px dashed #c4f2ff;
+}
+
+/* 받은 후기, 작성 후기 드롭다운 */
+.dropdown-btn {
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  width: 25%;
+}
+
+.selected,
+.item {
+  background-color: var(--color-main);
+  padding: 5px 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  height: 30px;
+}
+
+.selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.item {
+  width: 100%;
+}
+
+.options {
+  position: absolute;
+  width: 100%;
+}
+
+.dropdown-btn p,
+.item {
+  color: #ffffff;
 }

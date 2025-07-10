@@ -62,14 +62,25 @@
       <section class="review-section">
         <div class="review-header">
           <h3>거래 후기</h3>
-          <button class="dropdown-btn">
+          <!-- <button class="dropdown-btn">
             작성 후기
             <img
               src="{% static 'reviews/images/down-icon.svg' %}"
               alt="화살표"
               class="down-icon"
             />
-          </button>
+          </button> -->
+          <!-- 받은 후기, 작성 후기 드롭다운 -->
+          <div class="dropdown-btn">
+            <div class="selected">
+              <p>받은 후기</p>
+              <img src="{% static 'requests/images/down-icon-white.svg' %}" alt="드롭다운 버튼" />
+            </div>
+            <div class="options hidden">
+              <a href="" class="item">받은 후기</a>
+              <a href="" class="item">작성 후기</a>
+            </div>
+          </div>
         </div>
 
         <!-- 후기 리스트 -->
