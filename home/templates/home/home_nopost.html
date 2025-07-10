@@ -40,7 +40,7 @@
             <p class="nopost">아직 등록된 게시글이 없습니다. <br />첫 게시물을 작성해 보세요!</p>
         </div>
 
-      
+
         <footer class="bottom-nav">
             <nav>
                 <ul>
@@ -65,11 +65,11 @@
                         </a>
                     </li>
                 </ul>
-            </nav> 
-             <div class="plus_btn">
-            <img src="/home/static/home/images/nopost_plus.svg" alt="" class="plus_bg">
-            <img src="/home/static/home/images/plusbtn.svg" alt="" class="plus">
-        </div>
+            </nav>
+            <div class="plus_btn" onclick="window.location.href='{% url 'post_add' %}'">
+                <img src="{% static 'home/images/nopost_plus.svg' %}" alt="" class="plus_bg">
+                <img src="{% static 'home/images/plusbtn.svg' %}" alt="" class="plus">
+            </div>
         </footer>
 
     </div>
