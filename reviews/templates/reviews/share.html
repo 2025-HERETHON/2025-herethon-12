@@ -21,26 +21,32 @@
 
     <div class="section">
       <div class="date-label">6/30</div>
-      <button class="dropdown-btn">
-        받은 나눔
-        <img src="{% static 'reviews/images/down-icon.svg' %}" alt="아래 화살표" class="down-icon" />
-      </button>
+      <div class="mini-dropdown">
+        <div class="selected">
+          <p>받은 나눔</p>
+          <img src="{% static 'reviews/images/down-icon.svg' %}" alt="드롭다운 아이콘" class="down-icon" />
+        </div>
+        <div class="options hidden">
+          <a href="{% url 'my_sent_donations' %}" class="dropdown-item">보낸 나눔</a>
+        </div>
+      </div>
     </div>
+  </div>
 
-    {% for date, donations in grouped.items %}
-    <div class="date-label">{{ date }}</div>
+  {% for date, donations in grouped.items %}
+  <div class="date-label">{{ date }}</div>
 
-    {% for donation in donations %}
-    <div class="item-card">
+  {% for donation in donations %}
+  <div class="item-card">
 
-      <img src="{{ donation.item.image.url }}" {# 실제 이미지 경로 필드명에 맞춰 수정해야 함 #} alt="{{ donation.item.title }}"
-        class="item-img" />
-      <!-- <img
+    <img src="{{ donation.item.image.url }}" {# 실제 이미지 경로 필드명에 맞춰 수정해야 함 #} alt="{{ donation.item.title }}"
+      class="item-img" />
+    <!-- <img
           src="/reviews/static/reviews/images/item-img1.png"
           alt=""
           class="item-img"
         /> -->
-      <!-- <div class="item-info">
+    <!-- <div class="item-info">
         <p class="item-title">하트 모양 변기</p>
         <p class="item-people">
           <spcn class="who">베베 몬스터</spcn>와의 거래
@@ -52,28 +58,28 @@
         <button class="review-btn">후기 작성하기</button>
       </div>
     </div> -->
-      <div class="item-info">
-        <p class="item-title">{{ donation.item.title }}</p>
-        <p class="item-people">
-          <span class="who">{{ donation.item.member.nickname }}</span>와의 거래
-        </p>
-        <p class="item-detail">{{ donation.item.description }}</p>
+    <div class="item-info">
+      <p class="item-title">{{ donation.item.title }}</p>
+      <p class="item-people">
+        <span class="who">{{ donation.item.member.nickname }}</span>와의 거래
+      </p>
+      <p class="item-detail">{{ donation.item.description }}</p>
 
-        {% if donation.review_written %}
-        <button class="review-btn" disabled>후기 작성 완료</button>
-        {% else %}
-        <a href="{% url 'create_review' 'donation' donation.id %}">
-          <button class="review-btn">후기 작성하기</button>
-        </a>
-        {% endif %}
-      </div>
+      {% if donation.review_written %}
+      <button class="review-btn" disabled>후기 작성 완료</button>
+      {% else %}
+      <a href="{% url 'create_review' 'donation' donation.id %}">
+        <button class="review-btn">후기 작성하기</button>
+      </a>
+      {% endif %}
     </div>
-    {% endfor %}
-    {% empty %}
-    <p class="empty">받은 나눔 내역이 없습니다.</p>
-    {% endfor %}
+  </div>
+  {% endfor %}
+  {% empty %}
+  <p class="empty">받은 나눔 내역이 없습니다.</p>
+  {% endfor %}
 
-    <!-- <div class="item-card">
+  <!-- <div class="item-card">
       <img src="/reviews//static/reviews/images/item-img2.png" alt="" class="item-img" />
       <div class="item-info">
         <p class="item-title">베이비 디아퍼 백</p>
@@ -116,27 +122,26 @@
       </div>
     </div> -->
 
-    <!-- 하단 네비게이션 -->
-      <footer class="bottom-nav">
-        <nav>
-          <a href="{% url 'home' %}">
-            <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-          </a>
-          <a href="{% url 'chat:thread_list' %}">
-            <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-          </a>
-          <a href="{% url 'requests:received_donation_requests' %}">
-            <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-          </a>
-          <a href="{% url 'my_page' %}" class="active">
-            <img
-              src="{% static 'reviews/images/my-active.svg' %}"
-              alt=""
-            />마이페이지
-          </a>
-        </nav>
-      </footer>
+  <!-- 하단 네비게이션 -->
+  <footer class="bottom-nav">
+    <nav>
+      <a href="{% url 'home' %}">
+        <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+      </a>
+      <a href="{% url 'chat:thread_list' %}">
+        <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+      </a>
+      <a href="{% url 'requests:received_donation_requests' %}">
+        <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+      </a>
+      <a href="{% url 'my_page' %}" class="active">
+        <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
+      </a>
+    </nav>
+  </footer>
   </div>
+  <script src="{% static 'reviews/js/share.js' %}"></script>
+
 </body>
 
 </html>
