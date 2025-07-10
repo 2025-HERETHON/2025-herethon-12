@@ -17,81 +17,45 @@
         <div class="header-title">교환 내역</div>
       </div>
 
-      <div class="date-label">6/30</div>
+    {% for date, requests in grouped.items %}
+      <div class="date-label">{{ date }}</div>
 
-      <div class="item-card">
-        <img
-          src="{% static 'reviews/images/item-img1.png' %}"
-          alt=""
-          class="item-img"
-        />
-        <div class="item-info">
-          <p class="item-title">하트 모양 변기</p>
-          <p class="item-people">
-            <spcn class="who">베베 몬스터</spcn>와의 거래
-          </p>
-          <p class="item-detail">
-            딱 1번 사용한 제품입니다. 아이가 빨리 커버려서 3세 남자 아이가
-            쓸만한 용품과 교환.....
-          </p>
-          <button class="review-btn">후기 작성하기</button>
+      {% for req in requests %}
+        <div class="item-card">
+          {% with req.item.images.first as first_image %}
+            {% if first_image %}
+              <img src="{{ first_image.image.url }}" alt="{{ req.item.title }}" class="item-img" />
+            {% else %}
+              <img src="{% static 'reviews/images/image.svg' %}" alt="사진 없음" class="item-img" />
+            {% endif %}
+          {% endwith %}
+
+          <div class="item-info">
+            <p class="item-title">{{ req.item.title }}</p>
+            <p class="item-people">
+              {% if req.member.id == user.id %}
+                <span class="who">{{ req.item.member.nickname }}</span>와의 거래
+              {% else %}
+                <span class="who">{{ req.member.nickname }}</span>와의 거래
+              {% endif %}
+            </p>
+            <p class="item-detail">{{ req.item.description }}</p>
+
+            {% if req.review_written %}
+              <button class="review-btn" disabled>리뷰 작성 완료</button>
+            {% elif req.id %}
+              <a href="{% url 'create_review' 'exchange' req.id %}">
+                <button class="review-btn">후기 작성하기</button>
+              </a>
+            {% else %}
+              <button class="review-btn" disabled>후기 작성 불가</button>
+            {% endif %}
+          </div>
         </div>
-      </div>
-
-      <div class="item-card">
-        <img
-          src="{% static 'reviews/images/item-img2.png' %}"
-          alt=""
-          class="item-img"
-        />
-        <div class="item-info">
-          <p class="item-title">베이비 디아퍼 백</p>
-          <p class="item-people">
-            <spcn class="who">베베 몬스터</spcn>와의 거래
-          </p>
-          <p class="item-detail">
-            아기 용품 넣을 때 딱 좋아요~ 수납력도 좋구요 ~
-          </p>
-          <button class="review-btn">후기 작성하기</button>
-        </div>
-      </div>
-
-      <div class="date-label">6/29</div>
-
-      <div class="item-card">
-        <img
-          src="{% static 'reviews/images/item-img3.png' %}"
-          alt=""
-          class="item-img"
-        />
-        <div class="item-info">
-          <p class="item-title">제품명</p>
-          <p class="item-people">
-            <spcn class="who">베베 몬스터</spcn>와의 거래
-          </p>
-          <p class="item-detail">
-            저번 달에 새로 샀는데 아이가 유모차를 안 타려고 하더라구요 ... 거의
-            새거인데 비슷한 가격대...
-          </p>
-          <button class="review-btn">후기 작성하기</button>
-        </div>
-      </div>
-
-      <div class="item-card">
-        <img
-          src="{% static 'reviews/images/item-img4.png' %}"
-          alt=""
-          class="item-img"
-        />
-        <div class="item-info">
-          <p class="item-title">제품명</p>
-          <p class="item-people">
-            <spcn class="who">베베 몬스터</spcn>와의 거래
-          </p>
-          <p class="item-detail">우리 아이 너무 빨리 커버려서 나눔합니다~</p>
-          <button class="review-btn">후기 작성하기</button>
-        </div>
-      </div>
+      {% endfor %}
+    {% empty %}
+      <p class="empty">교환 내역이 없습니다.</p>
+    {% endfor %}
 
       <!-- 하단 네비게이션 -->
       <footer class="bottom-nav">

@@ -199,19 +199,19 @@ def edit_profile(request):
 def my_exchange_history(request):
     member = request.user
 
-    # 받은 교환: 내가 올린 글에 대해 누군가 신청한 교환 성사된 것
+    # 받은 교환: 내가 올린 글에 누군가 신청해서 성사된 것
     received = ExchangeRequest.objects.filter(
         item__member=member,
-        status=Status.COMPLETED 
+        status=Status.COMPLETED
     ).select_related('item', 'member')
 
-    # 보낸 교환: 내가 신청해서 성사된 교환
+    # 보낸 교환: 내가 신청해서 성사된 것
     sent = ExchangeRequest.objects.filter(
         member=member,
         status=Status.COMPLETED
     ).select_related('item', 'item__member')
 
-    # 리뷰 작성 여부 설정
+    # 리뷰 작성 여부 추가
     for req in list(received) + list(sent):
         req.review_written = Review.objects.filter(exchange_request=req, writer=member).exists()
 
@@ -221,11 +221,18 @@ def my_exchange_history(request):
 
     grouped = defaultdict(list)
     for req in all_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
-        grouped[date].append(req)
+        date = localtime(req.updated_at).date()
+        month = date.strftime('%m').lstrip('0')
+        day = date.strftime('%d').lstrip('0')
+        date_str = f"{month}/{day}"
+        grouped[date_str].append(req)
+
+    # 날짜 내림차순 정렬 (최신 날짜 위로)
+    grouped = dict(sorted(grouped.items(), reverse=True))
 
     return render(request, 'reviews/change.html', {
-        'grouped': grouped
+        'grouped': dict(grouped),
+        'user': request.user
     })
 
 @login_required

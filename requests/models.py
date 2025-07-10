@@ -26,6 +26,7 @@ class ExchangeRequest(models.Model):
         default=Status.WAITING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="exchange_requests")
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="exchange_requests")
@@ -43,6 +44,7 @@ class DonationRequest(models.Model):
         default=Status.WAITING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="donation_requests")
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="donation_requests")
