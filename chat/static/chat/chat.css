@@ -76,7 +76,7 @@ label {
   border-top: 1px dashed #c4f2ff;
 }
 
-.complete-modal form {
+.complete-modal-bottom {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -102,8 +102,37 @@ label {
   align-items: center;
 }
 
-.hidden {
-  display: none;
+/* 거래 완료되었습니다 모달 */
+.success-modal {
+  position: fixed;
+  width: 70%;
+  height: 120px;
+  max-width: 301px;
+  z-index: 1020;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--color-main);
+}
+
+.success-modal p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#check {
+  color: var(--color-main);
+  font-size: 16px;
+  font-weight: 500;
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  background: none;
 }
 
 /* 뒤로가기, 새로고침 버튼이 있는 header */
@@ -345,4 +374,8 @@ label {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
