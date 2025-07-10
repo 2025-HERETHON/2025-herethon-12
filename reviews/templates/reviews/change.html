@@ -43,8 +43,8 @@
 
             {% if req.review_written %}
               <button class="review-btn" disabled>리뷰 작성 완료</button>
-            {% elif req.id %}
-              <a href="{% url 'create_review' 'exchange' req.id %}">
+            {% elif req.request_id %}
+              <a href="{% url 'create_review' 'exchange' req.request_id %}">
                 <button class="review-btn">후기 작성하기</button>
               </a>
             {% else %}
