@@ -66,6 +66,59 @@
   height: 7px;
   display: block;
 }
+.mini-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.selected {
+  width: 88px;
+  height: 28px;
+  font-size: 12px;
+  background-color: var(--color-main);
+  color: white;
+  border-radius: 8.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.options {
+  position: absolute;
+  top: 18px;
+  right: 0;
+  background-color: none;
+  z-index: 100;
+  padding: 6px 0px 0px 20px;
+  min-width: 100px;
+}
+
+.options.hidden {
+  display: none;
+}
+.options .dropdown-item {
+  width: 88px;
+  height: 28px;
+  font-size: 12px;
+  background-color: var(--color-main);
+  color: white;
+  border: none;
+  border-radius: 8.5px;
+  text-align: center;
+  line-height: 28px;
+  cursor: pointer;
+  margin: 4px auto;
+  display: block;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.options .dropdown-item:active {
+  background-color: var(--color-deep-main);
+}
 
 /* ===== 아이템 카드 ===== */
 .item-card {

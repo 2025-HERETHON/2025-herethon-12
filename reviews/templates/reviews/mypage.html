@@ -24,11 +24,15 @@
         <div class="user-card">
           <!-- <img src="/reviews/static/reviews/images/profile-icon.png" alt="프로필" class="profile-img" /> -->
           <div class="user-box">
+            {% if user.image %}
+            <img src="{{ user.image.url }}" alt="프로필" class="profile-img">
+            {% else %}
             <img
               src="{% static 'reviews/images/profile-icon.png' %}"
               alt="프로필"
               class="profile-img"
             />
+            {% endif %}
             <div class="user-info">
               <!-- <p class="username">베비몬스터</p>
             <p class="user-id">@uyohmnn</p> -->
@@ -44,7 +48,7 @@
 
       <div class="category">
         <div class="ex-btn">
-          <button class="excange">
+          <a class="excange" href="{% url 'my_exchange_history' %}">
             <!-- <img src="../static/accounts/images/account_exchange.svg" alt="" class="ex-img"> -->
             <a href="{% url 'change' %}">
             <img
@@ -57,7 +61,7 @@
           <p class="ex-text">교환 내역</p>
         </div>
         <div class="sh-btn">
-          <button class="share">
+          <a class="share" href="{% url 'my_received_donations' %}">
             <!-- <img src="../static/accounts/images/account_share.svg" alt="" class="sh-img"> -->
             <a href="{% url 'my_received_donations' %}">
             <img

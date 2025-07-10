@@ -42,18 +42,23 @@ def thread_list(request):
         Q(exchange__member=member) | Q(exchange__item__member=member)
     ).annotate(last_msg_time=Max("messages__sent_at")).order_by('-last_msg_time')
 
-    # 안읽음 인디케이터 띄우기 위한 읽음 상태 확인 (마지막 읽은 시간 세션에 저장)
+    
     thread_data = []
     for thread in threads:
+        # 안읽음 인디케이터 띄우기 위한 읽음 상태 확인 (마지막 읽은 시간 세션에 저장)
         last_read_str = request.session.get(f'last_read_{thread.thread_id}')
         last_read = datetime.fromisoformat(last_read_str) if last_read_str else None
-
         unread = thread.last_msg_time and (not last_read or thread.last_msg_time > last_read)
+        
+        # 상대방 프로필 사진 불러오기
+        opponent = thread.get_opponent(member)
+        opponent_image = opponent.image.url if opponent and opponent.image else None
 
-        thread_data.append((thread, unread))
+        thread_data.append((thread, unread, opponent_image))
 
     return render(request, 'chat/chat_list.html', {
-        'threads': thread_data
+        'threads': thread_data,
+        'current_user': request.user,
     })
 
 

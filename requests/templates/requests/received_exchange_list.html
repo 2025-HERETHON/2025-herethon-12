@@ -62,7 +62,11 @@
             <div class="r-container">
               <div class="text-container">
                 <div class="profile-bar">
+                  {% if request.member.image %}
+                  <img src="{{ request.member.image.url }}" alt="프로필">
+                  {% else %}
                   <img src="{% static 'requests/images/default_profile.png' %}" alt="기본 프로필" />
+                  {% endif %}
                   <div class="profile">
                     <div class="nickname-time">
                       <div class="nickname">{{ request.member.nickname }}</div>
@@ -111,7 +115,7 @@
               <div class="description">{{ request.memo }}</div>
               <!-- 쪽지 버튼, 거절 버튼 -->
               <div class="button-wrapper">
-                <a href="{% url 'chat:start_chat' 'exchange' request.pk %}">쪽지하기</a>
+                <a href="{% url 'chat:start_chat' 'exchange' request.pk %}" class="send-message">쪽지하기</a>
                 <button class="reject-button reject" data-url="{% url 'requests:reject_exchange_request' request.pk %}">거절</button>
               </div>
             </div>

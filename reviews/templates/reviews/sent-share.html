@@ -23,13 +23,22 @@
         <div class="section">
             <!-- <div class="date-label">6/30</div> -->
 
+                <div class="mini-dropdown">
+                    <div class="selected">
+                        <p>보낸 나눔</p>
+                        <img src="{% static 'reviews/images/down-icon.svg' %}" alt="드롭다운 아이콘" class="down-icon" />
+                    </div>
+                    <div class="options hidden">
+                        <a href="{% url 'my_received_donations' %}" class="dropdown-item">받은 나눔</a>
+                    </div>
+                </div>
+            </div>
+
+
             {% for date, donations in grouped.items %}
             <div class="date-label">{{ date }}</div>
 
-            <button class="dropdown-btn">
-                보낸 나눔
-                <img src="{% static 'reviews/images/down-icon.svg' %}" alt="아래 화살표" class="down-icon" />
-            </button>
+
         </div>
 
 
@@ -101,26 +110,25 @@
         </div> -->
 
         <!-- 하단 네비게이션 -->
-      <footer class="bottom-nav">
-        <nav>
-          <a href="{% url 'home' %}">
-            <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-          </a>
-          <a href="{% url 'chat:thread_list' %}">
-            <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-          </a>
-          <a href="{% url 'requests:received_donation_requests' %}">
-            <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-          </a>
-          <a href="{% url 'my_page' %}" class="active">
-            <img
-              src="{% static 'reviews/images/my-active.svg' %}"
-              alt=""
-            />마이페이지
-          </a>
-        </nav>
-      </footer>
+        <footer class="bottom-nav">
+            <nav>
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+                </a>
+                <a href="{% url 'chat:thread_list' %}">
+                    <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+                </a>
+                <a href="{% url 'requests:received_donation_requests' %}">
+                    <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+                </a>
+                <a href="{% url 'my_page' %}" class="active">
+                    <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
+                </a>
+            </nav>
+        </footer>
     </div>
+    <script src="{% static 'reviews/js/share.js' %}"></script>
+
 </body>
 
 </html>

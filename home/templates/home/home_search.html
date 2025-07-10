@@ -4,113 +4,112 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
-    <link rel="stylesheet" href="{% static 'home/home_search.css' %}" />
-    <link rel="stylesheet" href="{% static 'home/home_nopost.css' %}" />
-<!--    <link rel="stylesheet" href="/posts/static/posts/common.css" />-->
-<!--    <link rel="stylesheet" href="/home/static/home/home_search.css" />-->
-    <title>Dearbebe</title>
-  </head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
+  <link rel="stylesheet" href="{% static 'home/home_search.css' %}" />
+  <!-- <link rel="stylesheet" href="{% static 'home/home_nopost.css' %}" /> -->
+  <!--    <link rel="stylesheet" href="/posts/static/posts/common.css" />-->
+  <!--    <link rel="stylesheet" href="/home/static/home/home_search.css" />-->
+  <title>Dearbebe</title>
+</head>
 
-  <body>
-    <div class="main-container">
-        <div class="header">
-            <div class="top-bar">
-                <div class="top-location">{{ request.user.region_district }}</div>
-                <form method="get" action="">
-                    <div class="search-box">
-                        <img src="{% static 'home/images/search-icon.svg' %}" alt="검색 아이콘" class="search-icon" />
-<!--                    <img src="/home/static/home/images/search-icon.svg" alt="검색 아이콘" class="search-icon" />-->
-                        <input type="text" class="search-input" id="searchInput" name="q" />
-                    </div>
-                </form>
-            </div>
+<body>
+  <div class="main-container">
+    <div class="header">
+      <div class="top-bar">
+        <div class="top-location">{{ request.user.region_district }}</div>
+        <form method="get" action="">
+          <div class="search-box">
+            <img src="{% static 'home/images/search-icon.svg' %}" alt="검색 아이콘" class="search-icon" />
+            <!--                    <img src="/home/static/home/images/search-icon.svg" alt="검색 아이콘" class="search-icon" />-->
+            <input type="text" class="search-input" id="searchInput" name="q" />
+          </div>
+        </form>
+      </div>
 
 
-                <!-- ✅ 카테고리 메뉴 -->
-                <div class="category-list">
-                    <button class="category-btn {% if selected_category == '전체' %}active{% endif %}" onclick="location.href='?category=전체'">전체</button>
-                    <button class="category-btn {% if selected_category == '의류' %}active{% endif %}" onclick="location.href='?category=의류'">의류</button>
-                    <button class="category-btn {% if selected_category == '수유' %}active{% endif %}" onclick="location.href='?category=수유'">수유</button>
-                    <button class="category-btn {% if selected_category == '위생' %}active{% endif %}" onclick="location.href='?category=위생'">위생</button>
-                    <button class="category-btn {% if selected_category == '장난감' %}active{% endif %}" onclick="location.href='?category=장난감'">장난감</button>
-                    <button class="category-btn {% if selected_category == '기타' %}active{% endif %}" onclick="location.href='?category=기타'">기타</button>
-                </div>
-        </div>
+      <!-- ✅ 카테고리 메뉴 -->
+      <div class="category-list">
+        <button class="category-btn {% if selected_category == '전체' %}active{% endif %}"
+          onclick="location.href='?category=전체'">전체</button>
+        <button class="category-btn {% if selected_category == '의류' %}active{% endif %}"
+          onclick="location.href='?category=의류'">의류</button>
+        <button class="category-btn {% if selected_category == '수유' %}active{% endif %}"
+          onclick="location.href='?category=수유'">수유</button>
+        <button class="category-btn {% if selected_category == '위생' %}active{% endif %}"
+          onclick="location.href='?category=위생'">위생</button>
+        <button class="category-btn {% if selected_category == '장난감' %}active{% endif %}"
+          onclick="location.href='?category=장난감'">장난감</button>
+        <button class="category-btn {% if selected_category == '기타' %}active{% endif %}"
+          onclick="location.href='?category=기타'">기타</button>
+      </div>
+    </div>
 
     {% if items %}
-        <ul class="post-list">
-            <h2 class="title">최신 등록글</h2>
-            {% for item in items %}
-            <div class="item-card" data-id="{{item.id}}" onclick="location.href='{% url 'post_detail' item.item_id %}'">
-                {% if item.images.first %}
-                <img src="{{ item.images.first.image.url }}" alt="" class="item-img">
-                {% endif %}
-                <div class="item-info">
-                    <p class="item-title">{{item.title}}</p>
-                    <div class="state-line">
-                        <button class="{% if item.trade_type == '무료 나눔' %}free{% else %}state{% endif %}">
-                            {{ item.trade_type }}
-                        </button>
-                        {% if item.condition or item.age %}
-                            <p class="age">
-                            {% if item.condition %}{{ item.get_condition_display }}{% endif %}
-                            {% if item.condition and item.age %} / {% endif %}
-                                {% if item.age %}{{ item.get_age_display }} 추천{% endif %}
-                            </p>
-                        {% endif %}
-                    </div>
-                    <p class="item-detail">{{ item.description | truncatechars:63}}</p>
-                    <div class="loca-min">
-                        <div class="location">
-                            <img src="{% static 'home/images/location.svg' %}" alt="" class="location-icon">
-<!--                            <img src="/home/static/home/images/location.svg" alt="" class="location-icon">-->
-                            <p class="loca">{{ item.region_dong }}</p>
-                        </div>
-                        <p class="minute">{{ item.created_at|time_since_custom }}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <div class="main">
-            <img src="{% static 'home/images/home_nopost_bgi.png' %}" alt="" class="bgi">
-            <p class="nopost">아직 등록된 게시글이 없습니다. <br />첫 게시물을 작성해 보세요!</p>
-        </div>
+    <ul class="post-list">
+      <h2 class="title">최신 등록글</h2>
+      {% for item in items %}
+      <div class="item-card" data-id="{{item.id}}" onclick="location.href='{% url 'post_detail' item.item_id %}'">
+        {% if item.images.first %}
+        <img src="{{ item.images.first.image.url }}" alt="" class="item-img">
         {% endif %}
+        <div class="item-info">
+          <p class="item-title">{{item.title}}</p>
+          <div class="state-line">
+            <button class="{% if item.trade_type == '무료 나눔' %}free{% else %}state{% endif %}">
+              {{ item.trade_type }}
+            </button>
+            {% if item.condition or item.age %}
+            <p class="age">
+              {% if item.condition %}{{ item.get_condition_display }}{% endif %}
+              {% if item.condition and item.age %} / {% endif %}
+              {% if item.age %}{{ item.get_age_display }} 추천{% endif %}
+            </p>
+            {% endif %}
+          </div>
+          <p class="item-detail">{{ item.description | truncatechars:63}}</p>
+          <div class="loca-min">
+            <div class="location">
+              <img src="{% static 'home/images/location.svg' %}" alt="" class="location-icon">
+              <!--                            <img src="/home/static/home/images/location.svg" alt="" class="location-icon">-->
+              <p class="loca">{{ item.region_dong }}</p>
+            </div>
+            <p class="minute">{{ item.created_at|time_since_custom }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="main">
 
-        <!-- 하단 네비게이션 -->
-        <footer class="bottom-nav">
-          <nav>
-            <a href="{% url 'home' %}" class="active">
-              <img src="{% static 'home/images/home-active.svg' %}" alt="" />홈
-            </a>
-            <a href="{% url 'chat:thread_list' %}">
-              <img
-                src="{% static 'home/images/message.svg' %}"
-                alt=""
-              />쪽지
-            </a>
-            <a
-              href="{% url 'requests:received_donation_requests' %}"
-            >
-              <img
-                src="{% static 'home/images/form.svg' %}"
-                alt=""
-              />신청 관리
-            </a>
-            <a href="{% url 'my_page' %}">
-              <img
-                src="{% static 'home/images/my.svg' %}"
-                alt=""
-              />마이페이지
-            </a>
-          </nav>
-        </footer>
+      <p class="nopost">아직 등록된 게시글이 없습니다. <br />첫 게시물을 작성해 보세요!</p>
     </div>
+    {% endif %}
+    <img src="{% static 'home/images/home_nopost_bgi.png' %}" alt="" class="bgi">
+    <!-- 하단 네비게이션 -->
+    <footer class="bottom-nav">
+      <nav>
+        <a href="{% url 'home' %}" class="active">
+          <img src="{% static 'home/images/home-active.svg' %}" alt="" />홈
+        </a>
+        <a href="{% url 'chat:thread_list' %}">
+          <img src="{% static 'home/images/message.svg' %}" alt="" />쪽지
+        </a>
+        <a href="{% url 'requests:received_donation_requests' %}">
+          <img src="{% static 'home/images/form.svg' %}" alt="" />신청 관리
+        </a>
+        <a href="{% url 'my_page' %}">
+          <img src="{% static 'home/images/my.svg' %}" alt="" />마이페이지
+        </a>
+      </nav>
+       <div class="plus_btn">
+                <img src="{% static 'home/images/nopost_plus.svg' %}" alt="" class="plus_bg">
+                <img src="{% static 'home/images/plusbtn.svg' %}" alt="" class="plus">
+            </div>
+    </footer>
+  </div>
 
 </body>
 
