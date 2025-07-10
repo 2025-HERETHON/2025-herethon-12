@@ -232,7 +232,7 @@ def my_exchange_history(request):
 
     grouped = defaultdict(list)
     for req in all_requests:
-        date = localtime(req.updated_at).date()
+        date = localtime(req.updated_at).date() #추후 필요하면 completed_at으로 교체, 완료 처리가 되면 status가 바뀌기 때문에 updated_at으로 해도 충분할 것 같습니다
         month = date.strftime('%m').lstrip('0')
         day = date.strftime('%d').lstrip('0')
         date_str = f"{month}/{day}"
