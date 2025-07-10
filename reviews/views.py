@@ -249,23 +249,38 @@ def my_sent_donations(request):
 
 @login_required
 def my_received_donations(request):
+    print("🔥 my_received_donations 뷰 함수 호출됨")
     member = request.user
+    print("현재 로그인한 사용자:", member)
 
     completed_requests = DonationRequest.objects.filter(
         member=member,
         status=Status.COMPLETED
     ).select_related('item', 'item__member')
+    print("완료된 받은 나눔 개수:", completed_requests.count())
 
     for req in completed_requests:
         req.review_written = Review.objects.filter(donation_request=req, writer=member).exists()
+        print("리뷰 작성 여부:", req.review_written)
+        print("아이템 제목:", req.item.title)
+        print("아이템 작성자 닉네임:", req.item.member.nickname)
+        print("아이템 설명:", req.item.description)
+        
+        print("업데이트 일자:", req.updated_at)
 
     grouped = defaultdict(list)
     for req in completed_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
+        date = localtime(req.created_at).date()
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
         grouped[date].append(req)
 
+    # 날짜 내림차순 정렬 (최신 날짜 위로)
+    grouped = dict(sorted(grouped.items(), reverse=True))
+
     return render(request, 'reviews/share.html', {
-        'grouped': grouped
+        'grouped': dict(grouped)
     })
 
 @require_GET
@@ -273,3 +288,15 @@ def check_id_duplicate(request):
     username = request.GET.get('username')
     exists = Member.objects.filter(username=username).exists()
     return JsonResponse({'exists': exists})
+
+def change_view(request):
+    return render(request, 'reviews/change.html')
+
+def share_view(request):
+    return render(request, 'reviews/share.html')
+
+def myreview_view(request):
+    return render(request, 'reviews/myreview.html')
+
+def mypage_view(request):
+    return render(request, 'reviews/mypage.html')
