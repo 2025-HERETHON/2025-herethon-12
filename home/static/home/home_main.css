@@ -58,7 +58,7 @@
   position: relative;
   width: 290px;
   height: 34px;
-  margin-left: 20px;
+
 }
 
 .top-location {
@@ -67,11 +67,12 @@
   font-weight: bold;
   color: var(--color-deep-main);
   white-space: nowrap;
+  max-width: 100px;
 }
 
 .search-input {
   width: 90%;
-  padding: 8px 12px 8px 30px;
+  padding: 8px 12px 8px 60px;
   /* 왼쪽 패딩: 아이콘 공간 확보 */
   border: 1px solid #ccc;
   border-radius: 8px;

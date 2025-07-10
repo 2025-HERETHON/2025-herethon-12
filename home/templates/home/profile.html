@@ -23,7 +23,7 @@
                     <img src="{% static 'reviews/images/back-btn.svg' %}" alt="뒤로가기" />
                 </a>
 
-<!--                <img src="/reviews/static/reviews/images/back-btn.svg" alt="뒤로가기" />-->
+                <!--                <img src="/reviews/static/reviews/images/back-btn.svg" alt="뒤로가기" />-->
 
             </button>
             <h1 class="page-title">프로필</h1>
@@ -36,7 +36,7 @@
                 <img src="{% static 'reviews/images/profile-icon.png' %}" alt="프로필" class="profile-img" />
                 {% endif %}
 
-<!--                <img src="/reviews/static/reviews/images/profile-icon.png" alt="프로필" class="profile-img" />-->
+                <!--                <img src="/reviews/static/reviews/images/profile-icon.png" alt="프로필" class="profile-img" />-->
 
                 <div class="user-info">
                     <p class="username">{{profile_user.nickname}}</p>
@@ -82,13 +82,13 @@
                             {{ item.trade_type }}
                         </button>
 
-<!--                        <button class="state">{{item.trade_type}}</button>-->
+                        <!--                        <button class="state">{{item.trade_type}}</button>-->
                         {% if item.condition or item.age %}
-                            <p class="age">
+                        <p class="age">
                             {% if item.condition %}{{ item.get_condition_display }}{% endif %}
                             {% if item.condition and item.age %} / {% endif %}
-                                {% if item.age %}{{ item.get_age_display }} 추천{% endif %}
-                            </p>
+                            {% if item.age %}{{ item.get_age_display }} 추천{% endif %}
+                        </p>
 
                         {% endif %}
                     </div>
@@ -106,13 +106,13 @@
             {% for review in received_reviews %}
             <li class="review-item">
 
-            <a href="{%url 'profile' review.writer.pk%}">
-                {% if review.writer.image %}
-                <img src="{{ review.writer.image.url }}" alt="프로필" class="profile-img" />
-                {% else %}
-                <img src="{% static 'reviews/images/profile-icon.png' %}" alt="프로필" class="review-profile" />
-                {% endif %}
-            </a>
+                <a href="{%url 'profile' review.writer.pk%}">
+                    {% if review.writer.image %}
+                    <img src="{{ review.writer.image.url }}" alt="프로필" class="profile-img" />
+                    {% else %}
+                    <img src="{% static 'reviews/images/profile-icon.png' %}" alt="프로필" class="review-profile" />
+                    {% endif %}
+                </a>
 
                 <div class="review-content">
                     <div class="rating-box">
@@ -147,6 +147,7 @@
                 </div>
 
             </li>
+
             {% endfor %}
         </div>
     </div>
