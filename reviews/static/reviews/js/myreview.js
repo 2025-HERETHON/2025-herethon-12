@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmDeleteBtn = document.getElementById("confirmDelete");
   const cancelDeleteBtn = document.getElementById("cancelDelete");
   const modalOverlay = document.getElementById("deleteModal");
+  const deleteForm = document.getElementById("deleteForm");
 
   if (!confirmDeleteBtn || !cancelDeleteBtn || !modalOverlay) {
     console.error("❌ 모달 요소가 없습니다. id 확인하세요.");
@@ -100,14 +101,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   deleteBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      targetReview = btn.closest(".review-item");
       modalOverlay.classList.remove("hidden");
+      targetReview = btn.dataset.reviewId;
     });
   });
 
   confirmDeleteBtn.addEventListener("click", () => {
     if (targetReview) {
-      targetReview.remove();
+      deleteForm.action = `/reviews/delete/${targetReview}/`;
+      deleteForm.submit();
       targetReview = null;
     }
     modalOverlay.classList.add("hidden");
@@ -115,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cancelDeleteBtn.addEventListener("click", () => {
     modalOverlay.classList.add("hidden");
+    targetReview = null;
   });
 
   const ratingBoxes = document.querySelectorAll(".rating-box");
