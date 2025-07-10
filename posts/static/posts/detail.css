@@ -93,9 +93,15 @@ body {
   background: none;
 }
 
-.back-btn,
+.back-btn {
+  padding: 0 15px;
+}
+
 .more-btn {
-  padding: 0 10px;
+  width: 43px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-dropdown {
