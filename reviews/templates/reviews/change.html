@@ -18,13 +18,14 @@
 <!--          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />-->
 <!--        </button>-->
         <div class="header-title">교환 내역</div>
+        <p></p>
       </div>
 
     {% for date, requests in grouped.items %}
       <div class="date-label">{{ date }}</div>
 
       {% for req in requests %}
-        <div class="item-card">
+        <div class="item-card {% if forloop.last %}last{% endif %}">
           {% with req.item.images.first as first_image %}
             {% if first_image %}
               <img src="{{ first_image.image.url }}" alt="{{ req.item.title }}" class="item-img" />
