@@ -11,17 +11,21 @@ const usernameDesc = document.getElementById("username-desc");
 
 function validUsername() {
   if (msg) {
-    msg.classList.add("hidden")
+    msg.classList.add("hidden");
   }
 
   const regex = /^[a-z\d]{4,12}$/;
+  let valid = true;
   if (!regex.test(username.value)) {
+    valid = false;
     username.style.borderColor = "var(--color-red)";
     usernameErr.classList.remove("hidden");
   } else {
     username.style.borderColor = "#ababab";
     usernameErr.classList.add("hidden");
   }
+
+  return valid;
 }
 
 function validPassword() {
@@ -59,19 +63,28 @@ function validNickname() {
 
 // 아이디 중복 확인 로직
 function checkId() {
-    document.getElementById("password").removeAttribute("required");
-    document.getElementById("password-check").removeAttribute("required");
-    document.getElementById("nickname").removeAttribute("required");
+  document.getElementById("password").removeAttribute("required");
+  document.getElementById("password-check").removeAttribute("required");
+  document.getElementById("nickname").removeAttribute("required");
 
-    const form = document.querySelector("form");
+  const form = document.querySelector("form");
 
-    const actionInput = document.createElement("input");
-    actionInput.type = "hidden";
-    actionInput.name = "action";
-    actionInput.value = "check_id";
-    form.appendChild(actionInput);
+  // 초기화
+  const exist = form.querySelector('input[name="action"]');
+  if (exist) {
+    exist.remove();
+  }
 
+  const actionInput = document.createElement("input");
+  actionInput.type = "hidden";
+  actionInput.name = "action";
+  actionInput.value = "check_id";
+  form.appendChild(actionInput);
+  // 아이디 중복확인 전에도 아이디 유효성 검사 먼저
+  const usernameValid = validUsername();
+  if (usernameValid) {
     form.submit();
+  }
 }
 
 function restoreRequired() {
@@ -94,7 +107,7 @@ window.addEventListener("DOMContentLoaded", () => {
     username.style.borderColor = "#4EC789";
     usernameDesc.classList.add("hidden");
   }
-})
+});
 
 username.addEventListener("input", validUsername);
 password.addEventListener("input", validPassword);

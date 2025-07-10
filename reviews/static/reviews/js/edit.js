@@ -1,6 +1,5 @@
-const edit = document.getElementById("edit")
-const prev = document.querySelector(".preview")
-const preview = document.querySelector(".preview-img")
+const edit = document.getElementById("edit");
+const preview = document.querySelector(".preview-img");
 const msg = document.querySelector(".message");
 const username = document.getElementById("username");
 const usernameErr = document.getElementById("username-err");
@@ -16,14 +15,13 @@ function renderPreview(photo) {
   reader.onload = (e) => {
     const previewImg = preview.querySelector("img");
     previewImg.src = e.target.result;
-
     preview.classList.remove("hidden");
   };
   reader.readAsDataURL(photo);
 }
 
 edit.addEventListener("change", () => {
-  const profiles = Array.from(edit.files)
+  const profiles = Array.from(edit.files);
   if (profiles.length > 1) {
     alert("사진은 1장만 업로드할 수 있습니다.");
     edit.value = "";
@@ -31,23 +29,26 @@ edit.addEventListener("change", () => {
   }
 
   renderPreview(profiles[0]);
-})
-
+});
 
 // 여기부턴 signup.js에서 그대로 가져옴 -> 연동 과정에서 수정 가능
 function validUsername() {
   if (msg) {
-    msg.classList.add("hidden")
+    msg.classList.add("hidden");
   }
 
   const regex = /^[a-z\d]{4,12}$/;
+  let valid = true;
   if (!regex.test(username.value)) {
+    valid = false;
     username.style.borderColor = "var(--color-red)";
     usernameErr.classList.remove("hidden");
   } else {
     username.style.borderColor = "#ababab";
     usernameErr.classList.add("hidden");
   }
+
+  return valid;
 }
 
 function validNickname() {
@@ -63,17 +64,26 @@ function validNickname() {
 
 // 아이디 중복 확인 로직
 function checkId() {
-    document.getElementById("nickname").removeAttribute("required");
+  document.getElementById("nickname").removeAttribute("required");
 
-    const form = document.querySelector("form");
+  const form = document.querySelector("form");
 
-    const actionInput = document.createElement("input");
-    actionInput.type = "hidden";
-    actionInput.name = "action";
-    actionInput.value = "check_id";
-    form.appendChild(actionInput);
+  // 중복확인 input 초기화
+  const exist = form.querySelector('input[name="action"]');
+  if (exist) {
+    exist.remove();
+  }
 
+  const actionInput = document.createElement("input");
+  actionInput.type = "hidden";
+  actionInput.name = "action";
+  actionInput.value = "check_id";
+  form.appendChild(actionInput);
+  // 아이디 중복확인 전에도 아이디 유효성 검사 먼저
+  const usernameValid = validUsername();
+  if (usernameValid) {
     form.submit();
+  }
 }
 
 function restoreRequired() {
@@ -90,7 +100,7 @@ window.addEventListener("DOMContentLoaded", () => {
   } else if (msg.classList.contains("success")) {
     username.style.borderColor = "#4EC789";
   }
-})
+});
 
 username.addEventListener("input", validUsername);
 nickname.addEventListener("input", validNickname);
