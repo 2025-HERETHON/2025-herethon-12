@@ -7,6 +7,7 @@ const nickname = document.getElementById("nickname");
 const nicknameErr = document.getElementById("nickname-err");
 const form = document.querySelector("form");
 const idChecked = document.getElementById("idChecked");
+const originalUsername = document.getElementById("original-username").value;
 
 // 프로필 사진 미리보기 함수
 function renderPreview(photo) {
@@ -90,7 +91,9 @@ function checkId() {
 
 function restoreRequired() {
   document.getElementById("nickname").setAttribute("required", "true");
-  msg.classList.add("hidden");
+  if (msg) {
+    msg.classList.add("hidden");
+  }
 }
 
 // 중복 확인 후 아이디 입력창 테두리 색 변경
@@ -108,7 +111,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
 username.addEventListener("input", () => {
   validUsername();
-  idChecked.value = "false"; // 중복확인 이후에 아이디 값이 바뀌면 재확인
+  if (username.value === originalUsername) {
+    idChecked.value = "true"; // 아이디 값이 바뀌어도 기존 아이디와 같으면 그대로 true
+  } else {
+    idChecked.value = "false"; // 중복확인 이후에 아이디 값이 바뀌면 재확인 (중복확인 안 하면 그대로 true)
+  }
 });
 nickname.addEventListener("input", validNickname);
 
