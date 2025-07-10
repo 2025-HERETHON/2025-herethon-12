@@ -80,42 +80,33 @@
   margin-top: 16px;
 }
 
-.excange,
-.share,
-.review {
+.cat-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.circle-btn {
   width: 45px;
   height: 45px;
-  border-radius: 30px;
+  border-radius: 50%;
+  background-color: #d6eef5;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: none;
-  background-color: #d6eef5;
 }
 
-.ex-img,
-.sh-img,
-.re-img {
-  width: 42px;
+.cat-img {
+  width: 24px;
   height: 24px;
 }
 
-.ex-text {
+.cat-text {
   font-size: 11px;
   font-weight: 600;
-  margin-left: 2px;
-}
-
-.sh-text {
-  font-size: 11px;
-  font-weight: 600;
-  margin-left: 3px;
-}
-
-.re-text {
-  font-size: 11px;
-  font-weight: 600;
-  margin-left: 3px;
+  color: #000;
 }
 
 .logout {
