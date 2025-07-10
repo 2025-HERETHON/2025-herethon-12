@@ -13,12 +13,14 @@
 <body>
     <div class="main-container">
         <div class="header">
-            <button class="back-btn">
+            <a href="javascript:history.back()" class="back-btn">
                 <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
-            </button>
+            </a>
+<!--            <button class="back-btn">-->
+<!--                <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />-->
+<!--            </button>-->
             <div class="header-title">나눔 내역</div>
         </div>
-
 
         <div class="section">
             <!-- <div class="date-label">6/30</div> -->
@@ -33,14 +35,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-
         {% for date, donations in grouped.items %}
         <div class="date-label">{{ date }}</div>
-        
+
         {% for donation in donations %}
         <div class="item-card">
-            {# 이미지가 하나 이상 있을 때 첫 번째 이미지 출력 #}
+            <!--# 이미지가 하나 이상 있을 때 첫 번째 이미지 출력 #}-->
             {% with donation.item.images.first as first_image %}
                 {% if first_image %}
                     <img src="{{ first_image.image.url }}" alt="{{ donation.item.title }}" class="item-img" />
@@ -48,7 +48,7 @@
                     <img src="{% static 'reviews/images/image.svg' %}" alt="사진 없음" class="item-img" />
                 {% endif %}
             {% endwith %}
-            
+
             <div class="item-info">
                 <p class="item-title">{{ donation.item.title }}</p>
                 <p class="item-people">
@@ -61,7 +61,7 @@
         {% empty %}
         <p class="empty">보낸 나눔 내역이 없습니다.</p>
         {% endfor %}
-
+        </div>
         <!-- 하단 네비게이션 -->
         <footer class="bottom-nav">
             <nav>

@@ -13,9 +13,9 @@
 <body>
   <div class="main-container">
     <div class="header">
-      <button class="back-btn">
-        <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
-      </button>
+      <a href="javascript:history.back()" class="back-btn">
+                <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
+            </a>
       <div class="header-title">나눔 내역</div>
     </div>
 
@@ -28,12 +28,8 @@
         <div class="options hidden">
           <a href="{% url 'my_sent_donations' %}" class="dropdown-item">보낸 나눔</a>
         </div>
-      </div>
-    </div>
-  </div>
-
-  {% for date, donations in grouped.items %}
-  <div class="date-label">{{ date }}</div> 
+        {% for date, donations in grouped.items %}
+  <div class="date-label">{{ date }}</div>
 
   {% for donation in donations %}
   <div class="item-card">
@@ -53,8 +49,8 @@
         </p>
         <p class="item-detail">{{ donation.item.description }}</p>
 
-      {% if donation.id %}
-        <a href="{% url 'create_review' 'donation' donation.id %}">
+      {% if donation.request_id %}
+        <a href="{% url 'create_review' 'donation' donation.request_id %}">
           <button class="review-btn">후기 작성하기</button>
         </a>
       {% else %}
@@ -64,6 +60,9 @@
   </div>
   {% endfor %}
   {% endfor %}
+      </div>
+    </div>
+  </div>
 
   <!-- 하단 네비게이션 -->
   <footer class="bottom-nav">
