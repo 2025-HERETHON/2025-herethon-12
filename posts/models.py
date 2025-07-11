@@ -41,7 +41,7 @@ class Item(models.Model):
         default=Status.WAITING
     )
 
-    sold_out = models.BooleanField(default=False)
+    #sold_out = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     member = models.ForeignKey(Member, on_delete=models.CASCADE)

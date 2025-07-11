@@ -116,8 +116,8 @@
           </div>
         </div>
         <div class="button-wrapper">
-          {% if item.sold_out %}
-            <a href="#" class="submit-btn sold-out">거래 완료</a>
+          {% if item.status == 'COMPLETED' %}
+            <button class="submit-btn sold-out" disabled>거래 완료</button>
           {% elif is_writer %} <!--작성자일 경우 나눔, 교환 여부에 따라 신청 관리로-->
             {% if item.trade_type == '무료 나눔' %}
               <a href="{% url 'requests:received_donation_requests' %}" class="submit-btn">신청 관리</a>
