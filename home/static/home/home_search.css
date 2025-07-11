@@ -184,6 +184,15 @@ h2 {
   color: #fff;
   margin: 10px 10px 10px 0;
 }
+.complete {
+  width: 88px;
+  height: 17px;
+  border-radius: 8.5px;
+  margin: 10px 10px;
+  background-color:#8F8F8F;
+  color: #fff;
+  margin: 10px 10px 10px 0;
+}
 
 .age {
   font-size: 12px;
