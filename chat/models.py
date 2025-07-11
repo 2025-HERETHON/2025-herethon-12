@@ -46,3 +46,12 @@ class Message(models.Model):
 
     def __str__(self):
         return f"{self.member.nickname}의 메시지 ({self.sent_at})"
+    
+
+class ThreadReadStatus(models.Model):
+    thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name='read_statuses')
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    last_read_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('thread', 'member')
