@@ -106,7 +106,11 @@
           {% else %}
             {% for r in written_reviews %}
             <li class="review-item">
-              <img src="{% static 'reviews/images/profile-icon.png' %}" class="review-profile" />
+              {% if user.image %}
+              <img src="{{ user.image.url }}" alt="" class="profile-img">
+              {% else %}
+              <img src="{% static 'reviews/images/profile-icon.png' %}" class="profile-img" />
+              {% endif %}
               <div class="review-content">
                 <div class="rating-box">
                   <div class="rating">
