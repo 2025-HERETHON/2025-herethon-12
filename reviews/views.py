@@ -292,7 +292,7 @@ def my_sent_donations(request):
     completed_requests = DonationRequest.objects.filter(
         item__member=member,
         status=Status.COMPLETED
-    ).select_related('item', 'member')
+    ).select_related('item', 'member').order_by('-updated_at')
 
     grouped = defaultdict(list)
     for req in completed_requests:
@@ -323,7 +323,7 @@ def my_received_donations(request):
     completed_requests = DonationRequest.objects.filter(
         member=member,
         status=Status.COMPLETED
-    ).select_related('item', 'item__member')
+    ).select_related('item', 'item__member').order_by('-updated_at')
     print("완료된 받은 나눔 개수:", completed_requests.count())
 
     for req in completed_requests:
