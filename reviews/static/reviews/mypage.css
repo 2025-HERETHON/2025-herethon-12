@@ -1,3 +1,7 @@
+body {
+  overflow-y: hidden;
+}
+
 /* 로그아웃 모달 */
 .logout-modal {
   position: fixed;
