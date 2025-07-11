@@ -13,7 +13,7 @@
   z-index: 100;
 }
 
-.header-title {
+.header .header-title {
   font-weight: 600;
   font-size: 20px;
 }
@@ -67,11 +67,11 @@
 .user-info {
   display: flex;
   flex-direction: column;
-  gap:5px;
+  gap: 5px;
 }
 
-.user-info > p {
-  margin:0;
+.user-info>p {
+  margin: 0;
 }
 
 .user-info .username {
@@ -110,6 +110,7 @@
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .rating-label {
   width: 14px;
   overflow: hidden;
@@ -149,11 +150,13 @@
   padding: 0 16px 80px;
   /* 하단 nav 고려 */
 }
+
 .review-section h3 {
   font-size: 18px;
   font-weight: 600;
   margin: 0px;
 }
+
 .review-header {
   display: flex;
   justify-content: space-between;
@@ -197,6 +200,7 @@
 
 .review-content {
   flex-grow: 1;
+   min-width: 0;
 }
 
 .review-content .stars {
@@ -216,6 +220,9 @@
   font-size: 13px;
   color: #333;
   line-height: 1.4;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .reviewimg {
@@ -224,6 +231,8 @@
   border-radius: 8px;
   justify-self: center;
   align-self: center;
+    flex-shrink: 0; 
+  margin-left: 4px;
 }
 
 .reviewimg img {
@@ -246,6 +255,7 @@
   font-size: 11px;
   color: var(--color-gray);
   margin-left: 8px;
+   flex-shrink: 0;
 }
 
 .review-meta .delete-btn {
@@ -293,9 +303,11 @@
   position: fixed;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%); /* 가운데 정렬 */
+  transform: translateX(-50%);
+  /* 가운데 정렬 */
   width: 100%;
-  max-width: 430px; /* 📌 main-container와 동일하게 */
+  max-width: 430px;
+  /* 📌 main-container와 동일하게 */
   background-color: #fff;
   z-index: 10;
 }
