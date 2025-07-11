@@ -27,6 +27,7 @@ class ExchangeRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True)
+    is_reviewed = models.BooleanField(default=False)
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="exchange_requests")
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="exchange_requests")
@@ -48,6 +49,7 @@ class DonationRequest(models.Model):
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="donation_requests")
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="donation_requests")
+    is_reviewed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.member.nickname}의 나눔 신청"

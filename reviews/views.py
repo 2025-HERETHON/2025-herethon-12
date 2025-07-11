@@ -55,6 +55,8 @@ def create_review(request, request_type, request_id):
                 review.receiver = receiver
                 review.exchange_request = exchange
                 review.save()
+                exchange.is_reviewed = True
+                exchange.save()
 
                 #messages.success(request, "후기가 등록되었습니다.")
                 #return redirect('my_exchange_history')
@@ -103,6 +105,8 @@ def create_review(request, request_type, request_id):
                 review.receiver = receiver
                 review.donation_request = donation
                 review.save()
+                donation.is_reviewed = True
+                donation.save()
                 messages.success(request, "후기가 등록되었습니다.")
                 #return redirect('my_donation_history_received')
                 return redirect(f"{request.path}?success=1")
