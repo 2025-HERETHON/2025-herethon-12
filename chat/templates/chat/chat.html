@@ -18,22 +18,24 @@
     <div class="complete-modal hidden">
       <p>거래를 완료하시겠어요?</p>
       <div class="x-divide"></div>
-      <div class="complete-modal-bottom">
-        <button type="button" id="cancel">아니오</button>
-        <div class="y-divide"></div>
-        <button type="button" id="ok">네</button>
-      </div>
-    </div>
-
-    <div class="success-modal hidden">
       <form method="POST" action="{% url 'chat:complete_trade' thread.thread_id %}" id="complete-form">
         {% csrf_token %}
-        <p>🎉거래가 완료 되었습니다!</p>
-        <button type="submit" id="check">확인</button>
+        <button type="button" id="cancel">아니오</button>
+        <div class="y-divide"></div>
+        <button type="submit" id="ok">네</button>
       </form>
+      </div>
     </div>
-
     <div class="darken hidden"></div>
+    {% if is_completed %}
+      {% if not is_receiver %}
+      <div class="success-modal hidden">
+        <p>🎉거래가 완료 되었습니다!</p>
+        <button type="button" id="check">확인</button>
+      </div>
+      <div class="success-darken hidden"></div>
+      {% endif %}
+    {% endif %}
 
     <!-- 이미지 미리보기 -->
     <div class="img-preview hidden">
@@ -51,7 +53,8 @@
       </a>
     </div>
 
-    <div class="main-container">
+    <!-- 신청자 최초 열람 여부 확인을 위해 임의로 집어넣었습니다 -->
+    <div class="main-container" data-thread-id="{{ thread.thread_id }}">
     <!-- 거래 완료 상태 확인을 위해 임의로 집어넣었습니다 -->
     <div id="is-completed" data-completed="{{ is_completed }}"></div>
     <div class="complete-bar">
@@ -61,7 +64,7 @@
           <button class="complete-btn" disabled>거래 완료</button>
         {% else %}
           <div class="complete-desc">거래가 끝나셨다면 버튼을 눌러 완료해 주세요.</div>
-          <button id="complete-btn">거래 완료</button>
+          <button class="complete-btn">거래 완료</button>
         {% endif %}
       {% else %}
         <!-- 신청자 입장 -->

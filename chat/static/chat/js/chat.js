@@ -9,17 +9,12 @@ const ok = document.getElementById("ok");
 const preview = document.querySelector(".img-preview");
 const previewDarken = document.querySelector(".preview-darken");
 
-const successModal = document.querySelector(".success-modal");
-const check = document.getElementById("check");
-
 console.log("isCompleted 값:", isCompleted);
 
 // 모달창 닫는 함수
-function closeAll() {
+function closeCompleteModal() {
   completeModal.classList.add("hidden");
-  if (successModal.classList.contains("hidden")) {
-    darken.classList.add("hidden");
-  }
+  darken.classList.add("hidden");
 }
 
 // 사진 미리보기 함수
@@ -41,9 +36,14 @@ function renderPreview(photo) {
 
 // 거래완료 버튼 누르면 화면 어두워지고 모달창 뜸
 completeBtn.addEventListener("click", (e) => {
-  if (isCompleted) return;
+  console.log("거래 완료 버튼 클릭됨");
+  if (isCompleted) {
+    console.log("이미 완료된 거래입니다.");
+    return;
+  }
 
   e.stopPropagation();
+  console.log("모달 열기 시도 중...");
   darken.classList.remove("hidden");
   completeModal.classList.remove("hidden");
 });
@@ -54,21 +54,12 @@ completeModal.addEventListener("click", (e) => {
 });
 
 // 취소 버튼 누르거나, 화면 다른 부분 누르면 모달창 닫힘
-document.addEventListener("click", closeAll);
-cancel.addEventListener("click", closeAll);
+document.addEventListener("click", closeCompleteModal);
+cancel.addEventListener("click", closeCompleteModal);
 
-// ✅ 네 버튼을 눌렀을 때 기존 모달창 닫고 거래 완료 모달창 열기
+// ✅ 네 버튼을 눌렀을 때도 모달창 닫기
 ok.addEventListener("click", () => {
-  completeModal.classList.add("hidden"); // 모달 닫기
-
-  // 거래 완료 모달 열기
-  successModal.classList.remove("hidden");
-});
-
-// 폼은 거래 완료 모달의 확인 버튼 눌러야 submit 됨 (다른 버튼으로 안 닫히게)
-check.addEventListener("click", () => {
-  successModal.classList.add("hidden");
-  darken.classList.add("hidden");
+  closeCompleteModal(); // 모달 닫기
 });
 
 // 사진 여러 장 업로드 금지
@@ -83,7 +74,6 @@ imgInput.addEventListener("change", () => {
   renderPreview(photos[0]);
 });
 
-// 입력 없을 경우 전송되지 않게 (여전히 전송됨.. 해결해야함) => 해결 완료!
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".chat-input");
   const textInput = document.getElementById("text-input");
@@ -132,6 +122,26 @@ document.addEventListener("DOMContentLoaded", () => {
   if (isCompleted) {
     completeBtn.style.backgroundColor = "#8A8A8A"; // 거래완료 시 회색 버튼 됨
   }
+
+  // 거래 신청자가 최초로 들어왔을 때 거래 완료 모달
+  const successModal = document.querySelector(".success-modal");
+  const check = document.getElementById("check");
+  const successDarken = document.querySelector(".success-darken");
+
+  const threadId = document.querySelector(".main-container").dataset.threadId;
+  const modalKey = `${threadId}_modal_shown`;
+
+  // 만약 localStorage에 채팅방 모달 키가 없다면 거래 완료 모달 띄움 (최초 한 번만)
+  if (!localStorage.getItem(modalKey)) {
+    successModal.classList.remove("hidden");
+    successDarken.classList.remove("hidden");
+  }
+  
+  check.addEventListener("click", () => {
+    localStorage.setItem(modalKey, "true");
+    successModal.classList.add("hidden");
+    successDarken.classList.add("hidden");
+  });
 });
 
 // 리다이렉트 시 최신 채팅으로 스크롤 이동
@@ -140,19 +150,4 @@ window.addEventListener("DOMContentLoaded", () => {
     const anchor = document.getElementById("scroll-anchor");
     anchor?.scrollIntoView({ behavior: "auto" });
   }, 50); // 일부러 지연시켜서 타이밍 어긋나지 않게
-});
-
-
-
-completeBtn.addEventListener("click", (e) => {
-  console.log("거래 완료 버튼 클릭됨");
-  if (isCompleted) {
-    console.log("이미 완료된 거래입니다.");
-    return;
-  }
-
-  e.stopPropagation();
-  console.log("모달 열기 시도 중...");
-  darken.classList.remove("hidden");
-  completeModal.classList.remove("hidden");
 });

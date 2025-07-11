@@ -10,7 +10,7 @@ label {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-.darken {
+.darken, .success-darken {
   position: fixed;
   right: 0;
   top: 0;
@@ -76,7 +76,7 @@ label {
   border-top: 1px dashed #c4f2ff;
 }
 
-.complete-modal-bottom {
+#complete-form {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
