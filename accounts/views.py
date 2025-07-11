@@ -88,7 +88,8 @@ def my_region(request):
         member.region_district = request.POST.get('region_district')
         member.region_dong = request.POST.get('region_dong')
         member.save()
-        return redirect('home')
+        logout(request) #자동으로 로그인으로 이동
+        #return redirect('home')
     return render(request, 'accounts/location.html')
 
 #상대방 프로필
