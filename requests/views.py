@@ -22,9 +22,10 @@ def received_donation_requests(request):
     member = request.user
     my_items = Item.objects.filter(member=member)
 
-    # 거절된(REJECTED) 요청 제외
+    # 거절된(REJECTED) 요청, 거래 완료된 요청 제외
     donation_requests = DonationRequest.objects.filter(
-        item__in=my_items
+        item__in=my_items,
+        item__status__in=[Status.WAITING, Status.IN_PROGRESS]  # 거래중인 아이템만
     ).exclude(
         status=Status.REJECTED
     ).order_by('-created_at')
@@ -113,9 +114,10 @@ def received_exchange_requests(request):
     member = request.user
     my_items = Item.objects.filter(member=member)
 
-    # 거절된 요청 제외
+    # 거절된(REJECTED) 요청, 거래 완료된 요청 제외
     exchange_requests = ExchangeRequest.objects.filter(
-        item__in=my_items
+        item__in=my_items,
+        item__status__in=[Status.WAITING, Status.IN_PROGRESS]  # 거래중인 아이템만
     ).exclude(
         status=Status.REJECTED
     ).order_by('-created_at')

@@ -1,6 +1,7 @@
 from django.db import models
 from .enums import Category, TradeType, Condition, RecommendedAge
 from accounts.models import Member
+from requests.enums import Status 
 
 # Create your models here.
 #게시글
@@ -34,6 +35,12 @@ class Item(models.Model):
     region_district = models.CharField(max_length=15)
     region_dong = models.CharField(max_length=15)
     
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.WAITING
+    )
+
     sold_out = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -158,6 +158,9 @@ def complete_trade(request, thread_id):
         donation_request.status = Status.COMPLETED
         donation_request.save()
 
+        donation_request.item.status = Status.COMPLETED  # 아이템 상태도 변경
+        donation_request.item.save()
+
     elif thread.exchange:
         exchange_request = thread.exchange
         if exchange_request.item.member != request.user and exchange_request.member != request.user:
@@ -166,5 +169,8 @@ def complete_trade(request, thread_id):
         # 상태 변경
         exchange_request.status = Status.COMPLETED
         exchange_request.save()
+
+        exchange_request.item.status = Status.COMPLETED  # 아이템 상태도 변경
+        exchange_request.item.save()
 
     return redirect('chat:chat_room', thread_id=thread_id)
