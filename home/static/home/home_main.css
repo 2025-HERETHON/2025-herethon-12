@@ -147,6 +147,7 @@ h2 {
 
 .item-card {
   display: flex;
+  align-items: center;
   padding: 12px 16px;
   gap: 12px;
   border-top: 1px solid var(--color-light-main);
@@ -193,6 +194,15 @@ h2 {
   margin: 10px 10px 10px 0;
   background-color: var(--color-mint);
   color: #fff;
+}
+.complete {
+  width: 88px;
+  height: 17px;
+  border-radius: 8.5px;
+  margin: 10px 10px;
+  background-color:#8F8F8F;
+  color: #fff;
+  margin: 10px 10px 10px 0;
 }
 
 .age {
@@ -242,16 +252,14 @@ h2 {
 .plus_btn {
   position: fixed;
   bottom: 100px;
-  /* nav보다 살짝 위 */
-  left: 40%;
+  left: 4%;
   transform: translateX(150px);
-  /* 오른쪽 정렬 + nav 폭 고려 (430px 기준이면 약 +150px) */
   width: 52px;
   height: 52px;
   z-index: 20;
-  /* nav보다 위에 오게 */
   pointer-events: auto;
   cursor: pointer;
+  margin-left: 13px;
 }
 
 .plus_bg {

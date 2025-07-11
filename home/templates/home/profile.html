@@ -28,6 +28,13 @@
             </button>
             <h1 class="page-title">프로필</h1>
         </header>
+        <div class="header">
+            <a href="javascript:history.back()" class="back-btn">
+                <img src="{% static 'reviews/images/back-btn.svg' %}" alt="뒤로가기" />
+            </a>
+            <div class="header-title">프로필</div>
+            <p></p>
+        </div>
         <section class="user-summary">
             <div class="user-card">
                 {% if profile_user.image %}
@@ -71,7 +78,7 @@
                 <img src="{% static 'home/images/profile_down.svg' %}" alt="" class="down">
             </div>
             {% for item in posts %}
-            <div class="item-card" onclick="location.href='{% url 'post_detail' item.item_id %}'">
+            <div class="item-card {% if forloop.first %}first{% endif %} {% if forloop.last %}last{% endif %}" onclick="location.href='{% url 'post_detail' item.item_id %}'">
                 {% if item.images.first %}
                 <img src="{{item.images.first.image.url}}" alt="" class="item-img">
                 {% endif %}
@@ -104,8 +111,7 @@
                 <img src="{% static 'home/images/profile_down.svg' %}" alt="" class="review-down">
             </div>
             {% for review in received_reviews %}
-            <li class="review-item">
-
+            <li class="review-item {% if forloop.first %}first{% endif %} {% if forloop.last %}last{% endif %}">
                 <a href="{%url 'profile' review.writer.pk%}">
                     {% if review.writer.image %}
                     <img src="{{ review.writer.image.url }}" alt="프로필" class="profile-img" />
