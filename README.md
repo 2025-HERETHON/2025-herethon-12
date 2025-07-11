@@ -33,7 +33,7 @@
 ### 👩‍💻 역할 분담
 |       이름         | 프로필                                                              |  역할 |                                    역할분담                         |
 | -------------------------------------- | ------------------------------------------------------------------- | --------------------|------------------------------------------------- |
-| 유효민 | <img width="160"  alt="image 14" src="https://github.com/user-attachments/assets/e14ae26d-5792-4b56-b6f6-2385196b75b4" /> | PM/DE| |
+| 유효민 | <img width="160"  alt="image 14" src="https://github.com/user-attachments/assets/e14ae26d-5792-4b56-b6f6-2385196b75b4" /> | PM/DE|  기획, UI/UX 디자인, 발표 자료 제작 |
 | 박소유 | <img width="160"  alt="박소유" src="https://github.com/user-attachments/assets/b7a4bdd4-22ca-4ebb-a91b-c7af2c009ac4" /> | FE| |
 | 백민영 | <img width="160" alt="백민영" src="https://github.com/user-attachments/assets/4719f790-692f-4498-bfe0-7033d9515bc5" /> | FE |  |
 | 남예은 | <img width="70"  alt="image 17" src="https://github.com/user-attachments/assets/98f335ae-276b-4553-a629-71c555efdb4e" /> | BE | 회원가입, 로그인, 지역 인증, 홈, 게시글, 나눔/교환 신청, 마이페이지(프로필 수정, 후기 작성) |
