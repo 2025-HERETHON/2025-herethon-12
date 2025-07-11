@@ -1,28 +1,44 @@
-/* === 헤더 === */
-.header {
+.main-container {
+    background-color: #ffffff;
     display: flex;
-    align-items: center;
-    padding: 0px 16px;
-    position: relative;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 뒤로가기 버튼만 있는 header */
+.header {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.header-title {
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .back-btn {
-    background: none;
-    padding: 0;
-    width: 23px;
-    height: 13px;
+  padding: 0 15px;
 }
 
-.page-title {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 600;
+.header p {
+  width: 43px;
 }
 
 /* === 유저 정보 카드 === */
 .user-summary {
     padding: 0px;
+    background-color: #ffffff;
+    margin-top: 60px;
 }
 
 .user-card {
@@ -54,7 +70,6 @@
 .user-info .user-id {
     font-size: 12px;
     color: var(--color-gray);
-    margin-top: 10px;
 }
 
 .user-rating p {
@@ -63,16 +78,19 @@
 }
 
 .user-rating {
-    margin-left: 25px;
+    margin-left: 16px;
+    background-color: #ffffff;
 }
 
 .rating-box {
     display: flex;
     align-items: center;
+    background-color: #ffffff;
 }
 
 .rating {
     display: flex;
+    background-color: #ffffff;
 }
 
 .rating-score {
@@ -128,17 +146,26 @@
     padding: 8px 8px 8px 16px;
     margin-top: 40px;
     margin-bottom: 0;
+    background-color: #ffffff;
 }
 
 .post-list {
     display: flex;
     flex-direction: column;
     padding-top: 0px;
+    width: 100%;
+    background-color: #ffffff;
 }
 
 .title_line {
     display: flex;
     align-items: center;
+    position: fixed;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 430px;
+    z-index: 10;
+    border-bottom: 1px solid #d9d9d9;
 }
 
 .down {
@@ -152,8 +179,21 @@
     padding: 12px 16px;
     gap: 12px;
     border-top: 1px solid #d9d9d9;
-    border-bottom: 1px solid #d9d9d9;
     position: relative;
+}
+
+.post-list .first {
+    border-top: none;
+    margin-top: 80px;
+}
+
+.review_list .first {
+    border-top: none;
+    margin-top: 55px;
+}
+
+.last {
+    border-bottom: 1px solid #d9d9d9;
 }
 
 .item-img {
@@ -217,6 +257,7 @@
 
 .review_list {
     margin-top: 20px;
+    width: 100%;
 }
 
 .review-title {
@@ -235,11 +276,9 @@
 .review-item {
     display: flex;
     align-items: flex-start;
-    border-radius: 8px;
     padding: 12px;
     margin-bottom: 0px;
     border-top: 1px solid #d9d9d9;
-    border-bottom: 1px solid #d9d9d9;
     gap: 12px;
 }
 
@@ -284,6 +323,11 @@
     height: 62px;
     flex-shrink: 0;
     margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.reviewimg img {
+    border-radius: 8px;
 }
 
 .date {
@@ -354,4 +398,5 @@
 .review_list {
     max-height: 300px;
     overflow-y: auto;
+    scrollbar-width: none;
 }
