@@ -1,11 +1,11 @@
 const form = document.querySelector("form");
 const username = document.getElementById("username");
 const password = document.getElementById("password");
-const kakao = document.getElementById("kakao");
+// const kakao = document.getElementById("kakao");
 
-kakao.addEventListener("click", () => {
-  alert("개발 중인 기능입니다.");
-});
+// kakao.addEventListener("click", () => {
+//   alert("개발 중인 기능입니다.");
+// });
 
 // 로그인 잘못되면 테두리 색 변경
 window.addEventListener("DOMContentLoaded", () => {

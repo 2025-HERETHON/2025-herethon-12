@@ -74,14 +74,14 @@ input {
   background-color: var(--color-deep-main);
 }
 
-#kakao {
+/* #kakao {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   background-color: #ffee00;
   margin: 7px 0;
-}
+} */
 
 .message {
   color: var(--color-red);
