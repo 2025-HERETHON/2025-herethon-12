@@ -121,5 +121,7 @@ def profile_view(request, pk):
 #로그아웃
 @login_required
 def user_logout(request):
-    logout(request)
-    return render(request, '')
+    if request.method == "POST":
+        logout(request)
+        return redirect('/?success=1')
+    return redirect('home')
