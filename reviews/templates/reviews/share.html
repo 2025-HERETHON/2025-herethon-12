@@ -59,7 +59,7 @@
 <!--      {% else %}-->
 <!--        <button class="review-btn" disabled>후기 작성 완료</button>-->
 <!--      {% endif %}-->
-        {% if donation.review_written %}
+        {% if donation.review_written or donation.is_reviewed %}
           <button class="review-btn" disabled>후기 작성 완료</button>
         {% elif donation.request_id %}
            <a href="{% url 'create_review' 'donation' donation.request_id %}" class="review-btn">
