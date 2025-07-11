@@ -10,6 +10,9 @@
     <title>Dearbebe</title>
   </head>
   <body>
+    <script>
+      const isCompleted = {{ is_completed|yesno:"true,false" }};
+    </script>
     <!-- 거래 완료 모달 -->
     {% block content %}
     <div class="complete-modal hidden">
@@ -50,11 +53,12 @@
 
     <div class="main-container">
       <!-- 거래 완료 상태 확인을 위해 임의로 집어넣었습니다 -->
+       <div id="is-completed" data-completed="{{ is_completed }}"></div>
     <div class="complete-bar">
       {% if is_receiver %}
         {% if is_completed %}
           <div class="complete-desc">거래가 완료되었습니다!</div>
-          <button id="complete-btn" disabled>거래 완료</button>
+          <button class="complete-btn" disabled>거래 완료</button>
         {% else %}
           <div class="complete-desc">거래가 끝나셨다면 버튼을 눌러 완료해 주세요.</div>
           <button id="complete-btn">거래 완료</button>
@@ -63,10 +67,10 @@
         <!-- 신청자 입장 -->
         {% if status == 'IN_PROGRESS' %}
           <div class="complete-desc">거래가 확정되면 거래 완료 안내가 표시됩니다.</div>
-          <button id="complete-btn">거래중</button>
+          <button class="complete-btn">거래중</button>
         {% elif status == 'COMPLETED' %}
           <div class="complete-desc">거래가 완료되었습니다!</div>
-          <button id="complete-btn" disabled>거래 완료</button>
+          <button class="complete-btn" disabled>거래 완료</button>
         {% endif %}
       {% endif %}
     </div>

@@ -6,10 +6,11 @@ const imgInput = document.getElementById("img-input");
 const ok = document.getElementById("ok");
 const preview = document.querySelector(".img-preview");
 const previewDarken = document.querySelector(".preview-darken");
-const isCompleted =
-  document.getElementById("is-completed").dataset.completed === "True";
+
 const successModal = document.querySelector(".success-modal");
 const check = document.getElementById("check");
+
+console.log("isCompleted 값:", isCompleted);
 
 // 모달창 닫는 함수
 function closeAll() {
@@ -137,4 +138,19 @@ window.addEventListener("DOMContentLoaded", () => {
     const anchor = document.getElementById("scroll-anchor");
     anchor?.scrollIntoView({ behavior: "auto" });
   }, 50); // 일부러 지연시켜서 타이밍 어긋나지 않게
+});
+
+
+
+completeBtn.addEventListener("click", (e) => {
+  console.log("거래 완료 버튼 클릭됨");
+  if (isCompleted) {
+    console.log("이미 완료된 거래입니다.");
+    return;
+  }
+
+  e.stopPropagation();
+  console.log("모달 열기 시도 중...");
+  darken.classList.remove("hidden");
+  completeModal.classList.remove("hidden");
 });
