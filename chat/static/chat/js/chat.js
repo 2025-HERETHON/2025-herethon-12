@@ -1,7 +1,9 @@
 const darken = document.querySelector(".darken");
 const completeModal = document.querySelector(".complete-modal");
 const cancel = document.getElementById("cancel");
-const completeBtn = document.getElementById("complete-btn");
+// id 말고 class로 바꾸셨길래 이 부분도 수정했습니다.
+// const completeBtn = document.getElementById("complete-btn");
+const completeBtn = document.querySelector(".complete-btn");
 const imgInput = document.getElementById("img-input");
 const ok = document.getElementById("ok");
 const preview = document.querySelector(".img-preview");
