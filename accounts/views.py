@@ -118,7 +118,7 @@ def profile_view(request, pk):
         'stars': stars,
     })
 
-#로그아웃
-@login_required
-def user_logout(request):
+# #로그아웃
+# @login_required
+# def user_logout(request):
 
