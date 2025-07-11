@@ -113,7 +113,6 @@ h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: 40px;
   pointer-events: none;
   z-index: 0;
 }
@@ -245,7 +244,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 200px);
+  height: 100vh;
   position: relative;
 }
 
@@ -270,6 +269,8 @@ h2 {
   color: #555;
   line-height: 1.5;
   text-align: center;
+  justify-self: center;
+  align-self: center;
 }
 
 /* ===== 하단 네비게이션 ===== */
