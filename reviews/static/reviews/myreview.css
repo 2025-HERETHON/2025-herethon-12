@@ -1,0 +1,499 @@
+.header {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.header .header-title {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  padding: 0 15px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.header p {
+  width: 43px;
+}
+
+.main-container {
+  margin-top: 60px;
+  margin-bottom: 67px;
+}
+
+/* === 유저 정보 카드 === */
+.user-summary {
+  padding: 16px;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 32px;
+}
+
+.profile-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+
+.user-card .profile-img {
+  margin-right: 12px;
+  width: 62px;
+  height: 62px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.user-info>p {
+  margin: 0;
+}
+
+.user-info .username {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.user-info .user-id {
+  font-size: 12px;
+  color: var(--color-gray);
+}
+
+.user-rating p {
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.rating-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating {
+  display: flex;
+}
+
+.rating-score {
+  color: rgba(0, 0, 0, 0.46);
+  font-size: 15px;
+  text-align: center;
+}
+
+.user-rating .rating-total {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.rating-label {
+  width: 14px;
+  overflow: hidden;
+}
+
+.rating span:nth-child(odd) {
+  background-position: left;
+}
+
+.rating span:nth-child(even) {
+  margin-right: 10px;
+  background-position: right;
+}
+
+.star-icon {
+  width: 14px;
+  height: 28px;
+  display: block;
+  position: relative;
+  left: 0;
+  background-image: url(./images/empty-star.svg);
+  background-repeat: no-repeat;
+}
+
+.star-icon-filled {
+  width: 14px;
+  height: 28px;
+  display: block;
+  position: relative;
+  left: 0;
+  background-image: url(./images/full-star.svg);
+  background-repeat: no-repeat;
+}
+
+/* === 거래 후기 섹션 === */
+.review-section {
+  padding: 0 16px 80px;
+  /* 하단 nav 고려 */
+}
+
+.review-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+  width: 100%;
+}
+
+.review-header h2 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.down-icon {
+  width: 12px;
+  height: 6px;
+}
+
+/* === 후기 리스트 === */
+.review-list {
+  padding: 0;
+  margin: 0;
+}
+
+.review-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px;
+  margin-bottom: 0px;
+  border-top: 1px solid #d9d9d9;
+  width: calc(100% - 16 * 2);
+  margin: 0 -16px;
+  position: relative;
+}
+
+.review-profile {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+
+.review-content {
+  flex-grow: 1;
+  width: 60%;
+   min-width: 0;
+}
+
+.review-content .stars {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.review-content .stars img {
+  width: 14px;
+  height: 14px;
+}
+
+.review-text {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.4;
+  margin: 10px 0;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.reviewimg {
+  width: 62px;
+  height: 62px;
+  border-radius: 8px;
+  justify-self: center;
+  align-self: center;
+    flex-shrink: 0; 
+  margin-left: 4px;
+}
+
+.reviewimg img {
+  width: 62px;
+  height: 62px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.date {
+  font-size: 10px;
+  font-weight: 400;
+  margin-bottom: 35px;
+}
+
+.review-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 11px;
+  color: var(--color-gray);
+  white-space: nowrap;
+   flex-shrink: 0;
+}
+
+.review-meta .delete-btn {
+  cursor: pointer;
+  background: none;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+/* review-list 내 star를 더 작은 svg로 교체했습니다 */
+.review-item .rating-label {
+  width: 5.5px;
+  overflow: hidden;
+}
+
+.review-item .star-icon {
+  width: 5.5px;
+  height: 11px;
+  display: block;
+  position: relative;
+  left: 0;
+  background-image: url(./images/mini-empty-star.svg);
+  background-repeat: no-repeat;
+}
+
+.review-item .star-icon-filled {
+  width: 5.5px;
+  height: 11px;
+  display: block;
+  position: relative;
+  left: 0;
+  background-image: url(./images/mini-full-star.svg);
+  background-repeat: no-repeat;
+}
+
+.review-item .rating-score {
+  font-size: 10px;
+}
+
+.review-item .rating span:nth-child(even) {
+  margin-right: 5px;
+}
+
+/* ===== 하단 네비게이션 ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  /* 가운데 정렬 */
+  width: 100%;
+  max-width: 430px;
+  /* 📌 main-container와 동일하게 */
+  background-color: #fff;
+  z-index: 10;
+}
+
+.bottom-nav nav {
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bottom-nav nav a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-light-main);
+}
+
+.bottom-nav nav a img {
+  width: 30px;
+  height: 30px;
+}
+
+.bottom-nav .active {
+  color: var(--color-deep-main);
+}
+
+/* 모달 전체 배경 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* 모달창 박스 */
+.modal-content {
+  position: fixed;
+  width: 70%;
+  max-width: 301px;
+  z-index: 1020;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-rows: 1.4fr 1px 1fr;
+  border-radius: 8px;
+  border: 1px solid var(--color-main);
+}
+
+/* 삭제 모달 배경 */
+.modal {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+/* 숨김 처리 */
+.modal.hidden {
+  display: none;
+}
+
+/* 모달 안 하얀 박스 */
+.modal-content {
+  position: fixed;
+  width: 70%;
+  max-width: 301px;
+  z-index: 1020;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-rows: 1.4fr 1px 1fr;
+  border-radius: 8px;
+  border: 1px solid var(--color-main);
+}
+
+.modal_p {
+  justify-self: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* 버튼 감싸는 박스 */
+.modal form {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0;
+}
+
+/* 버튼 공통 스타일 */
+.modal button {
+  background: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.x-divide {
+  width: 100%;
+  height: 1px;
+  border-top: 1px dashed #c4f2ff;
+}
+
+.y-divide {
+  height: 100%;
+  width: 1px;
+  border-right: 1px dashed #c4f2ff;
+}
+
+/* 받은 후기, 작성 후기 드롭다운 */
+.dropdown-btn {
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  width: 25%;
+  z-index: 100;
+}
+
+.selected,
+.item {
+  background-color: var(--color-main);
+  padding: 5px 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  height: 30px;
+}
+
+.selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.item {
+  width: 100%;
+}
+
+.options {
+  position: absolute;
+  width: 100%;
+}
+
+.dropdown-btn p,
+.item {
+  color: #ffffff;
+  white-space: nowrap;
+}

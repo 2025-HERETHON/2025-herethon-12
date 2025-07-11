@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dearbebe</title>
+    <link rel="stylesheet" href="{% static 'reviews/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'reviews/change.css' %}" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header">
+        <a href="javascript:history.back()" class="back-btn">
+          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
+        </a>
+<!--        <button class="back-btn">-->
+<!--          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />-->
+<!--        </button>-->
+        <div class="header-title">교환 내역</div>
+        <p></p>
+      </div>
+
+    {% for date, requests in grouped.items %}
+      <div class="date-label">{{ date }}</div>
+
+      {% for req in requests %}
+        <div class="item-card {% if forloop.last %}last{% endif %}">
+          {% with req.item.images.first as first_image %}
+            {% if first_image %}
+              <img src="{{ first_image.image.url }}" alt="{{ req.item.title }}" class="item-img" />
+            {% else %}
+              <img src="{% static 'reviews/images/image.svg' %}" alt="사진 없음" class="item-img" />
+            {% endif %}
+          {% endwith %}
+
+          <div class="item-info">
+            <p class="item-title">{{ req.item.title }}</p>
+            <p class="item-people">
+              {% if req.member.id == user.id %}
+                <span class="who">{{ req.item.member.nickname }}</span>와의 거래
+              {% else %}
+                <span class="who">{{ req.member.nickname }}</span>와의 거래
+              {% endif %}
+            </p>
+            <p class="item-detail">{{ req.item.description }}</p>
+
+            {% if req.review_written or req.is_reviewed %}
+              <button class="review-btn" disabled>후기 작성 완료</button>
+            {% elif req.request_id %}
+              <a href="{% url 'create_review' 'exchange' req.request_id %}" class="review-btn">
+                <button class="review-btn">후기 작성하기</button>
+              </a>
+            {% else %}
+              <button class="review-btn" disabled>후기 작성 불가</button>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% empty %}
+      <p class="empty">교환 내역이 없습니다.</p>
+    {% endfor %}
+
+      <!-- 하단 네비게이션 -->
+      <footer class="bottom-nav">
+        <nav>
+          <a href="{% url 'home' %}">
+            <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+          </a>
+          <a href="{% url 'chat:thread_list' %}">
+            <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+          </a>
+          <a href="{% url 'requests:received_donation_requests' %}">
+            <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+          </a>
+          <a href="{% url 'my_page' %}" class="active">
+            <img
+              src="{% static 'reviews/images/my-active.svg' %}"
+              alt=""
+            />마이페이지
+          </a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>

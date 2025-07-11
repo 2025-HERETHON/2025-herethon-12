@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dearbebe</title>
+    <link rel="stylesheet" href="{% static 'requests/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'requests/received_list.css' %}" />
+    <script defer src="{% static 'requests/js/received_list.js' %}"></script>
+    <script src="{% static 'requests/js/reject_modal.js' %}"></script>
+  </head>
+  <body>
+      <div class="main-container">
+      <!-- 신청 거절 모달 -->
+      <div class="reject-modal hidden">
+        <p>거절하시겠습니까?</p>
+        <div class="x-divide"></div>
+        <form method="POST" id="reject-form">
+            {% csrf_token %}
+            <button type="button" id="cancel">취소</button>
+            <button type="submit" id="ok">확인</button>
+        </form>
+      </div>
+      <div class="darken hidden"></div>
+
+      <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+          <div class="header-title">신청 관리</div>
+        </div>
+        <!-- 받은 신청 보낸 신청-->
+        <div class="mini-header">
+          <div class="request-radio">
+            <a href="#" class="marked">받은 신청</a>
+            <a href="{% url 'requests:sent_exchange_requests' %}">보낸 신청</a>
+          </div>
+          <div class="mini-dropdown">
+            <div class="selected">
+              <p>교환</p>
+              <img
+                src="{% static 'requests/images/down-icon-white.svg' %}"
+                alt="드롭다운 버튼"
+              />
+            </div>
+            <div class="options hidden">
+              <a href="#" class="item">교환</a>
+              <a
+                href="{% url 'requests:received_donation_requests' %}"
+                class="item"
+                >나눔</a
+              >
+            </div>
+          </div>
+        </div>
+         <!-- 날짜별 신청 목록 -->
+      {% for date, requests in grouped.items %}
+        <div class="requests-container">
+          <div class="date">{{ date }}</div>
+
+          {% for request in requests %}
+            <div class="r-container">
+              <div class="text-container">
+                <div class="profile-bar">
+                  {% if request.member.image %}
+                  <img src="{{ request.member.image.url }}" alt="프로필">
+                  {% else %}
+                  <img src="{% static 'requests/images/default_profile.png' %}" alt="기본 프로필" />
+                  {% endif %}
+                  <div class="profile">
+                    <div class="nickname-time">
+                      <div class="nickname">{{ request.member.nickname }}</div>
+                      <div class="time">{{ request.created_at|time:"H:i" }}</div>
+                    </div>
+                    <div class="region">
+                      <img src="{% static 'requests/images/place.svg' %}" alt="위치 아이콘" />
+                      <p id="region">{{ request.item.region_dong }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="title">{{ request.item.title }}</div>
+              </div>
+
+              <div class="gray-divide"></div>
+
+              <!-- 이미지 썸네일 -->
+              <div class="images-box">
+                {% for image in request.image.all %}
+                  <div class="image">
+                    <img src="{{ image.image.url }}" alt="신청 이미지" />
+                  </div>
+                {% empty %}
+                  {% for _ in "123"|make_list %}
+                    <div class="image-unknown">
+                      <img src="{% static 'requests/images/image.svg' %}" alt="사진 없음" />
+                    </div>
+                  {% endfor %}
+                {% endfor %}
+              </div>
+
+              <div class="title">
+                <span>{{ request.offered_title }}</span>
+                <span class="gray-span">와 교환</span>
+              </div>
+
+              <div class="place place-condition-age">
+                <div class="dot"></div>
+                <span id="place">{{ request.place }}</span>
+                <span>/</span>
+                <span id="condition">{{ request.get_offered_condition_display }}</span>
+                <span>/</span>
+                <span id="age">{{ request.get_offered_age_display }} 추천</span>
+              </div>
+
+              <div class="description">{{ request.memo }}</div>
+              <!-- 쪽지 버튼, 거절 버튼 -->
+              <div class="button-wrapper">
+                <a href="{% url 'chat:start_chat' 'exchange' request.pk %}" class="send-message">쪽지하기</a>
+                <button class="reject-button reject" data-url="{% url 'requests:reject_exchange_request' request.pk %}">거절</button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+        <!-- 하단 네비게이션 -->
+        <footer class="bottom-nav">
+          <nav>
+            <a href="{% url 'home' %}">
+              <img src="{% static 'requests/images/home.svg' %}" alt="" />홈
+            </a>
+            <a href="{% url 'chat:thread_list' %}">
+              <img
+                src="{% static 'requests/images/message.svg' %}"
+                alt=""
+              />쪽지
+            </a>
+            <a
+              href="{% url 'requests:received_donation_requests' %}"
+              class="active"
+            >
+              <img
+                src="{% static 'requests/images/form-active.svg' %}"
+                alt=""
+              />신청 관리
+            </a>
+            <a href="{% url 'my_page' %}">
+              <img
+                src="{% static 'requests/images/my.svg' %}"
+                alt=""
+              />마이페이지
+            </a>
+          </nav>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

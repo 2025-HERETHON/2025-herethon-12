@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'reviews/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'reviews/myreview.css' %}" />
+
+    <title>Dearbebe</title>
+  </head>
+
+  <body>
+    <div class="main-container">
+      <!-- 헤더 -->
+      <div class="header">
+        <a href="{% url 'my_page' %}" class="back-btn">
+          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
+        </a>
+        <div class="header-title">나의 후기</div>
+        <p></p>
+      </div>
+
+      <!-- 유저 정보 -->
+      <section class="user-summary">
+        <div class="user-card">
+          {% if user.image %}
+          <img src="{{ user.image.url }}" alt="" class="profile-img">
+          {% else %}
+          <img src="{{% static 'reviews/images/default_profile.png' %}" class="profile-img" />
+          {% endif %}
+          <div class="user-info">
+            <p class="username">{{ user.nickname }}</p>
+            <p class="user-id">@{{ user.username }}</p>
+          </div>
+        </div>
+
+        <div class="user-rating">
+          <p class="rating-total">{{ user.nickname }}님의 총 별점</p>
+          <div class="rating-box">
+            <div class="rating">
+              {% for i in stars %}
+                {% if forloop.counter0 < filled_count %}
+                  <span class="star-icon star-icon-filled"></span>
+                {% else %}
+                  <span class="star-icon"></span>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <span class="rating-score">{{ avg_rating|floatformat:1 }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 드롭다운 -->
+      <section class="review-section">
+        <div class="review-header">
+          <h3>거래 후기</h3>
+          <div class="dropdown-btn">
+            <div class="selected">
+              {% if view_type == "received" %}
+                <p>받은 후기</p>
+              {% else %}
+                <p>작성한 후기</p>
+              {% endif %}
+              <img src="{% static 'reviews/images/down-icon.svg' %}" alt="드롭다운 버튼" />
+            </div>
+            <div class="options hidden">
+              <a href="?type=received" class="item">받은 후기</a>
+              <a href="?type=written" class="item">작성한 후기</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 후기 리스트 -->
+        <ul class="review-list">
+          {% if view_type == 'received' %}
+            {% for r in received_reviews %}
+            <li class="review-item">
+              <img src="{% static 'reviews/images/default_profile.png' %}" class="review-profile" />
+              <div class="review-content">
+                <div class="rating-box">
+                  <div class="rating">
+                    {% for i in stars %}
+                      {% if forloop.counter0 < r.filled_count %}
+                        <span class="star-icon star-icon-filled"></span>
+                      {% else %}
+                        <span class="star-icon"></span>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <span class="rating-score">{{ r.avg_rating|floatformat:1 }}</span>
+                </div>
+                <p class="review-text">{{ r.content }}</p>
+              </div>
+              {% if r.image %}
+                <div class="reviewimg">
+                  <img src="{{ r.image }}" class="review_img" />
+                </div>
+              {% endif %}
+              <div class="review-meta">
+                <span class="date">{{ r.days_ago }}</span>
+              </div>
+            </li>
+            {% endfor %}
+          {% else %}
+            {% for r in written_reviews %}
+            <li class="review-item">
+              {% if user.image %}
+              <img src="{{ user.image.url }}" alt="" class="profile-img">
+              {% else %}
+              <img src="{% static 'reviews/images/default_profile.png' %}" class="profile-img" />
+              {% endif %}
+              <div class="review-content">
+                <div class="rating-box">
+                  <div class="rating">
+                    {% for i in stars %}
+                      {% if forloop.counter0 < r.filled_count %}
+                        <span class="star-icon star-icon-filled"></span>
+                      {% else %}
+                        <span class="star-icon"></span>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <span class="rating-score">{{ r.avg_rating|floatformat:1 }}</span>
+                </div>
+                <p class="review-text">{{ r.review.content }}</p>
+              </div>
+              {% if r.image %}
+                <div class="reviewimg">
+                  <img src="{{ r.image }}" class="review_img" />
+                </div>
+              {% endif %}
+              <div class="review-meta">
+                <span class="date">{{ r.days_ago }}</span>
+                  <button type="button" class="delete-btn" data-review-id="{{ r.review.pk }}">
+                    <img src="{% static 'reviews/images/trash.svg' %}" alt="삭제" />
+                  </button>
+              </div>
+            </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </section>
+    </div>
+    <!-- 하단 네비게이션 -->
+    <footer class="bottom-nav">
+      <nav>
+        <a href="{% url 'home' %}">
+          <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+        </a>
+        <a href="{% url 'chat:thread_list' %}">
+          <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+        </a>
+        <a href="{% url 'requests:received_donation_requests' %}">
+          <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+        </a>
+        <a href="{% url 'my_page' %}" class="active">
+          <img
+            src="{% static 'reviews/images/my-active.svg' %}"
+            alt=""
+          />마이페이지
+        </a>
+      </nav>
+    </footer>
+
+  <!-- 삭제 확인 모달 -->
+  <div id="deleteModal" class="modal hidden">
+    <div class="modal-content">
+      <p class="modal_p">정말 삭제하시겠습니까?</p>
+      <div class="x-divide"></div>
+      <form method="POST" action="" id="deleteForm">
+      {% csrf_token %}
+        <button type="button" id="cancelDelete">취소</button>
+        <div class="y-divide"></div>
+        <button type="button" id="confirmDelete">네</button>
+      </form>
+    </div>
+  </div>
+    <script src="{% static 'reviews/js/myreview.js' %}"></script>
+  </body>
+  </html>

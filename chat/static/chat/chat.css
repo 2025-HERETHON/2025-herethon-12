@@ -1,0 +1,383 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: #000000;
+  -webkit-overflow-scrolling: touch;
+}
+
+label {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+.darken, .success-darken {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+/* 이미지 첨부 시 미리보기 */
+.preview-darken {
+  position: fixed;
+  right: 0;
+  bottom: 54px;
+  width: 100%;
+  height: 100%;
+  background-color: #4b4b4b;
+  opacity: 0.8;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.img-preview {
+  position: fixed;
+  width: 85%;
+  max-width: 365px;
+  z-index: 1020;
+  bottom: 64px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.img-preview img {
+  width: 92px;
+  height: 92px;
+  border-radius: 8px;
+}
+
+.complete-modal {
+  position: fixed;
+  width: 70%;
+  max-width: 301px;
+  z-index: 1020;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-rows: 1.4fr 1px 1fr;
+  border-radius: 8px;
+  border: 1px solid var(--color-main);
+}
+
+.complete-modal p {
+  justify-self: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.x-divide {
+  width: 100%;
+  height: 1px;
+  border-top: 1px dashed #c4f2ff;
+}
+
+#complete-form {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0;
+}
+
+.y-divide {
+  height: 100%;
+  width: 1px;
+  border-right: 1px dashed #c4f2ff;
+}
+
+.complete-modal button {
+  background: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 거래 완료되었습니다 모달 */
+.success-modal {
+  position: fixed;
+  width: 70%;
+  height: 120px;
+  max-width: 301px;
+  z-index: 1020;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--color-main);
+}
+
+.success-modal p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#check {
+  color: var(--color-main);
+  font-size: 16px;
+  font-weight: 500;
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  background: none;
+}
+
+/* 뒤로가기, 새로고침 버튼이 있는 header */
+.header {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.header-title {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.refresh-btn {
+  padding: 0 10px;
+}
+
+.back-btn {
+  padding: 0 15px;
+}
+
+.main-container {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* 거래 완료 바 */
+.complete-bar {
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid #bcbcbc;
+  border-bottom: 1px solid #bcbcbc;
+  height: 40px;
+  padding: 0 15px;
+  position: fixed;
+  background-color: #ffffff;
+}
+
+.complete-desc {
+  font-weight: 500;
+  font-size: 13px;
+  color: #8a8a8a;
+}
+
+.complete-btn,
+#complete-btn {
+  color: #ffffff;
+  background-color: var(--color-main);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 5px 15px;
+  white-space: nowrap;
+}
+
+.complete-btn:active,
+#complete-btn:active {
+  background-color: var(--color-deep-main);
+}
+
+/* 채팅 부분 */
+/* complete-bar만큼의 margin */
+.chatting {
+  margin-top: 40px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chat-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  gap: 10px;
+}
+
+.chat-container:last-child {
+  margin-bottom: 50px;
+}
+
+.date {
+  font-weight: 600;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #bebebe;
+  border-radius: 30px;
+  padding: 3px 8px;
+}
+
+.your-chats {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.your-profile-img img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.your-msgs {
+  gap: 10px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.your-nickname {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.your-msg {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.your-msg-content {
+  background-color: #e2e2e2;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  padding: 10px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.your-msg-time,
+.my-msg-time {
+  color: #8a8a8a;
+  font-weight: 500;
+  font-size: 11px;
+}
+
+.your-msg-content-photo img {
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  flex: 1;
+}
+
+.my-chats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.my-msg {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.my-msg-content {
+  background-color: #ffffff;
+  border: 2px solid #b7b7b7;
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  padding: 10px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.my-msg-content-photo img {
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  flex: 1;
+}
+
+/* 채팅 입력창 */
+.chat-input-wrapper {
+  position: fixed;
+  bottom: 0;
+  height: 54px;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 13px 1px rgba(0, 0, 0, 0.25);
+}
+
+.chat-input {
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  height: 40px;
+  width: 90%;
+  max-width: 387px;
+  border: 1px solid #bebebe;
+  border-radius: 30px;
+  padding: 0 10px;
+  background-color: #f0f0f0;
+}
+
+#img-input,
+#send-btn {
+  display: none;
+}
+
+#text-input {
+  background: none;
+  border: none;
+  height: 38px;
+  padding: 10px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+#send-btn-label,
+#img-input-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dearbebe</title>
+    <link rel="stylesheet" href="{% static 'posts/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'posts/post.css' %}" />
+    <script defer src="{% static 'posts/js/post.js' %}"></script>
+
+    <!--    <link rel="stylesheet" href="/posts/static/posts/common.css" />-->
+    <!--    <link rel="stylesheet" href="/posts/static/posts/post.css" />-->
+    <!--    <script defer src="/posts/static/posts/js/post.js"></script>-->
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header">
+        <a href="javascript:history.back()" class="back-btn">
+          <img src="{% static 'posts/images/back.svg' %}" alt="뒤로가기" />
+          <!--          <img src="/posts/static/posts/images/back.svg" alt="뒤로가기" />-->
+        </a>
+        <div class="header-title">글쓰기</div>
+        <p></p>
+      </div>
+      <form
+        method="POST"
+        action=""
+        class="main-form"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+        <div class="photo-container">
+          <div class="photo-title">사진</div>
+          <div class="photo-box">
+            <div class="photo-select">
+              <label for="photo-input" id="photo-input-label">
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="photo-input"
+                  name="photos"
+                  multiple
+                />
+                <img
+                  src="{% static 'posts/images/add.svg' %}"
+                  alt="사진 추가"
+                />
+                <!--                <img src="/posts/static/posts/images/add.svg" alt="사진 추가" />-->
+                <div class="photo-input-status">0/3</div>
+              </label>
+            </div>
+            <div class="photo-slot">
+              <!-- 고른 사진이 없을 때 -->
+              <div class="photo-preview-unknown">
+                <img
+                  src="{% static 'posts/images/image.svg' %}"
+                  alt="사진 없음"
+                />
+              </div>
+              <!-- 고른 사진이 있을 때 -->
+              <div class="photo-preview hidden">
+                <img src="#" alt="사진" />
+              </div>
+            </div>
+            <div class="photo-slot">
+              <!-- 고른 사진이 없을 때 -->
+              <div class="photo-preview-unknown">
+                <img
+                  src="{% static 'posts/images/image.svg' %}"
+                  alt="사진 없음"
+                />
+              </div>
+              <!-- 고른 사진이 있을 때 -->
+              <div class="photo-preview hidden">
+                <img src="#" alt="사진" />
+              </div>
+            </div>
+            <div class="photo-slot">
+              <!-- 고른 사진이 없을 때 -->
+              <div class="photo-preview-unknown">
+                <img
+                  src="{% static 'posts/images/image.svg' %}"
+                  alt="사진 없음"
+                />
+              </div>
+              <!-- 고른 사진이 있을 때 -->
+              <div class="photo-preview hidden">
+                <img src="#" alt="사진" />
+              </div>
+            </div>
+          </div>
+          <div class="error-msg hidden" id="photo-err">
+            사진을 1장 이상으로 등록해주세요.
+          </div>
+        </div>
+        <div class="category-container dropdown">
+          <!-- category value는 이 hidden input에 들어감 -->
+          <input
+            type="hidden"
+            id="category"
+            name="category"
+            class="hidden-input"
+            placeholder="카테고리"
+          />
+          <div class="selected category-selected">
+            <p>카테고리</p>
+            <img
+              src="{% static 'posts/images/arrow.svg' %}"
+              alt="드롭다운 버튼"
+            />
+            <!--            <img-->
+            <!--              src="/posts/static/posts/images/arrow.svg"-->
+            <!--              alt="드롭다운 버튼"-->
+            <!--            />-->
+          </div>
+          <div class="options hidden">
+            <!-- 각 item div의 textContent가 value로 들어감 (post.js 참고)-->
+            <div class="item">의류</div>
+            <div class="item">수유</div>
+            <div class="item">위생</div>
+            <div class="item">장난감</div>
+            <div class="item">기타</div>
+          </div>
+        </div>
+        <div class="place-container">
+          <label for="place" class="text-label">거래 희망 장소</label>
+          <div class="wrapper">
+            <input type="text" maxlength="12" id="place" name="place" />
+            <div class="limit">12자 이내</div>
+          </div>
+          <div class="error-msg hidden" id="place-err">
+            필수 입력 사항입니다.
+          </div>
+        </div>
+        <div class="title-container">
+          <label for="title" class="text-label">제목(용품명)</label>
+          <div class="wrapper">
+            <input type="text" maxlength="12" id="title" name="title" />
+            <div class="limit">12자 이내</div>
+          </div>
+          <div class="error-msg hidden" id="title-err">
+            필수 입력 사항입니다.
+          </div>
+        </div>
+        <div class="desc-container">
+          <label for="description" class="text-label">설명</label>
+          <div class="wrapper">
+            <textarea
+              name="description"
+              id="description"
+              maxlength="200"
+            ></textarea>
+            <div class="limit">200자 이내</div>
+          </div>
+          <div class="error-msg hidden" id="desc-err">
+            필수 입력 사항입니다.
+          </div>
+        </div>
+        <div class="type-container">
+          <div class="type-box">
+            <input type="radio" value="무료 나눔" id="free" name="trade_type" />
+            <label for="free" class="btn-label">무료 나눔</label>
+            <input type="radio" value="교환" id="exchange" name="trade_type" />
+            <label for="exchange" class="btn-label">교환</label>
+          </div>
+          <div class="error-msg hidden" id="type-err">하나를 선택해주세요.</div>
+        </div>
+        <div class="condition-container dropdown">
+          <input
+            type="hidden"
+            id="condition"
+            name="condition"
+            class="hidden-input"
+            placeholder="제품 상태"
+          />
+          <div class="selected condition-selected">
+            <p>제품 상태</p>
+            <img
+              src="{% static 'posts/images/arrow.svg' %}"
+              alt="드롭다운 버튼"
+            />
+            <!--            <img-->
+            <!--              src="/posts/static/posts/images/arrow.svg"-->
+            <!--              alt="드롭다운 버튼"-->
+            <!--            />-->
+          </div>
+          <div class="options hidden">
+            <div class="item">새상품</div>
+            <div class="item">상태 양호</div>
+            <div class="item">사용감 있음(생활 기스/ 오염)</div>
+            <div class="item">사용감 많음(기능 정상)</div>
+          </div>
+        </div>
+        <div class="age-container dropdown">
+          <input
+            type="hidden"
+            id="age"
+            name="age"
+            class="hidden-input"
+            placeholder="추천 월령"
+          />
+          <div class="selected age-selected">
+            <p>추천 월령</p>
+            <img
+              src="{% static 'posts/images/arrow.svg' %}"
+              alt="드롭다운 버튼"
+            />
+            <!--            <img-->
+            <!--              src="/posts/static/posts/images/arrow.svg"-->
+            <!--              alt="드롭다운 버튼"-->
+            <!--            />-->
+          </div>
+          <div class="options hidden">
+            <div class="item">0~3개월</div>
+            <div class="item">3~6개월</div>
+            <div class="item">6~9개월</div>
+            <div class="item">9~12개월</div>
+            <div class="item">12~18개월</div>
+            <div class="item">18~24개월</div>
+            <div class="item">24~36개월</div>
+            <div class="item">4~5세</div>
+            <div class="item">6~7세</div>
+            <div class="item">8~10세</div>
+            <div class="item">10세 이상</div>
+          </div>
+        </div>
+        <div class="button-wrapper">
+          <button type="submit" class="submit-btn">등록하기</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

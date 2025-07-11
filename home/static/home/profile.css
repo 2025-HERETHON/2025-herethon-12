@@ -1,0 +1,403 @@
+.main-container {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 뒤로가기 버튼만 있는 header */
+.header {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.header-title {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.back-btn {
+  padding: 0 15px;
+}
+
+.header p {
+  width: 43px;
+}
+
+/* === 유저 정보 카드 === */
+.user-summary {
+    padding: 0px;
+    background-color: #ffffff;
+    margin-top: 60px;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 0px 16px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+}
+
+.profile-img {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    margin-right: 0px;
+}
+
+.user-info .username {
+    font-weight: 600;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.user-info .user-id {
+    font-size: 12px;
+    color: var(--color-gray);
+}
+
+.user-rating p {
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.user-rating {
+    margin-left: 16px;
+    background-color: #ffffff;
+}
+
+.rating-box {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.rating {
+    display: flex;
+    background-color: #ffffff;
+}
+
+.rating-score {
+    color: rgba(0, 0, 0, 0.46);
+    font-size: 15px;
+    text-align: center;
+}
+
+.user-rating .rating-total {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.rating-label {
+    width: 14px;
+    overflow: hidden;
+}
+
+.rating span:nth-child(odd) {
+    background-position: left;
+}
+
+.rating span:nth-child(even) {
+    margin-right: 10px;
+    background-position: right;
+}
+
+.star-icon {
+    width: 14px;
+    height: 28px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url(./images/empty-star.svg);
+    background-repeat: no-repeat;
+}
+
+.star-icon-filled {
+    width: 14px;
+    height: 28px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url(./images/full-star.svg);
+    background-repeat: no-repeat;
+}
+
+/* ===== 아이템 카드 ===== */
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 8px 8px 16px;
+    margin-top: 40px;
+    margin-bottom: 0;
+    background-color: #ffffff;
+}
+
+.post-list {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0px;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.title_line {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 430px;
+    z-index: 10;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.down {
+    width: 16px;
+    height: 9px;
+    margin-top: 45px;
+}
+
+.item-card {
+    display: flex;
+    padding: 12px 16px;
+    gap: 12px;
+    border-top: 1px solid #d9d9d9;
+    position: relative;
+}
+
+.post-list .first {
+    border-top: none;
+    margin-top: 80px;
+}
+
+.review_list .first {
+    border-top: none;
+    margin-top: 55px;
+}
+
+.last {
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.item-img {
+    width: 73px;
+    height: 68px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+     min-width: 0;
+}
+
+.state-line {
+    display: flex;
+}
+
+.state,
+.free {
+    width: 88px;
+    height: 17px;
+    border-radius: 8.5px;
+    margin: 10px 10px 10px 0px;
+    color: #fff;
+}
+
+.state {
+    background-color: var(--color-deep-main);
+}
+
+.free {
+    background-color: var(--color-mint);
+}
+
+.age {
+    font-size: 12px;
+    color: #484848;
+}
+
+.item-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: #000;
+}
+
+.item-detail {
+    font-size: 12px;
+    color: #000;
+    margin: 4px 0 8px;
+    line-height: 100%;
+    font-weight: 400; 
+    overflow-wrap: break-word;    
+    word-break: break-word;
+}
+
+.review_list {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.review-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 8px 8px 16px;
+    margin-bottom: 0;
+}
+
+.review-down {
+    width: 16px;
+    height: 9px;
+    margin-top: 20px;
+}
+
+.review-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px;
+    margin-bottom: 0px;
+    border-top: 1px solid #d9d9d9;
+    gap: 12px;
+}
+
+.review-profile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.review-content {
+    flex-grow: 1;
+    flex: 1;
+    min-width: 0;
+}
+
+.review-content .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.review-content .stars img {
+    width: 14px;
+    height: 14px;
+}
+
+.review-text {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.reviewimg {
+    width: 62px;
+    height: 62px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+}
+
+.reviewimg img {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.date {
+    font-size: 10px;
+    font-weight: 400;
+    margin-bottom: 35px;
+}
+
+.review-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 11px;
+    color: var(--color-gray);
+    margin-left: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.review-meta .delete-btn {
+    width: 14px;
+    height: 14px;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+/* review-list 내 star를 더 작은 svg로 교체했습니다 */
+.review-item .rating-label {
+    width: 5.5px;
+    overflow: hidden;
+}
+
+.review-item .star-icon {
+    width: 5.5px;
+    height: 11px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url(./images/mini-empty-star.svg);
+    background-repeat: no-repeat;
+}
+
+.review-item .star-icon-filled {
+    width: 5.5px;
+    height: 11px;
+    display: block;
+    position: relative;
+    left: 0;
+    background-image: url(./images/mini-full-star.svg);
+    background-repeat: no-repeat;
+}
+
+.review-item .rating-score {
+    font-size: 10px;
+}
+
+.review-item .rating span:nth-child(even) {
+    margin-right: 5px;
+}
+
+/* 접힘 토글용 */
+.toggle-content.collapsed {
+    display: none;
+}
+
+/* 리스트 스크롤 */
+.post-list,
+.review_list {
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}

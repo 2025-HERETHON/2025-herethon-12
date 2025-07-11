@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dearbebe</title>
+    <link rel="stylesheet" href="{% static 'accounts/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'accounts/location.css' %}" />
+<!--    <link rel="stylesheet" href="/accounts/static/accounts/common.css" />-->
+<!--    <link rel="stylesheet" href="/accounts/static/accounts/location.css" />-->
+    <script defer src="{% static 'accounts/js/location.js' %}"></script>
+<!--    <script defer src="/accounts/static/accounts/js/location.js"></script>-->
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header">
+        <div class="header-title">동네 설정</div>
+      </div>
+      <form method="post" action="">
+        {% csrf_token %}
+        <div class="search-container">
+          <input
+            type="text"
+            id="region"
+            placeholder="동명(읍, 면)으로 검색"
+            readonly
+          />
+          <button type="button" class="search-btn">현재 위치로 검색</button>
+        </div>
+        <div class="result-container">
+          <div class="result-title">근처 동네</div>
+          <ul class="result">
+            <li>
+              <button type="button" class="result-btn"></button>
+            </li>
+          </ul>
+        </div>
+        <!-- 서버로 전송하기 위한 hidden input -->
+        <input type="hidden" id="region_city" name="region_city" />
+        <input type="hidden" id="region_district" name="region_district" />
+        <input type="hidden" id="region_dong" name="region_dong" />
+        <div class="button-wrapper">
+          <button class="submit-btn">동네 인증 완료</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

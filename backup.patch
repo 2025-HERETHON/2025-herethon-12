@@ -1,0 +1,124 @@
+diff --git a/backup.patch b/backup.patch
+index 2c6e169..e69de29 100644
+--- a/backup.patch
++++ b/backup.patch
+@@ -1,47 +0,0 @@
+-diff --git a/reviews/static/reviews/mypage.css b/reviews/static/reviews/mypage.css
+-index da7d25c..d2084b4 100644
+---- a/reviews/static/reviews/mypage.css
+-+++ b/reviews/static/reviews/mypage.css
+-@@ -13,8 +13,7 @@
+-   z-index: 100;
+- }
+- 
+--.header 
+--.header-title {
+-+.header .header-title {
+-   font-weight: 600;
+-   font-size: 20px;
+- }
+-@@ -116,9 +115,11 @@
+- }
+- 
+- .logout {
+--  margin-top: 320px;
+-+  position: fixed;
+-+  right: calc(50% - 215px + 40px);
+-+  bottom: 80px;
+-   background-color: transparent;
+--  margin-left: 330px;
+-+  z-index: 20;
+- }
+- 
+- .logout-text {
+-@@ -171,4 +172,4 @@
+-   justify-content: center;
+-   align-items: center;
+-   color: #ffffff;
+--}
+-+}
+-\ No newline at end of file
+-diff --git a/reviews/templates/reviews/mypage.html b/reviews/templates/reviews/mypage.html
+-index 35c3855..c3c8d8a 100644
+---- a/reviews/templates/reviews/mypage.html
+-+++ b/reviews/templates/reviews/mypage.html
+-@@ -87,6 +87,7 @@
+- 
+-   <!-- 하단 네비게이션 -->
+-   <footer class="bottom-nav">
+-+    
+-     <nav>
+-       <a href="{% url 'home' %}">
+-         <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+diff --git a/home/static/home/home_main.css b/home/static/home/home_main.css
+index eb7146f..8bfe067 100644
+--- a/home/static/home/home_main.css
++++ b/home/static/home/home_main.css
+@@ -194,6 +194,15 @@ h2 {
+   background-color: var(--color-mint);
+   color: #fff;
+ }
++.complete {
++  width: 88px;
++  height: 17px;
++  border-radius: 8.5px;
++  margin: 10px 10px;
++  background-color:#8F8F8F;
++  color: #fff;
++  margin: 10px 10px 10px 0;
++}
+ 
+ .age {
+   font-size: 12px;
+@@ -242,16 +251,14 @@ h2 {
+ .plus_btn {
+   position: fixed;
+   bottom: 100px;
+-  /* nav보다 살짝 위 */
+-  left: 40%;
++  left: 4%;
+   transform: translateX(150px);
+-  /* 오른쪽 정렬 + nav 폭 고려 (430px 기준이면 약 +150px) */
+   width: 52px;
+   height: 52px;
+   z-index: 20;
+-  /* nav보다 위에 오게 */
+   pointer-events: auto;
+   cursor: pointer;
++  margin-left: 13px;
+ }
+ 
+ .plus_bg {
+diff --git a/home/static/home/home_search.css b/home/static/home/home_search.css
+index 40e8fea..cb7793e 100644
+--- a/home/static/home/home_search.css
++++ b/home/static/home/home_search.css
+@@ -183,6 +183,15 @@ h2 {
+   color: #fff;
+   margin: 10px 10px 10px 0;
+ }
++.complete {
++  width: 88px;
++  height: 17px;
++  border-radius: 8.5px;
++  margin: 10px 10px;
++  background-color:#8F8F8F;
++  color: #fff;
++  margin: 10px 10px 10px 0;
++}
+ 
+ .age {
+   font-size: 12px;
+diff --git a/reviews/static/reviews/myreview.css b/reviews/static/reviews/myreview.css
+index fb8e592..9a86d5e 100644
+--- a/reviews/static/reviews/myreview.css
++++ b/reviews/static/reviews/myreview.css
+@@ -54,7 +54,7 @@
+   border-radius: 12px;
+   padding: 16px;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+-  margin-bottom: 12px;
++  margin-bottom: 32px;
+ }
+ 
+ .profile-img {
