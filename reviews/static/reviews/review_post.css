@@ -195,6 +195,7 @@ body {
   align-items: center;
   font-size: 15px;
   font-weight: 300;
+  outline: none;
 }
 
 .error-msg {
