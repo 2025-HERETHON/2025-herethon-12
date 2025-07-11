@@ -86,9 +86,18 @@
           </div>
           <div class="title">{{item.title}}</div>
           <div class="type-time">
-            <div class="type {% if item.trade_type == '무료 나눔' %}free-type{% else %}exchange-type{% endif %}">
-              {{item.trade_type}}
-            </div>
+            {% if item.status == 'COMPLETED' %}
+              <button class="state">
+                거래 완료
+              </button>
+            {% else %}
+              <button class="{% if item.trade_type == '무료 나눔' %}free-type{% else %}exchange-type{% endif %}">
+                {{ item.trade_type }}
+              </button>
+            {% endif %}
+<!--            <div class="type {% if item.trade_type == '무료 나눔' %}free-type{% else %}exchange-type{% endif %}">-->
+<!--              {{item.trade_type}}-->
+<!--            </div>-->
             <!-- <div class="type exchange-type">교환</div> -->
             <div class="time">{{ item.created_at|date:"m/d H:i" }}</div>
           </div>

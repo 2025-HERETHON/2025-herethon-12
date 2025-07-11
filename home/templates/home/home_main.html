@@ -41,9 +41,15 @@
                 <div class="item-info">
                     <p class="item-title">{{item.title}}</p>
                     <div class="state-line">
-                        <button class="{% if item.trade_type == '무료 나눔' %}free{% else %}state{% endif %}">
+                        {% if item.status == 'COMPLETED' %}
+                            <button class="state">
+                                거래 완료
+                            </button>
+                        {% else %}
+                            <button class="{% if item.trade_type == '무료 나눔' %}free{% else %}state{% endif %}">
                             {{ item.trade_type }}
-                        </button>
+                            </button>
+                        {% endif %}
                         {% if item.condition or item.age %}
                         <p class="age">
                             {% if item.condition %}{{ item.get_condition_display }}{% endif %}
