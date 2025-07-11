@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q, Max
 from django.utils.timezone import localtime
-from .models import Thread, Message
+from .models import Thread, Message, ThreadReadStatus
 from requests.models import DonationRequest, ExchangeRequest
 from requests.enums import Status
 from .forms import MessageForm
@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from datetime import datetime
 from collections import defaultdict
+from django.utils.timezone import now
 
 # 1. 쪽지방 생성
 @login_required
@@ -37,20 +38,23 @@ def thread_list(request):
     request.session['previous_page'] = reverse('chat:thread_list')
 
     member = request.user
+
+    # 로그인한 사용자가 관련된 모든 쪽지방 조회
     threads = Thread.objects.filter(
         Q(donation__member=member) | Q(donation__item__member=member) |
         Q(exchange__member=member) | Q(exchange__item__member=member)
     ).annotate(last_msg_time=Max("messages__sent_at")).order_by('-last_msg_time')
 
-    
     thread_data = []
     for thread in threads:
-        # 안읽음 인디케이터 띄우기 위한 읽음 상태 확인 (마지막 읽은 시간 세션에 저장)
-        last_read_str = request.session.get(f'last_read_{thread.thread_id}')
-        last_read = datetime.fromisoformat(last_read_str) if last_read_str else None
+        # 마지막 읽은 시간 (DB 기반)
+        read_status = ThreadReadStatus.objects.filter(thread=thread, member=member).first()
+        last_read = read_status.last_read_at if read_status else None
+
+        # 안읽은 메시지 여부 판단
         unread = thread.last_msg_time and (not last_read or thread.last_msg_time > last_read)
-        
-        # 상대방 프로필 사진 불러오기
+
+        # 상대방 프로필 사진
         opponent = thread.get_opponent(member)
         opponent_image = opponent.image.url if opponent and opponent.image else None
 
@@ -78,10 +82,14 @@ def chat_room(request, thread_id):
         date = localtime(msg.sent_at).strftime("%Y.%m.%d")
         grouped[date].append(msg)
 
-    # 안읽음 인디케이터용 마지막 읽은 메시지 시간 기록
+    # 읽음 시간 DB에 저장 (ThreadReadStatus 기반)
     last_msg = messages.last()
     if last_msg:
-        request.session[f'last_read_{thread_id}'] = last_msg.sent_at.isoformat()
+        ThreadReadStatus.objects.update_or_create(
+            thread=thread,
+            member=request.user,
+            defaults={'last_read_at': now()}
+        )
 
     # 거래 상태 및 사용자 역할 판단
     is_completed = False
