@@ -270,6 +270,12 @@ p {
   color: var(--color-main);
 }
 
+#place, #condition, #age {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .dot {
   width: 5px;
   height: 5px;
