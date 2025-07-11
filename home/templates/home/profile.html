@@ -143,8 +143,7 @@
                 <div class="reviewimg">
                     {% if review.image %}
                     <img src="{{ review.image.url }}" alt="리뷰 이미지" class="review_img" />
-                    {% else %}
-                    <img src="{% static 'reviews/images/review_img.png' %}" alt="리뷰 기본 이미지" class="review_img" />
+
                     {% endif %}
                 </div>
                 <div class="review-meta">
