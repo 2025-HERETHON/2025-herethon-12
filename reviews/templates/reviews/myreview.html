@@ -23,8 +23,11 @@
       <!-- 유저 정보 -->
       <section class="user-summary">
         <div class="user-card">
-          <img src="{% static 'reviews/images/profile-icon.png' %}" class="profile-img" />
-          <div class="user-info">
+          {% if user.image %}
+          <img src="{{ user.image.url }}" alt="프로필" class="profile-img">
+          {% else %}
+          <img src="{% static 'reviews/images/profile-icon.png' %}" alt="프로필" class="profile-img" />
+          {% endif %}          <div class="user-info">
             <p class="username">{{ user.nickname }}</p>
             <p class="user-id">@{{ user.username }}</p>
           </div>
@@ -133,9 +136,9 @@
                 <form method="POST" action="{% url 'delete_review' r.review.pk %}">
                   {% csrf_token %}
                   <button type="submit" class="delete-btn">
-                    <img src="{% static 'reviews/images/trash.svg' %}" alt="삭제" />
-                  </button>
-                </form>
+                  <img src="{% static 'reviews/images/trash.svg' %}" alt="삭제" />
+                </button>
+              </form>
               </div>
             </li>
             {% endfor %}
