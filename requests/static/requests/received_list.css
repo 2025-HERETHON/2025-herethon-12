@@ -123,7 +123,7 @@ p {
   width: 50%;
 }
 
-.request-radio > a:not(.marked) {
+.request-radio>a:not(.marked) {
   color: #000000;
   font-weight: 600;
   font-size: 18px;
@@ -219,7 +219,7 @@ p {
   gap: 10px;
 }
 
-.profile-bar > img {
+.profile-bar>img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
