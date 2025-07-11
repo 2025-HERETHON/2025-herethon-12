@@ -27,7 +27,7 @@
           {% if user.image %}
           <img src="{{ user.image.url }}" alt="" class="profile-img">
           {% else %}
-          <img src="{% static 'reviews/images/profile-icon.png' %}" class="profile-img" />
+          <img src="{{% static 'reviews/images/default_profile.png' %}" class="profile-img" />
           {% endif %}
           <div class="user-info">
             <p class="username">{{ user.nickname }}</p>
@@ -77,7 +77,7 @@
           {% if view_type == 'received' %}
             {% for r in received_reviews %}
             <li class="review-item">
-              <img src="{% static 'reviews/images/profile-icon.png' %}" class="review-profile" />
+              <img src="{% static 'reviews/images/default_profile.png' %}" class="review-profile" />
               <div class="review-content">
                 <div class="rating-box">
                   <div class="rating">
@@ -109,7 +109,7 @@
               {% if user.image %}
               <img src="{{ user.image.url }}" alt="" class="profile-img">
               {% else %}
-              <img src="{% static 'reviews/images/profile-icon.png' %}" class="profile-img" />
+              <img src="{% static 'reviews/images/default_profile.png' %}" class="profile-img" />
               {% endif %}
               <div class="review-content">
                 <div class="rating-box">

@@ -58,9 +58,15 @@
 }
 
 .profile-img {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
+}
+
+.user-card .profile-img {
+  margin-right: 12px;
+  width: 62px;
+  height: 62px;
 }
 
 .user-info {
@@ -193,8 +199,8 @@
 }
 
 .review-profile {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
 }
 
