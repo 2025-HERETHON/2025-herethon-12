@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib import messages
 from .models import Member
 from posts.models import Item,ItemImage
@@ -118,7 +118,8 @@ def profile_view(request, pk):
         'stars': stars,
     })
 
-# #로그아웃
-# @login_required
-# def user_logout(request):
-#
+#로그아웃
+@login_required
+def user_logout(request):
+    logout(request)
+    return render(request, '')
