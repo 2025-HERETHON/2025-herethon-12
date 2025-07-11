@@ -184,31 +184,32 @@
 .review-item {
   display: flex;
   align-items: flex-start;
+  gap: 10px;
   padding: 16px;
   margin-bottom: 0px;
   border-top: 1px solid #d9d9d9;
   width: calc(100% - 16 * 2);
   margin: 0 -16px;
+  position: relative;
 }
 
 .review-profile {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  margin-right: 10px;
 }
 
 .review-content {
   flex-grow: 1;
+  width: 60%;
    min-width: 0;
 }
 
 .review-content .stars {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
   font-size: 12px;
-  margin-bottom: 4px;
 }
 
 .review-content .stars img {
@@ -220,6 +221,7 @@
   font-size: 13px;
   color: #333;
   line-height: 1.4;
+  margin: 10px 0;
   overflow-wrap: break-word;
   white-space: pre-wrap;
   word-break: break-word;
@@ -254,14 +256,16 @@
   align-items: flex-end;
   font-size: 11px;
   color: var(--color-gray);
-  margin-left: 8px;
+  white-space: nowrap;
    flex-shrink: 0;
 }
 
 .review-meta .delete-btn {
-  margin-top: 6px;
   cursor: pointer;
   background: none;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
 }
 
 /* review-list 내 star를 더 작은 svg로 교체했습니다 */
@@ -448,6 +452,7 @@
   position: relative;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   width: 25%;
+  z-index: 100;
 }
 
 .selected,
