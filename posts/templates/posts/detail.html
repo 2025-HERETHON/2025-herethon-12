@@ -87,11 +87,11 @@
           <div class="title">{{item.title}}</div>
           <div class="type-time">
             {% if item.status == 'COMPLETED' %}
-              <button class="complete-type">
+              <button class="complete-type type">
                 거래 완료
               </button>
             {% else %}
-              <button class="{% if item.trade_type == '무료 나눔' %}free-type{% else %}exchange-type{% endif %}">
+              <button class="type {% if item.trade_type == '무료 나눔' %}free-type{% else %}exchange-type{% endif %}">
                 {{ item.trade_type }}
               </button>
             {% endif %}
