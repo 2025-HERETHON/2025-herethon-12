@@ -151,6 +151,7 @@ def complete_trade(request, thread_id):
     # 로그인한 유저가 거래 주인인지 확인 (예: 게시물 주인 or 신청자)
     if thread.donation:
         donation_request = thread.donation
+        
         if donation_request.item.member != request.user and donation_request.member != request.user:
             return redirect('chat:chat_room', thread_id=thread_id)
 
@@ -160,6 +161,9 @@ def complete_trade(request, thread_id):
 
         donation_request.item.status = Status.COMPLETED  # 아이템 상태도 변경
         donation_request.item.save()
+
+        # 내가 선택하지 않은 다른 신청자들은 모두 거절 처리
+        DonationRequest.objects.filter(item=donation_request.item).exclude(pk=donation_request.pk).update(status=Status.REJECTED)
 
     elif thread.exchange:
         exchange_request = thread.exchange
@@ -172,5 +176,8 @@ def complete_trade(request, thread_id):
 
         exchange_request.item.status = Status.COMPLETED  # 아이템 상태도 변경
         exchange_request.item.save()
+
+        # 내가 선택하지 않은 다른 신청자들은 모두 거절 처리
+        ExchangeRequest.objects.filter(item=exchange_request.item).exclude(pk=exchange_request.pk).update(status=Status.REJECTED)
 
     return redirect('chat:chat_room', thread_id=thread_id)
