@@ -318,12 +318,12 @@
 }
 
 .reviewimg {
-    margin-right: 10px;
     width: 62px;
     height: 62px;
     flex-shrink: 0;
-    margin-bottom: 10px;
     border-radius: 8px;
+    display: flex;
+    justify-content: center;
 }
 
 .reviewimg img {
