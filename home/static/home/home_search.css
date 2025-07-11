@@ -23,13 +23,11 @@ h2 {
 }
 
 .top-bar {
-  /* display: flex;
-  justify-content: space-between; */
-  display: grid;
-  grid-template-columns: 1fr 7fr;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 16px;
   width: 100%;
+  gap: 20px;
 }
 
 /*  카테고리 버튼 */
@@ -80,7 +78,6 @@ h2 {
   font-weight: bold;
   color: var(--color-deep-main);
   white-space: nowrap;
-  text-align: center;
 }
 
 .search-input {
@@ -137,7 +134,6 @@ h2 {
 
 .item-card {
   display: flex;
-  align-items: center;
   padding: 12px 16px;
   gap: 12px;
   border-top: 1px solid var(--color-light-main);
@@ -286,6 +282,7 @@ h2 {
   /* nav보다 위에 오게 */
   pointer-events: auto;
   cursor: pointer;
+  margin-left: 28px;
 }
 
 .plus_bg {
