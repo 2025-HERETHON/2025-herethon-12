@@ -1,4 +1,4 @@
-const KAKAO_REST_API_KEY = "2779484e14f114f2fa546b670fecdf3f";
+const KAKAO_REST_API_KEY = "";
 // 여기에 카카오 REST API 키 담아서 테스트
 
 const region = document.getElementById("region");
