@@ -11,17 +11,21 @@
   <body>
     <div class="main-container">
       <div class="header">
-        <button class="back-btn">
+        <a href="javascript:history.back()" class="back-btn">
           <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
-        </button>
+        </a>
+<!--        <button class="back-btn">-->
+<!--          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />-->
+<!--        </button>-->
         <div class="header-title">교환 내역</div>
+        <p></p>
       </div>
 
     {% for date, requests in grouped.items %}
       <div class="date-label">{{ date }}</div>
 
       {% for req in requests %}
-        <div class="item-card">
+        <div class="item-card {% if forloop.last %}last{% endif %}">
           {% with req.item.images.first as first_image %}
             {% if first_image %}
               <img src="{{ first_image.image.url }}" alt="{{ req.item.title }}" class="item-img" />
@@ -42,9 +46,9 @@
             <p class="item-detail">{{ req.item.description }}</p>
 
             {% if req.review_written %}
-              <button class="review-btn" disabled>리뷰 작성 완료</button>
-            {% elif req.id %}
-              <a href="{% url 'create_review' 'exchange' req.id %}">
+              <button class="review-btn" disabled>후기 작성 완료</button>
+            {% elif req.request_id %}
+              <a href="{% url 'create_review' 'exchange' req.request_id %}" class="review-btn">
                 <button class="review-btn">후기 작성하기</button>
               </a>
             {% else %}

@@ -13,12 +13,15 @@
 <body>
     <div class="main-container">
         <div class="header">
-            <button class="back-btn">
+            <a href="javascript:history.back()" class="back-btn">
                 <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />
-            </button>
+            </a>
+<!--            <button class="back-btn">-->
+<!--                <img src="{% static 'reviews/images/back-btn.svg' %}" alt="" />-->
+<!--            </button>-->
             <div class="header-title">나눔 내역</div>
+            <p></p>
         </div>
-
 
         <div class="section">
             <!-- <div class="date-label">6/30</div> -->
@@ -33,13 +36,12 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         {% for date, donations in grouped.items %}
         <div class="date-label">{{ date }}</div>
         
         {% for donation in donations %}
-        <div class="item-card">
+        <div class="item-card {% if forloop.last %}last{% endif %}">
             {# 이미지가 하나 이상 있을 때 첫 번째 이미지 출력 #}
             {% with donation.item.images.first as first_image %}
                 {% if first_image %}
@@ -48,7 +50,7 @@
                     <img src="{% static 'reviews/images/image.svg' %}" alt="사진 없음" class="item-img" />
                 {% endif %}
             {% endwith %}
-            
+
             <div class="item-info">
                 <p class="item-title">{{ donation.item.title }}</p>
                 <p class="item-people">
@@ -59,27 +61,27 @@
         </div>
         {% endfor %}
         {% empty %}
-        <p class="empty">보낸 나눔 내역이 없습니다.</p>
+            <p class="empty">보낸 나눔 내역이 없습니다.</p>
         {% endfor %}
-
-        <!-- 하단 네비게이션 -->
-        <footer class="bottom-nav">
-            <nav>
-                <a href="{% url 'home' %}">
-                    <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
-                </a>
-                <a href="{% url 'chat:thread_list' %}">
-                    <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
-                </a>
-                <a href="{% url 'requests:received_donation_requests' %}">
-                    <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
-                </a>
-                <a href="{% url 'my_page' %}" class="active">
-                    <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
-                </a>
-            </nav>
-        </footer>
     </div>
+
+    <!-- 하단 네비게이션 -->
+    <footer class="bottom-nav">
+        <nav>
+            <a href="{% url 'home' %}">
+                <img src="{% static 'reviews/images/home.svg' %}" alt="" />홈
+            </a>
+            <a href="{% url 'chat:thread_list' %}">
+                <img src="{% static 'reviews/images/message.svg' %}" alt="" />쪽지
+            </a>
+            <a href="{% url 'requests:received_donation_requests' %}">
+                <img src="{% static 'reviews/images/form.svg' %}" alt="" />신청 관리
+            </a>
+            <a href="{% url 'my_page' %}" class="active">
+                <img src="{% static 'reviews/images/my-active.svg' %}" alt="" />마이페이지
+            </a>
+        </nav>
+    </footer>
     <script src="{% static 'reviews/js/share.js' %}"></script>
 
 </body>

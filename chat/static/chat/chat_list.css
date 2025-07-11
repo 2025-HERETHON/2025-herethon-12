@@ -1,14 +1,27 @@
 .header {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  z-index: 100;
   border-bottom: 1px solid #bcbcbc;
 }
 
 .header-title {
+  font-weight: 600;
   font-size: 20px;
-  font-weight: bold;
-  margin: 20px 0px;
+}
+
+.main-container {
+  margin-top: 60px;
+  margin-bottom: 67px;
 }
 
 .chat_list {
