@@ -35,7 +35,12 @@
 | 유효민 | <img width="160"  alt="image 14" src="https://github.com/user-attachments/assets/e14ae26d-5792-4b56-b6f6-2385196b75b4" /> | PM/DE|  기획, UI/UX 디자인, 발표 자료 제작 |
 | 박소유 | <img width="160"  alt="박소유" src="https://github.com/user-attachments/assets/b7a4bdd4-22ca-4ebb-a91b-c7af2c009ac4" /> | FE | 홈, 프로필, 쪽지, 마이페이지(교환/나눔 내역, 나의 후기) |
 | 백민영 | <img width="160" alt="백민영" src="https://github.com/user-attachments/assets/4719f790-692f-4498-bfe0-7033d9515bc5" /> | FE | 회원가입, 로그인, 지역 인증, 게시글, 나눔/교환 신청, 나눔/교환 신청 관리, 쪽지 채팅방, 마이페이지(프로필 수정, 후기 작성) |
-| 남예은 | <img width="70"  alt="image 17" src="https://github.com/user-attachments/assets/98f335ae-276b능
+| 남예은 | <img width="70"  alt="image 17" src="https://github.com/user-attachments/assets/98f335ae-276b-4553-a629-71c555efdb4e" /> | BE | 회원가입, 로그인, 지역 인증, 홈, 게시글, 나눔/교환 신청, 마이페이지(프로필 수정, 후기 작성) |
+| 이혜지 | <img width="160" alt="1" src="https://github.com/user-attachments/assets/083c72bb-4ab8-4dfd-a419-83207d3a1b71" /> | BE | 나눔/교환 신청 관리, 쪽지, 마이페이지(교환/나눔 내역, 나의 후기) |
+
+</br>
+
+### 💡 주요 기능
 <img width="1920" height="1080" alt="7  프로토 타입" src="https://github.com/user-attachments/assets/3c18b8ad-8bc5-407b-b801-127881f0a521" />
 <img width="1920" height="1080" alt="8  프로토 타입" src="https://github.com/user-attachments/assets/5ffefe66-65a5-4012-985d-73065a303b14" />
 <img width="1920" height="1080" alt="9  프로토 타입" src="https://github.com/user-attachments/assets/f80dc9a3-5c51-4405-9ae8-ff3c5a630e4b" />
