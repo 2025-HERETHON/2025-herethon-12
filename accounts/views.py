@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import Member
 from posts.models import Item,ItemImage
 from reviews.models import Review
+from django.db.models import Avg
 
 #로그인
 def login_page(request):
@@ -102,9 +103,17 @@ def profile_view(request, pk):
     received_reviews = Review.objects.filter(receiver=user).order_by('-created_at')
     received_review_count = received_reviews.count()
 
+    avg_rating = received_reviews.aggregate(avg=Avg('rating'))['avg'] or 0
+
+    filled_count = int(round(avg_rating * 2))
+    stars = range(10)
+
     return render(request, 'home/profile.html', {
         'profile_user': user,
         'posts': posts,
         'received_reviews': received_reviews,
         'received_review_count': received_review_count,
+        'avg_rating': avg_rating,
+        'filled_count': filled_count,
+        'stars': stars,
     })

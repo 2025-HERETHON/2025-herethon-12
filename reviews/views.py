@@ -39,7 +39,7 @@ def create_review(request, request_type, request_id):
         avg_rating = Review.objects.filter(receiver=receiver).aggregate(avg=Avg('rating'))['avg'] or 0
         filled_count = int(round(avg_rating * 2))
         stars = range(10)
-        receiver.save()
+        #receiver.save()
             
         #이미 리뷰를 작성한 경우
         if request.method == 'POST': #post일 때만 검증.. > 토글은 get이라 해당 로직 제외
@@ -88,7 +88,7 @@ def create_review(request, request_type, request_id):
         avg_rating = Review.objects.filter(receiver=receiver).aggregate(avg=Avg('rating'))['avg'] or 0
         filled_count = int(round(avg_rating * 2))
         stars = range(10)
-        receiver.save()
+        #receiver.save()
 
         if request.method == 'POST':  # post일 때만 검증.. > 토글은 get이라 해당 로직 제외
             if Review.objects.filter(donation_request=donation, writer=writer).exists():
@@ -192,6 +192,7 @@ def delete_review(request, review_id):
         return HttpResponseForbidden("리뷰를 삭제할 권한이 없습니다.")
 
     review.delete()
+
     messages.success(request, "리뷰가 삭제되었습니다.")
     return redirect('/reviews/mypage/reviews/?type=written') 
 
@@ -327,7 +328,7 @@ def my_received_donations(request):
         print("아이템 제목:", req.item.title)
         print("아이템 작성자 닉네임:", req.item.member.nickname)
         print("아이템 설명:", req.item.description)
-        
+
         print("업데이트 일자:", req.updated_at)
 
     grouped = defaultdict(list)
