@@ -79,9 +79,3 @@
 └── README.md              ← 프로젝트 설명
 ```
 </br>
-
-### 💻 개발환경에서의 실행방법
-```
-(추가예정)
-python manage.py runserver
-```
