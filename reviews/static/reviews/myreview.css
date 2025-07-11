@@ -1,21 +1,46 @@
-/* === 헤더 === */
 .header {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  position: relative;
+  z-index: 100;
+}
+
+.header .header-title {
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .back-btn {
   background: none;
-  padding: 0;
+  border: none;
+  padding: 0 15px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.page-title {
-  flex-grow: 1;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
+.back-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.header p {
+  width: 43px;
+}
+
+.main-container {
+  margin-top: 60px;
+  margin-bottom: 67px;
 }
 
 /* === 유저 정보 카드 === */
@@ -39,6 +64,16 @@
   margin-right: 12px;
 }
 
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.user-info>p {
+  margin: 0;
+}
+
 .user-info .username {
   font-weight: 600;
   font-size: 14px;
@@ -47,7 +82,6 @@
 .user-info .user-id {
   font-size: 12px;
   color: var(--color-gray);
-  margin-top: 4px;
 }
 
 .user-rating p {
@@ -58,6 +92,7 @@
 .rating-box {
   display: flex;
   align-items: center;
+  gap: 5px;
 }
 
 .rating {
@@ -75,6 +110,7 @@
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .rating-label {
   width: 14px;
   overflow: hidden;
@@ -114,34 +150,24 @@
   padding: 0 16px 80px;
   /* 하단 nav 고려 */
 }
+
 .review-section h3 {
   font-size: 18px;
   font-weight: 600;
   margin: 0px;
 }
+
 .review-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 12px 0;
+  width: 100%;
 }
 
 .review-header h2 {
   font-size: 14px;
   font-weight: 600;
-}
-
-.dropdown-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-main);
-  color: #fff;
-  border-radius: 8px;
-  padding: 4px 8px;
-  font-size: 12px;
-  gap: 4px;
-  height: 28px;
 }
 
 .down-icon {
@@ -158,30 +184,32 @@
 .review-item {
   display: flex;
   align-items: flex-start;
+  gap: 10px;
   padding: 16px;
   margin-bottom: 0px;
   border-top: 1px solid #d9d9d9;
   width: calc(100% - 16 * 2);
   margin: 0 -16px;
+  position: relative;
 }
 
 .review-profile {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  margin-right: 10px;
 }
 
 .review-content {
   flex-grow: 1;
+  width: 60%;
+   min-width: 0;
 }
 
 .review-content .stars {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
   font-size: 12px;
-  margin-bottom: 4px;
 }
 
 .review-content .stars img {
@@ -193,12 +221,27 @@
   font-size: 13px;
   color: #333;
   line-height: 1.4;
+  margin: 10px 0;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .reviewimg {
-  margin-right: 10px;
   width: 62px;
   height: 62px;
+  border-radius: 8px;
+  justify-self: center;
+  align-self: center;
+    flex-shrink: 0; 
+  margin-left: 4px;
+}
+
+.reviewimg img {
+  width: 62px;
+  height: 62px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .date {
@@ -213,14 +256,16 @@
   align-items: flex-end;
   font-size: 11px;
   color: var(--color-gray);
-  margin-left: 8px;
+  white-space: nowrap;
+   flex-shrink: 0;
 }
 
 .review-meta .delete-btn {
-  width: 14px;
-  height: 14px;
-  margin-top: 6px;
   cursor: pointer;
+  background: none;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
 }
 
 /* review-list 내 star를 더 작은 svg로 교체했습니다 */
@@ -262,23 +307,23 @@
   position: fixed;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%); /* 가운데 정렬 */
+  transform: translateX(-50%);
+  /* 가운데 정렬 */
   width: 100%;
-  max-width: 430px; /* 📌 main-container와 동일하게 */
+  max-width: 430px;
+  /* 📌 main-container와 동일하게 */
   background-color: #fff;
   z-index: 10;
 }
 
-.bottom-nav nav ul,
-.bottom-nav ul {
+.bottom-nav nav {
+  padding: 8px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 8px 0;
 }
 
-.bottom-nav nav li,
-.bottom-nav li {
+.bottom-nav nav a {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -287,20 +332,14 @@
   text-align: center;
   font-size: 11px;
   color: var(--color-light-main);
-  cursor: pointer;
 }
 
-.bottom-nav nav li img,
-.bottom-nav li img {
+.bottom-nav nav a img {
   width: 30px;
   height: 30px;
 }
 
-.bottom-nav nav .active {
-  color: var(--color-deep-main);
-}
-
-.bottom-nav nav .active {
+.bottom-nav .active {
   color: var(--color-deep-main);
 }
 
@@ -404,4 +443,52 @@
   height: 100%;
   width: 1px;
   border-right: 1px dashed #c4f2ff;
+}
+
+/* 받은 후기, 작성 후기 드롭다운 */
+.dropdown-btn {
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  width: 25%;
+  z-index: 100;
+}
+
+.selected,
+.item {
+  background-color: var(--color-main);
+  padding: 5px 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  height: 30px;
+}
+
+.selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.item {
+  width: 100%;
+}
+
+.options {
+  position: absolute;
+  width: 100%;
+}
+
+.dropdown-btn p,
+.item {
+  color: #ffffff;
+  white-space: nowrap;
 }

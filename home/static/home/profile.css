@@ -61,7 +61,8 @@
     font-size: 14px;
     margin: 8px 0;
 }
-.user-rating{
+
+.user-rating {
     margin-left: 25px;
 }
 
@@ -168,6 +169,7 @@
     flex-direction: column;
     justify-content: space-between;
     flex: 1;
+     min-width: 0;
 }
 
 .state-line {
@@ -208,7 +210,9 @@
     color: #000;
     margin: 4px 0 8px;
     line-height: 100%;
-    font-weight: 400;
+    font-weight: 400; 
+    overflow-wrap: break-word;    
+    word-break: break-word;
 }
 
 .review_list {
@@ -236,6 +240,7 @@
     margin-bottom: 0px;
     border-top: 1px solid #d9d9d9;
     border-bottom: 1px solid #d9d9d9;
+    gap: 12px;
 }
 
 .review-profile {
@@ -243,10 +248,13 @@
     height: 32px;
     border-radius: 50%;
     margin-right: 10px;
+    flex-shrink: 0;
 }
 
 .review-content {
     flex-grow: 1;
+    flex: 1;
+    min-width: 0;
 }
 
 .review-content .stars {
@@ -266,12 +274,16 @@
     font-size: 13px;
     color: #333;
     line-height: 1.4;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .reviewimg {
     margin-right: 10px;
     width: 62px;
     height: 62px;
+    flex-shrink: 0;
+    margin-bottom: 10px;
 }
 
 .date {
@@ -287,6 +299,8 @@
     font-size: 11px;
     color: var(--color-gray);
     margin-left: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .review-meta .delete-btn {
@@ -328,4 +342,16 @@
 
 .review-item .rating span:nth-child(even) {
     margin-right: 5px;
+}
+
+/* 접힘 토글용 */
+.toggle-content.collapsed {
+    display: none;
+}
+
+/* 리스트 스크롤 */
+.post-list,
+.review_list {
+    max-height: 300px;
+    overflow-y: auto;
 }

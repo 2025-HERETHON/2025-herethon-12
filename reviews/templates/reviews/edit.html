@@ -5,32 +5,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dearbebe</title>
-    <link rel="stylesheet" href="/accounts/static/accounts/common.css" />
-    <link rel="stylesheet" href="/accounts/static/accounts/edit_profile.css" />
-    <script defer src="/accounts/static/accounts/js/edit_profile.js"></script>
+    <link rel="stylesheet" href="{% static 'reviews/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'reviews/edit.css' %}" />
+    <script defer src="{% static 'reviews/js/edit.js' %}"></script>
   </head>
   <body>
     <div class="main-container">
       <div class="header">
-        <a href="" class="back-btn">
-          <img src="/accounts/static/accounts/images/back.svg" alt="뒤로가기" />
+        <a href="javascript:history.back()" class="back-btn">
+          <img src="{% static 'reviews/images/back-btn.svg' %}" alt="뒤로가기" />
         </a>
         <div class="header-title">프로필 수정</div>
         <p></p>
       </div>
-      <form method="post" action="" class="container">
+      <form method="post" action="{% url 'edit_profile' %}" class="container" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="edit-profile">
           <div class="profile-preview">
             <div class="preview">
-              <img src="/accounts/static/accounts/images/default_profile.png" alt="프로필 사진">
+              {% if member.image %}
+              <img src="{{ member.image.url }}" alt="프로필 사진" />
+              {% else %}
+              <img src="{% static 'reviews/images/default_profile.png' %}" alt="기본 프로필 사진" />
+              {% endif %}
             </div>
             <!-- 바꿀 프사 미리보기 -->
             <div class="preview-img hidden">
-              <img src="" alt="프로필 사진">  
+              <img src="" alt="프로필 사진" />
             </div>
             <label for="edit" class="camera-btn">
-              <input type="file" id="edit" accept="image/*">
-              <img src="/accounts/static/accounts/images/camera-btn.png" alt="">
+              <input type="file" id="edit" accept="image/*" name="profile_image"/>
+              <img
+                src="{% static 'reviews/images/camera-btn.png' %}"
+                alt=""
+              />
             </label>
           </div>
         </div>
@@ -44,7 +52,7 @@
             minlength="2"
             maxlength="10"
             aria-describedby="nickname-desc"
-            value="{{ nickname|default:'' }}"
+            value="{{ nickname|default:member.nickname }}"
             required
           />
           <!-- <div class="description" id="nickname-desc">
@@ -67,7 +75,7 @@
               maxlength="12"
               aria-describedby="username-desc"
               required
-              value="{{ username|default:'' }}"
+              value="{{ username|default:member.username }}"
             />
             <button
               type="button"
@@ -77,6 +85,10 @@
             >
               중복확인
             </button>
+            <!-- 중복확인 결과 저장용 : 이미 아이디가 있으니까 기본값을 true -> 변동이 있을 때만 false로 바뀜 -->
+            <input type="hidden" id="idChecked" name="id_checked" value="true">
+            <!-- 원래 아이디 저장용 : 아이디를 바꾸려다가 안 바꿨을 때에도 중복확인할 필요 없음 -->
+            <input type="hidden" id="original-username" value="{{ member.username }}">
           </div>
           <!-- <div class="description" id="username-desc">
             4~12자/ 영문 소문자&#40;숫자 조합 가능&#41;
@@ -84,12 +96,12 @@
           <div class="error-msg hidden" id="username-err">
             필수 입력 사항입니다.
           </div>
-      <!-- {% if messages %} -->
+          {% if messages %}
           <!-- 중복 확인 결과 출력 / 수정하셔도 됩니다!! -->
-        <!-- {% for message in messages %} -->
-          <!-- <div class="message {{ message.tags }}">{{ message }}</div> -->
-        <!-- {% endfor %} -->
-      <!-- {% endif %} -->
+          {% for message in messages %}
+          <div class="message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+          {% endif %}
         </div>
         <div class="button-wrapper">
           <button type="submit" class="submit-btn">등록하기</button>

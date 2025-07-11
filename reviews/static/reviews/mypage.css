@@ -13,7 +13,12 @@
   z-index: 100;
 }
 
+<<<<<<< HEAD
 .header .header-title {
+=======
+.header 
+.header-title {
+>>>>>>> e87a22a2d87a575fab2a83a5c9400098391d06ce
   font-weight: 600;
   font-size: 20px;
 }
@@ -172,4 +177,8 @@
   justify-content: center;
   align-items: center;
   color: #ffffff;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e87a22a2d87a575fab2a83a5c9400098391d06ce

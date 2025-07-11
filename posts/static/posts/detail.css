@@ -86,16 +86,22 @@ body {
 
 .header-title {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .header button {
   background: none;
 }
 
-.back-btn,
+.back-btn {
+  padding: 0 15px;
+}
+
 .more-btn {
-  padding: 0 10px;
+  width: 43px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-dropdown {
@@ -187,6 +193,7 @@ body {
   padding: 10px;
   gap: 10px;
   margin-bottom: 100px;
+  width: 100%;
 }
 
 .profile-bar {

@@ -10,7 +10,7 @@ label {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-.darken {
+.darken, .success-darken {
   position: fixed;
   right: 0;
   top: 0;
@@ -18,6 +18,35 @@ label {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 1000;
+}
+
+/* 이미지 첨부 시 미리보기 */
+.preview-darken {
+  position: fixed;
+  right: 0;
+  bottom: 54px;
+  width: 100%;
+  height: 100%;
+  background-color: #4b4b4b;
+  opacity: 0.8;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.img-preview {
+  position: fixed;
+  width: 85%;
+  max-width: 365px;
+  z-index: 1020;
+  bottom: 64px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.img-preview img {
+  width: 92px;
+  height: 92px;
+  border-radius: 8px;
 }
 
 .complete-modal {
@@ -47,7 +76,7 @@ label {
   border-top: 1px dashed #c4f2ff;
 }
 
-.complete-modal form {
+#complete-form {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -73,11 +102,40 @@ label {
   align-items: center;
 }
 
-.hidden {
-  display: none;
+/* 거래 완료되었습니다 모달 */
+.success-modal {
+  position: fixed;
+  width: 70%;
+  height: 120px;
+  max-width: 301px;
+  z-index: 1020;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--color-main);
 }
 
-/* 뒤로가기 버튼만 있는 header */
+.success-modal p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#check {
+  color: var(--color-main);
+  font-size: 16px;
+  font-weight: 500;
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  background: none;
+}
+
+/* 뒤로가기, 새로고침 버튼이 있는 header */
 .header {
   position: fixed;
   width: 100%;
@@ -95,15 +153,15 @@ label {
 
 .header-title {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 20px;
 }
 
-.back-btn {
+.refresh-btn {
   padding: 0 10px;
 }
 
-.header p {
-  width: 26px;
+.back-btn {
+  padding: 0 15px;
 }
 
 .main-container {
@@ -121,6 +179,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   border-top: 1px solid #bcbcbc;
   border-bottom: 1px solid #bcbcbc;
   height: 40px;
@@ -135,6 +194,7 @@ label {
   color: #8a8a8a;
 }
 
+.complete-btn,
 #complete-btn {
   color: #ffffff;
   background-color: var(--color-main);
@@ -142,8 +202,10 @@ label {
   font-size: 14px;
   border-radius: 8px;
   padding: 5px 15px;
+  white-space: nowrap;
 }
 
+.complete-btn:active,
 #complete-btn:active {
   background-color: var(--color-deep-main);
 }
@@ -268,11 +330,22 @@ label {
 }
 
 /* 채팅 입력창 */
+.chat-input-wrapper {
+  position: fixed;
+  bottom: 0;
+  height: 54px;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 13px 1px rgba(0, 0, 0, 0.25);
+}
+
 .chat-input {
   display: grid;
   grid-template-columns: 10% 80% 10%;
-  position: fixed;
-  bottom: 10px;
   height: 40px;
   width: 90%;
   max-width: 387px;
@@ -303,4 +376,8 @@ label {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }

@@ -10,7 +10,7 @@ class Category(TextChoices):
     ETC = '기타', '기타'
 #거래 방식
 class TradeType(TextChoices):
-    FREE =  '무료나눔', '무료나눔'
+    FREE =  '무료 나눔', '무료 나눔'
     EXCHANGE = '교환', '교환'
 #제품 상태
 class Condition(TextChoices):

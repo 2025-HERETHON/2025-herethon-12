@@ -7,7 +7,6 @@ from requests.enums import Status
 from django.utils.timezone import localtime
 from django.contrib.auth.decorators import login_required
 from collections import defaultdict
-from reviews.models import Review
 
 
 # ------------------------
@@ -17,23 +16,56 @@ from reviews.models import Review
 # 나눔-받은 신청 목록 조회
 @login_required
 def received_donation_requests(request):
-    member = request.user # 현재 로그인한 유저 
-    my_items = Item.objects.filter(member=member) # 내가 올린 용품
-    donation_requests = DonationRequest.objects.filter(item__in=my_items).order_by('-created_at') # 최신순 정렬
+    print("로그인 상태:", request.user.is_authenticated)  # True면 로그인됨
+    print("현재 사용자:", request.user.username)
+
+    member = request.user
+    my_items = Item.objects.filter(member=member)
+
+    # 거절된(REJECTED) 요청, 거래 완료된 요청 제외
+    donation_requests = DonationRequest.objects.filter(
+        item__in=my_items,
+        item__status__in=[Status.WAITING, Status.IN_PROGRESS]  # 거래중인 아이템만
+    ).exclude(
+        status=Status.REJECTED
+    ).order_by('-created_at')
+
+    grouped = defaultdict(list)
+    for req in donation_requests:
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
+        grouped[date_str].append(req)
+
+    print("donation_requests 개수:", donation_requests.count())
+    print("grouped keys:", grouped.keys())
+
+    for date, reqs in grouped.items():
+        print("날짜:", date)
+        for r in reqs:
+            print("닉네임:", r.member.nickname, "| 제목:", r.item.title, "| 메모:", r.memo)
 
     return render(request, 'requests/received_donation_list.html', {
-        'donation_requests': donation_requests
+        'grouped': dict(grouped)
     })
-
 
 # 나눔-보낸 신청 목록 조회 
 @login_required
 def sent_donation_requests(request):
     member = request.user
-    donation_requests = DonationRequest.objects.filter(member=member).order_by('-created_at')
+    requests = DonationRequest.objects.filter(member=member).order_by('-created_at')
+
+    grouped_requests = defaultdict(list)
+    for req in requests:
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')
+        day = date.strftime('%d').lstrip('0')
+        date_str = f"{month}/{day}"  # 예: 7/8
+        grouped_requests[date_str].append(req)
 
     return render(request, 'requests/sent_donation_list.html', {
-        'donation_requests': donation_requests
+        'grouped_requests': grouped_requests.items()
     })
 
 # 나눔-받은신청(거절처리)
@@ -48,7 +80,7 @@ def reject_donation_request(request, request_id):
     donation_request.status = Status.REJECTED
     donation_request.save()
 
-    return redirect('received_donation_requests')
+    return redirect('requests:received_donation_requests')
 
 # 나눔-보낸신청(삭제 or 취소 처리)
 @login_required
@@ -57,47 +89,76 @@ def manage_sent_donation_request(request, request_id, action):
 
     if donation_request.member != request.user:
         messages.error(request, "해당 요청을 처리할 권한이 없습니다.")
-        return redirect('sent_donation_requests')
+        return redirect('requests:sent_donation_requests')
 
-    # 상태에 따라 처리
-    if action == "cancel":
-        if donation_request.status == Status.WAITING:
-            donation_request.status = Status.REJECTED  # 취소도 거절로 처리
-            donation_request.save()
-            messages.success(request, "신청이 취소되었습니다.")
-        else:
-            messages.error(request, "취소할 수 없는 상태입니다.")
-
-    elif action == "delete":
-        if donation_request.status in [Status.REJECTED, Status.COMPLETED]:
+    # 취소(cancel)와 삭제(delete) 모두 삭제로 처리
+    if action in ["cancel", "delete"]:
+        # WAITING, REJECTED, COMPLETED 상태일 때만 삭제 가능
+        if donation_request.status in [Status.WAITING, Status.REJECTED, Status.COMPLETED]:
             donation_request.delete()
             messages.success(request, "신청이 삭제되었습니다.")
         else:
             messages.error(request, "삭제할 수 없는 상태입니다.")
+    else:
+        messages.error(request, "잘못된 요청입니다.")
 
-    return redirect('sent_donation_requests')
+    return redirect('requests:sent_donation_requests')
 
 
-
-# 교환-받은 신청 목록 조회
+# 교환 - 받은 신청 목록 조회
 @login_required
 def received_exchange_requests(request):
+    print("로그인 상태:", request.user.is_authenticated)
+    print("현재 사용자:", request.user.username)
+
     member = request.user
     my_items = Item.objects.filter(member=member)
-    exchange_requests = ExchangeRequest.objects.filter(item__in=my_items).order_by('-created_at')
+
+    # 거절된(REJECTED) 요청, 거래 완료된 요청 제외
+    exchange_requests = ExchangeRequest.objects.filter(
+        item__in=my_items,
+        item__status__in=[Status.WAITING, Status.IN_PROGRESS]  # 거래중인 아이템만
+    ).exclude(
+        status=Status.REJECTED
+    ).order_by('-created_at')
+
+    grouped = defaultdict(list)
+    for req in exchange_requests:
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')  # '07' → '7'
+        day = date.strftime('%d').lstrip('0')    # '08' → '8'
+        date_str = f"{month}/{day}"              # '7/8'
+        grouped[date_str].append(req)
+
+    print("exchange_requests 개수:", exchange_requests.count())
+    print("grouped keys:", grouped.keys())
+
+    for date, reqs in grouped.items():
+        print("날짜:", date)
+        for r in reqs:
+            print("닉네임:", r.member.nickname, "| 제목:", r.item.title, "| 메모:", r.memo)
 
     return render(request, 'requests/received_exchange_list.html', {
-        'exchange_requests': exchange_requests
+        'grouped': dict(grouped)
     })
+
 
 # 교환-보낸 신청 목록 조회
 @login_required
 def sent_exchange_requests(request):
     member = request.user
-    exchange_requests = ExchangeRequest.objects.filter(member=member).order_by('-created_at')
+    requests = ExchangeRequest.objects.filter(member=member).order_by('-created_at')
+
+    grouped_requests = defaultdict(list)
+    for req in requests:
+        date = localtime(req.created_at)
+        month = date.strftime('%m').lstrip('0')
+        day = date.strftime('%d').lstrip('0')
+        date_str = f"{month}/{day}"  # 예: 7/8
+        grouped_requests[date_str].append(req)
 
     return render(request, 'requests/sent_exchange_list.html', {
-        'exchange_requests': exchange_requests
+        'grouped_requests': grouped_requests.items()
     })
 
 # 교환-받은신청(거절처리)
@@ -107,12 +168,12 @@ def reject_exchange_request(request, request_id):
 
     if exchange_request.item.member != request.user:
         messages.error(request, "해당 신청을 거절할 권한이 없습니다.")
-        return redirect('received_exchange_requests')
+        return redirect('requests:received_exchange_requests')
 
     exchange_request.status = Status.REJECTED
     exchange_request.save()
 
-    return redirect('received_exchange_requests')
+    return redirect('requests:received_exchange_requests')
 
 # 교환-보낸신청(취소/삭제)
 @login_required
@@ -121,98 +182,18 @@ def manage_sent_exchange_request(request, request_id, action):
 
     if exchange_request.member != request.user:
         messages.error(request, "해당 요청을 처리할 권한이 없습니다.")
-        return redirect('sent_exchange_requests')
+        return redirect('requests:sent_exchange_requests')
 
-    if action == "cancel":
-        if exchange_request.status == Status.WAITING:
-            exchange_request.status = Status.REJECTED
-            exchange_request.save()
-            messages.success(request, "신청이 취소되었습니다.")
-        else:
-            messages.error(request, "취소할 수 없는 상태입니다.")
-
-    elif action == "delete":
-        if exchange_request.status in [Status.REJECTED, Status.COMPLETED]:
+    # 취소(cancel)와 삭제(delete) 모두 삭제로 처리
+    if action in ["cancel", "delete"]:
+        # WAITING, REJECTED, COMPLETED 상태일 때만 삭제 가능
+        if exchange_request.status in [Status.WAITING, Status.REJECTED, Status.COMPLETED]:
             exchange_request.delete()
             messages.success(request, "신청이 삭제되었습니다.")
         else:
             messages.error(request, "삭제할 수 없는 상태입니다.")
+    else:
+        messages.error(request, "잘못된 요청입니다.")
 
-    return redirect('sent_exchange_requests')
+    return redirect('requests:sent_exchange_requests')
 
-# ------------------------
-# 마이페이지 - 교환/나눔 내역 조회 뷰
-# ------------------------
-
-@login_required
-def my_exchange_history(request):
-    member = request.user
-
-    # 받은 교환: 내가 올린 글에 대해 누군가 신청한 교환 성사된 것
-    received = ExchangeRequest.objects.filter(
-        item__member=member,
-        status=Status.COMPLETED 
-    ).select_related('item', 'member')
-
-    # 보낸 교환: 내가 신청해서 성사된 교환
-    sent = ExchangeRequest.objects.filter(
-        member=member,
-        status=Status.COMPLETED
-    ).select_related('item', 'item__member')
-
-    # 리뷰 작성 여부 설정
-    for req in list(received) + list(sent):
-        req.review_written = Review.objects.filter(exchange_request=req, writer=member).exists()
-
-    # 날짜별 그룹핑
-    all_requests = list(received) + list(sent)
-    all_requests.sort(key=lambda r: r.updated_at, reverse=True)
-
-    grouped = defaultdict(list)
-    for req in all_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
-        grouped[date].append(req)
-
-    return render(request, 'requests/my_exchange_history.html', {
-        'grouped': grouped
-    })
-
-@login_required
-def my_sent_donations(request):
-    member = request.user
-
-    completed_requests = DonationRequest.objects.filter(
-        item__member=member,
-        status=Status.COMPLETED
-    ).select_related('item', 'member')
-
-    grouped = defaultdict(list)
-    for req in completed_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
-        grouped[date].append(req)
-
-    return render(request, 'requests/my_sent_donations.html', {
-        'grouped': grouped
-    })
-
-
-@login_required
-def my_received_donations(request):
-    member = request.user
-
-    completed_requests = DonationRequest.objects.filter(
-        member=member,
-        status=Status.COMPLETED
-    ).select_related('item', 'item__member')
-
-    for req in completed_requests:
-        req.review_written = Review.objects.filter(donation_request=req, writer=member).exists()
-
-    grouped = defaultdict(list)
-    for req in completed_requests:
-        date = localtime(req.updated_at).strftime("%Y.%m.%d")
-        grouped[date].append(req)
-
-    return render(request, 'requests/my_received_donations.html', {
-        'grouped': grouped
-    })

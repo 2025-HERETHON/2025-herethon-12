@@ -1,25 +1,32 @@
 /* ===== 헤더 ===== */
 .header {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 16px 0;
-  font-weight: bold;
-  font-size: 18px;
+  z-index: 100;
+}
+
+.header-title {
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .back-btn {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
   background: none;
   border: none;
-  padding: 0;
+  padding: 0 15px;
   margin: 0;
-  width: 23px;
-  height: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .back-btn img {
@@ -28,13 +35,21 @@
   object-fit: contain;
 }
 
+.header p {
+  width: 43px;
+}
+
+.main-container {
+  margin-bottom: 67px;
+}
+
 /* ===== 날짜 ===== */
 .section {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 0 16px;
-  margin: 12px 0;
+  margin-top: 60px;
 }
 
 .date-label {
@@ -43,6 +58,7 @@
   color: #333;
   margin: 12px 16px 12px;
 }
+
 .dropdown-btn {
   width: 88px;
   height: 28px;
@@ -66,6 +82,61 @@
   height: 7px;
   display: block;
 }
+.mini-dropdown {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.selected {
+  width: 88px;
+  height: 28px;
+  font-size: 12px;
+  background-color: var(--color-main);
+  color: white;
+  font-weight: 600;
+  border-radius: 8.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.options {
+  position: absolute;
+  top: 18px;
+  right: 0;
+  background-color: none;
+  z-index: 100;
+  padding: 6px 0px 0px 20px;
+  min-width: 100px;
+}
+
+.options.hidden {
+  display: none;
+}
+.options .dropdown-item {
+  width: 88px;
+  height: 28px;
+  font-size: 12px;
+  background-color: var(--color-main);
+  color: white;
+  border: none;
+  border-radius: 8.5px;
+  text-align: center;
+  line-height: 28px;
+  cursor: pointer;
+  margin: 4px auto;
+  display: block;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.options .dropdown-item:active {
+  background-color: var(--color-deep-main);
+}
 
 /* ===== 아이템 카드 ===== */
 .item-card {
@@ -73,8 +144,11 @@
   padding: 12px 16px;
   gap: 12px;
   border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
   position: relative;
+}
+
+.item-card.last {
+  border-bottom: 1px solid #d9d9d9;
 }
 
 .item-img {
@@ -88,7 +162,7 @@
 .item-info {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 4px;
   flex: 1;
 }
 
@@ -151,14 +225,14 @@
   z-index: 10;
 }
 
-.bottom-nav ul {
+.bottom-nav nav {
+  padding: 8px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 8px 0;
 }
 
-.bottom-nav li {
+.bottom-nav nav a {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -167,14 +241,28 @@
   text-align: center;
   font-size: 11px;
   color: var(--color-light-main);
-  cursor: pointer;
 }
 
-.bottom-nav li img {
+.bottom-nav nav a img {
   width: 30px;
   height: 30px;
 }
 
-.bottom-nav nav .active {
+.bottom-nav .active {
   color: var(--color-deep-main);
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-btn:disabled {
+  background-color: #8a8a8a;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none;
 }

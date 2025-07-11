@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_GET
-from django.http import JsonResponse
-from accounts.models import Member
+from .models import Member
+from posts.models import Item,ItemImage
+from reviews.models import Review
 
 #로그인
 def login_page(request):
@@ -17,7 +17,7 @@ def login_page(request):
         if user is not None:
             #유저 존재
             login(request, user)
-            return redirect("/") #추후 home 경로 매핑 필요
+            return redirect("home") #추후 home 경로 매핑 필요
             #login 필요한 페이지일 때 비로그인 상태이면 로그인 페이지로 리다이렉트 > 로그인 후 전 페이지로 이동
             next_url = request.GET.get("next") or '/'
             return redirect(next_url)
@@ -61,7 +61,7 @@ def signup_page(request):
                 })
 
             if User.objects.filter(username=username).exists():
-                messages.error(request, "중복된 아이디")
+                messages.error(request, "이미 사용하고 있는 아이디입니다.")
                 return render(request, "accounts/signup.html", {
                     "username": username,
                     "nickname": nickname,
@@ -73,32 +73,38 @@ def signup_page(request):
                 nickname=nickname
             )
 
-            return redirect("login")
+            login(request, user)
+            return redirect("location")
 
     return render(request, "accounts/signup.html")
 
-# accounts/views.py
+#동네 설정
 @login_required
-def my_page(request):
-    return render(request, 'accounts/mypage.html', {'member': request.user})
-
-@login_required
-def edit_profile(request):
-    member = request.user
+def my_region(request):
     if request.method == 'POST':
-        nickname = request.POST.get('nickname')
-        profile_image = request.FILES.get('profile_image')
-
-        member.nickname = nickname
-        if profile_image:
-            member.profile_image = profile_image
+        member = request.user
+        member.region_city = request.POST.get('region_city')
+        member.region_district = request.POST.get('region_district')
+        member.region_dong = request.POST.get('region_dong')
         member.save()
-        return redirect('my_page')
+        return redirect('home')
+    return render(request, 'accounts/location.html')
 
-    return render(request, 'accounts/edit_profile.html', {'member': member})
+#상대방 프로필
+@login_required
+def profile_view(request, pk):
+    user = get_object_or_404(Member, pk=pk)
 
-@require_GET
-def check_id_duplicate(request):
-    username = request.GET.get('username')
-    exists = Member.objects.filter(username=username).exists()
-    return JsonResponse({'exists': exists})
+    #해당 유저가 작성한 게시글
+    posts = Item.objects.filter(member=user).order_by('-created_at')
+
+    #유저가 받은 후기들
+    received_reviews = Review.objects.filter(receiver=user).order_by('-created_at')
+    received_review_count = received_reviews.count()
+
+    return render(request, 'home/profile.html', {
+        'profile_user': user,
+        'posts': posts,
+        'received_reviews': received_reviews,
+        'received_review_count': received_review_count,
+    })

@@ -1,14 +1,27 @@
 .header {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  background-color: #ffffff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #BCBCBC;
+  align-items: center;
+  z-index: 100;
+  border-bottom: 1px solid #bcbcbc;
 }
 
 .header-title {
+  font-weight: 600;
   font-size: 20px;
-  font-weight: bold;
-  margin: 20px 0px;
+}
+
+.main-container {
+  margin-top: 60px;
+  margin-bottom: 67px;
 }
 
 .chat_list {
@@ -21,7 +34,7 @@
   display: flex;
   align-items: center;
   padding: 7px 15px;
-  border-bottom: 1px solid #BCBCBC;
+  border-bottom: 1px solid #bcbcbc;
   position: relative;
 }
 
@@ -29,6 +42,7 @@
   width: 45px;
   height: 45px;
   margin-right: 12px;
+  border-radius: 50%;
 }
 
 .chat-content {
@@ -44,7 +58,7 @@
 
 .chat-start {
   font-size: 13px;
-  color: #8A8A8A;
+  color: #8a8a8a;
   margin-top: 10px;
 }
 
@@ -53,6 +67,18 @@
   color: #aaa;
   position: absolute;
   right: 30px;
+  top: 15px;
+}
+
+/* 새 채팅 인디케이터 */
+.indicator {
+  background-color: #ff6c23;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  right: 10px;
   top: 15px;
 }
 
@@ -70,14 +96,14 @@
   z-index: 10;
 }
 
-.bottom-nav ul {
+.bottom-nav nav {
+  padding: 8px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 8px 0;
 }
 
-.bottom-nav li {
+.bottom-nav nav a {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,14 +112,13 @@
   text-align: center;
   font-size: 11px;
   color: var(--color-light-main);
-  cursor: pointer;
 }
 
-.bottom-nav li img {
+.bottom-nav nav a img {
   width: 30px;
   height: 30px;
 }
 
-.bottom-nav nav .active {
+.bottom-nav .active {
   color: var(--color-deep-main);
 }

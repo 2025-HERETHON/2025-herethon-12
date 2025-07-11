@@ -24,15 +24,15 @@ body {
 
 .header-title {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .back-btn {
-  padding: 0 10px;
+  padding: 0 15px;
 }
 
 .header p {
-  width: 26px;
+  width: 43px;
 }
 
 .main-container {
@@ -263,4 +263,9 @@ input[type="radio"]:checked + label {
 
 .submit-btn {
   box-shadow: 3px 4px 20px 8px rgba(0, 0, 0, 0.16);
+}
+
+
+.hidden {
+  display: none;
 }

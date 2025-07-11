@@ -1,6 +1,7 @@
 from django.db import models
 from .enums import Category, TradeType, Condition, RecommendedAge
 from accounts.models import Member
+from requests.enums import Status 
 
 # Create your models here.
 #게시글
@@ -14,7 +15,7 @@ class Item(models.Model):
     )
     place = models.CharField(max_length=12)
     trade_type = models.CharField(
-        max_length=4,
+        max_length=5,
         choices=TradeType.choices,
     )
     condition = models.CharField(
@@ -34,7 +35,13 @@ class Item(models.Model):
     region_district = models.CharField(max_length=15)
     region_dong = models.CharField(max_length=15)
     
-    sold_out = models.BooleanField(default=False)
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.WAITING
+    )
+
+    #sold_out = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
@@ -50,3 +57,5 @@ class ItemImage(models.Model):
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='images')
 
+    class Meta: #이미지 자동정렬
+        ordering = ['image_order']

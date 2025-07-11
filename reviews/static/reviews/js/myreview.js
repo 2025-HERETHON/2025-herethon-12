@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmDeleteBtn = document.getElementById("confirmDelete");
   const cancelDeleteBtn = document.getElementById("cancelDelete");
   const modalOverlay = document.getElementById("deleteModal");
+  const deleteForm = document.getElementById("deleteForm");
 
   if (!confirmDeleteBtn || !cancelDeleteBtn || !modalOverlay) {
     console.error("❌ 모달 요소가 없습니다. id 확인하세요.");
@@ -100,14 +101,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   deleteBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      targetReview = btn.closest(".review-item");
       modalOverlay.classList.remove("hidden");
+      targetReview = btn.dataset.reviewId;
     });
   });
 
   confirmDeleteBtn.addEventListener("click", () => {
     if (targetReview) {
-      targetReview.remove();
+      deleteForm.action = `/reviews/delete/${targetReview}/`;
+      deleteForm.submit();
       targetReview = null;
     }
     modalOverlay.classList.add("hidden");
@@ -115,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cancelDeleteBtn.addEventListener("click", () => {
     modalOverlay.classList.add("hidden");
+    targetReview = null;
   });
 
   const ratingBoxes = document.querySelectorAll(".rating-box");
@@ -133,4 +136,37 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+});
+
+/* 받은 후기, 작성 후기 드롭다운 */
+const selected = document.querySelector(".selected");
+const options = document.querySelector(".options");
+const downIcon = document.querySelector(".down-icon");
+const selectedItem = document.querySelector(".options .item:first-child");
+const otherItem = document.querySelector(".options .item:last-child");
+
+// 드롭다운 상위값 표시 위해 현재 링크 받아옴
+if (window.location.href.includes("written")) {
+  selectedItem.textContent = "작성한 후기";
+  selectedItem.href = "?type=written"
+  otherItem.textContent = "받은 후기";
+  otherItem.href = "?type=received"
+} else {
+  selectedItem.textContent = "받은 후기";
+  selectedItem.href = "?type=received"
+  otherItem.textContent = "작성한 후기";
+  otherItem.href = "?type=written"
+}
+
+// 드롭다운 누르면 열리고 다시 누르면 닫힘
+selected.addEventListener("click", (e) => {
+  e.stopPropagation();
+  options.classList.toggle("hidden");
+});
+
+// 드롭다운 열린 상태에서 드롭다운 제외 영역 누르면 닫힘
+document.addEventListener("click", () => {
+  if (!options.classList.contains("hidden")) {
+    options.classList.add("hidden");
+  }
 });

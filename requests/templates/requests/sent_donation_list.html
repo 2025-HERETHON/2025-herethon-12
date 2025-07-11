@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dearbebe</title>
+    <link rel="stylesheet" href="{% static 'requests/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'requests/sent_list.css' %}" />
+    <script defer src="{% static 'requests/js/sent_list.js' %}"></script>
+  </head>
+  <body>
+    <!-- 신청 취소, 삭제도 모달 염두에 두기 -->
+    <div class="main-container">
+      <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+          <div class="header-title">신청 관리</div>
+        </div>
+        <!-- 받은 신청 보낸 신청-->
+        <div class="mini-header">
+          <div class="request-radio">
+            <a href="{% url 'requests:received_donation_requests' %}"
+              >받은 신청</a
+            >
+            <a href="#" class="marked">보낸 신청</a>
+          </div>
+          <!-- 나눔 교환 드롭다운 -->
+          <div class="mini-dropdown">
+            <div class="selected">
+              <p>나눔</p>
+              <img
+                src="{% static 'requests/images/down-icon-white.svg' %}"
+                alt="드롭다운 버튼"
+              />
+            </div>
+            <div class="options hidden">
+              <a href="#" class="item">나눔</a>
+              <a href="{% url 'requests:sent_exchange_requests' %}" class="item"
+                >교환</a
+              >
+            </div>
+          </div>
+        </div>
+       {% for date, requests in grouped_requests %}
+  <div class="requests-container">
+    <div class="date">{{ date }}</div>
+
+    {% for request in requests %}
+    <div class="r-container">
+      <div class="top-wrapper">
+        <div class="text-container">
+          <div class="profile-bar">
+            <!-- 나눔글 작성자의 프로필 사진 -->
+            {% if request.item.member.image %}
+              <img src="{{ request.item.member.image.url }}" alt="프로필 이미지" />
+            {% else %}
+              <img src="{% static 'requests/images/default_profile.png' %}" alt="기본 프로필" />
+            {% endif %}
+            <div class="profile">
+              <div class="nickname-time">
+                <div class="nickname">{{ request.item.member.nickname }}</div>
+                <div class="time">{{ request.item.created_at|time:"H:i" }}</div>
+              </div>
+              <div class="region">
+                <img src="{% static 'requests/images/place.svg' %}" alt="위치 아이콘" />
+                <p>{{ request.item.region_dong }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="title">{{ request.item.title }}</div>
+          <div class="place">
+            <div class="dot"></div>
+            <p>{{ request.place }}</p>
+          </div>
+        </div>
+        <div class="image-container">
+                {% if request.item.images.first %}
+                  <img src="{{ request.item.images.first.image.url }}" alt="상품 이미지" />
+                {% else %}
+                  <img src="{% static 'requests/images/sample-img.png' %}" alt="기본 이미지" />
+                {% endif %}
+              </div>
+      </div>
+
+      <div class="description">
+        {{ request.memo }}
+      </div>
+
+      <div class="button-wrapper">
+          <!-- 신청 상태가 WAITING인 경우: 삭제(=취소) 버튼 -->
+          {% if request.status == 'WAITING' %}
+            <form method="POST" action="{% url 'requests:manage_sent_donation_request' request.pk 'delete' %}">
+              {% csrf_token %}
+              <button type="submit" class="txt-btn">신청 취소</button>
+            </form>
+            <p class="waiting">대기중</p>
+
+          <!-- 신청 상태가 REJECTED or COMPLETED인 경우: 삭제 버튼 -->
+          {% elif request.status == 'REJECTED' or request.status == 'COMPLETED' %}
+            <form method="POST" action="{% url 'requests:manage_sent_donation_request' request.pk 'delete' %}">
+              {% csrf_token %}
+              <button type="submit" class="txt-btn">삭제</button>
+            </form>
+            <p class="{% if request.status == 'REJECTED' %}rejected{% else %}completed{% endif %}">
+              {% if request.status == 'REJECTED' %}거절됨{% else %}거래 완료{% endif %}
+            </p>
+
+          <!-- 거래중일 경우: 버튼 없음 -->
+          {% elif request.status == 'IN_PROGRESS' %}
+            <div></div>
+            <p class="trading">거래중</p>
+          {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endfor %}
+
+        <!-- 하단 네비게이션 -->
+        <footer class="bottom-nav">
+          <nav>
+            <a href="{% url 'home' %}">
+              <img src="{% static 'requests/images/home.svg' %}" alt="" />홈
+            </a>
+            <a href="{% url 'chat:thread_list' %}">
+              <img
+                src="{% static 'requests/images/message.svg' %}"
+                alt=""
+              />쪽지
+            </a>
+            <a
+              href="{% url 'requests:received_donation_requests' %}"
+              class="active"
+            >
+              <img
+                src="{% static 'requests/images/form-active.svg' %}"
+                alt=""
+              />신청 관리
+            </a>
+            <a href="{% url 'my_page' %}">
+              <img
+                src="{% static 'requests/images/my.svg' %}"
+                alt=""
+              />마이페이지
+            </a>
+          </nav>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

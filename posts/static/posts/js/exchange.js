@@ -1,6 +1,7 @@
 const mainForm = document.querySelector(".main-form");
 const photoInput = document.getElementById("photo-input");
 const photoErr = document.getElementById("photo-err");
+const photoStatus = document.querySelector(".photo-input-status");
 const place = document.getElementById("place");
 const placeErr = document.getElementById("place-err");
 const title = document.getElementById("title");
@@ -9,19 +10,53 @@ const desc = document.getElementById("description");
 const descErr = document.getElementById("desc-err");
 const darken = document.querySelector(".darken");
 const modal = document.querySelector(".modal");
+const ok = document.getElementById("ok");
+
+// photo-input에서 여러 번에 걸쳐서 사진 선택할 수 있도록 전체 배열 선언하고 시작
+let allPhotos = [];
+
+// 사진 미리보기 함수
+function renderPreview(photos) {
+  const previews = document.querySelectorAll(".photo-preview");
+  const unknowns = document.querySelectorAll(".photo-preview-unknown");
+
+  // 초기화
+  previews.forEach((preview) => preview.classList.add("hidden"));
+  unknowns.forEach((unknown) => unknown.classList.remove("hidden"));
+
+  photos.forEach((photo, i) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const previewBox = previews[i];
+      const previewImg = previewBox.querySelector("img");
+      previewImg.src = e.target.result;
+
+      previewBox.classList.remove("hidden");
+      unknowns[i].classList.add("hidden");
+    };
+    reader.readAsDataURL(photo);
+  });
+}
 
 // 사진 3장 넘어가면 첨부 못하게
 photoInput.addEventListener("change", () => {
   const photos = Array.from(photoInput.files); // photo-input에 올라간 사진 파일 배열
-  if (photos.length > 3) {
+  if (allPhotos.length + photos.length > 3) {
     alert("사진은 최대 3장까지 업로드할 수 있습니다.");
     photoInput.value = "";
     return;
   }
 
-  if (photos.length >= 1 && photos.length <= 3) {
+  allPhotos = allPhotos.concat(photos); // 여러 번에 걸쳐서 사진 선택 가능
+  photoInput.value = ""; // 같은 파일도 다시 선택할 수 있도록 초기화
+
+  if (allPhotos.length >= 1) {
     photoErr.classList.add("hidden");
   }
+
+  photoStatus.textContent = `${allPhotos.length}/3`;
+
+  renderPreview(allPhotos); // 어떤 사진인지 확인
 });
 
 // 필수항목 제어
@@ -110,17 +145,14 @@ document.addEventListener("click", () => {
 mainForm.addEventListener("submit", (e) => {
   let valid = true;
 
-  const photos = Array.from(photoInput.files);
-  if (photos.length < 1) {
+  if (allPhotos.length < 1) {
     valid = false;
-    e.preventDefault();
     photoErr.classList.remove("hidden");
   }
 
   const placeValue = place.value.trim();
   if (!placeValue || placeValue.length > 12) {
     valid = false;
-    e.preventDefault();
     place.style.borderColor = "var(--color-red)";
     placeErr.classList.remove("hidden");
   }
@@ -128,7 +160,6 @@ mainForm.addEventListener("submit", (e) => {
   const titleValue = title.value.trim();
   if (!titleValue || titleValue.length > 12) {
     valid = false;
-    e.preventDefault();
     title.style.borderColor = "var(--color-red)";
     titleErr.classList.remove("hidden");
   }
@@ -136,14 +167,73 @@ mainForm.addEventListener("submit", (e) => {
   const descValue = desc.value.trim();
   if (!descValue || descValue.length > 200) {
     valid = false;
-    e.preventDefault();
     desc.style.borderColor = "var(--color-red)";
     descErr.classList.remove("hidden");
   }
 
-  // 정상적으로 submit 된다면 완료 모달창 띄움
+  if (!valid) {
+    e.preventDefault();
+  }
+
+  // 사진 formData.append로 순서 맞춰서 보냄
   if (valid) {
+    e.preventDefault();
+    // 완료 모달창 띄움
     darken.classList.remove("hidden");
     modal.classList.remove("hidden");
   }
+});
+
+// 모달창의 확인 버튼을 눌러야 최종 submit 되는 방식
+//ok.addEventListener("click", () => {
+//  // 확인 버튼이 submit이니까 중복 제출되지 않도록
+//  ok.disabled = true;
+//
+//  const formData = new FormData(mainForm);
+//  formData.delete("photos"); // 중복 제거
+//  allPhotos.forEach((photo) => formData.append("photos", photo));
+//  photoInput.value = ""; // 초기화
+//
+//  fetch(mainForm.action, {
+//    method: "POST",
+//    body: formData,
+//  })
+//    .then((res) => res.json())
+//    .then((data) => {
+//        if (data.redirect_url) {
+//        window.location.href = data.redirect_url;
+//        } else {
+//        alert("다시 시도해주세요.");
+//        ok.disabled = false;
+//        }
+//    })
+//    .catch(() => {
+//        alert("다시 시도해주세요.");
+//        ok.disabled = false;
+//   });
+// });
+//alert 삭제
+ok.addEventListener("click", () => {
+  ok.disabled = true;
+
+  const formData = new FormData(mainForm);
+  formData.delete("photos");
+  allPhotos.forEach((photo) => formData.append("photos", photo));
+  photoInput.value = "";
+
+  fetch(mainForm.action, {
+    method: "POST",
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.redirect_url) {
+        window.location.href = data.redirect_url;
+      } else {
+        ok.disabled = false;
+      }
+    })
+    .catch(() => {
+      ok.disabled = false;
+    });
 });
