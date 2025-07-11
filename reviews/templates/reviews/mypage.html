@@ -20,7 +20,7 @@
   <div class="logout-modal hidden">
     <p>로그아웃 하시겠습니까?</p>
     <div class="x-divide"></div>
-    <form method="POST" action="" id="logout-form">
+    <form method="POST" action="{% url 'logout' %}" id="logout-form">
       {% csrf_token %}
       <button type="button" id="cancel">아니오</button>
       <div class="y-divide"></div>
@@ -87,9 +87,10 @@
       </div>
     </div>
 
-    <button class="logout">
-      <p class="logout-text">로그아웃</p>
+    <button class="logout" type="button">
+      <span class="logout-text">로그아웃</span>
     </button>
+
   </div>
 
   <!-- <form method="post" action="{ url 'logout' }">
@@ -118,5 +119,12 @@
     </nav>
   </footer>
 </body>
-
+{% if show_modal %}
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector(".modal").classList.remove("hidden");
+      document.querySelector(".darken").classList.remove("hidden");
+    });
+  </script>
+  {% endif %}
 </html>
